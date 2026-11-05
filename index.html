@@ -317,6 +317,30 @@ autoTheme();setInterval(autoTheme,60000);document.addEventListener("visibilitych
  #md #mb .mcf-foot{padding:10px 16px}
  #md #mb .mcf-foot .btn{flex:1 1 0;min-width:0}
 }
+</style><style id="bgm-fix-css">
+/* إصلاح نوافذ إدارة الميزانية والفئات فقط (غلاف .bgm-modal) */
+#md:has(.bgm-modal){place-items:center;padding:16px;box-sizing:border-box}
+#md #mb:has(.bgm-modal){width:min(640px,calc(100vw - 32px));max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);height:auto;padding:0;margin:0;background:var(--card);border:1px solid var(--bd,#223058);border-radius:16px;display:flex;flex-direction:column;overflow:hidden;box-sizing:border-box;gap:0;min-height:0}
+#md #mb .bgm-modal{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;width:100%;max-width:100%;box-sizing:border-box;overflow:hidden}
+#md #mb .bgm-head{padding:16px 20px 12px;border-bottom:1px solid var(--bd,#223058);flex-shrink:0;min-width:0}
+#md #mb .bgm-body{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:14px 20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+#md #mb .bgm-body>*{max-width:100%;min-width:0;box-sizing:border-box}
+#md #mb .bgm-body input,#md #mb .bgm-body select,#md #mb .bgm-body textarea{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+#md #mb .bgm-body .cat-detail-wrap{max-height:none;overflow:visible}
+#md #mb .bgm-body .wrapx,#md #mb .bgm-body .wrap{max-width:100%;overflow-x:auto}
+#md #mb .bgm-body .row{flex-wrap:wrap;min-width:0}
+#md #mb .bgm-foot{padding:12px 20px;border-top:1px solid var(--bd,#223058);display:flex;justify-content:flex-end;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
+#md #mb .bgm-foot .btn{min-height:42px;min-width:120px;padding:10px 24px;border-radius:9px;cursor:pointer;transition:transform .12s,filter .15s,box-shadow .15s}
+#md #mb .bgm-foot .btn:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 4px 14px #0003}
+#md #mb .bgm-foot .btn:active{transform:translateY(0) scale(.97)}
+@media(max-width:600px){
+ #md:has(.bgm-modal){padding:8px}
+ #md #mb:has(.bgm-modal){width:calc(100vw - 16px);max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);border-radius:14px}
+ #md #mb .bgm-head{padding:14px 16px 10px}
+ #md #mb .bgm-body{padding:12px 16px}
+ #md #mb .bgm-foot{padding:10px 16px}
+ #md #mb .bgm-foot .btn{flex:1 1 0;min-width:0}
+}
 </style>
 </head>
 <body>
@@ -1261,16 +1285,16 @@ function openCatDetail(cname){
    +'</tr>'}).join('');
  var icon=CAT_ICON[cname]||'📂',col=CAT_COL[cname]||'#3b82f6',desc=CAT_DESC[cname]||'';
  var total=exps.reduce(function(a,e){return a+totOf(e)},0);
- var html='<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">'
+ var html='<div class="bgm-modal"><div class="bgm-head"><div style="display:flex;align-items:center;gap:10px">'
   +'<span style="font-size:2rem">'+icon+'</span>'
   +'<div><h3 style="margin:0">'+esc(cname)+'</h3><div class="muted" style="font-size:.8rem">'+esc(desc)+'</div></div></div>'
-  +'<div class="note" style="margin-bottom:10px">عدد المصروفات: <b>'+exps.length+'</b> — الإجمالي: <b style="color:'+col+'">'+money(total)+'</b></div>'
+  +'</div><div class="bgm-body"><div class="note" style="margin-bottom:10px">عدد المصروفات: <b>'+exps.length+'</b> — الإجمالي: <b style="color:'+col+'">'+money(total)+'</b></div>'
   +'<div class="cat-detail-wrap">'
   +(rows?'<div class="wrapx"><table><tr><th>الاسم</th><th>الدافع</th><th>الكمية</th><th>سعر الوحدة</th><th>الإجمالي</th><th>التاريخ</th><th>فاتورة</th>'+(adm?'<th></th>':'')+'</tr>'+rows+'</table></div>'
    :'<div class="empty">لا توجد مصروفات في هذه الفئة بعد.'+(adm?' <button class=\'btn\' onclick=\'closeM();expM()\'>+ إضافة مصروف</button>':'')+'</div>')
   +'</div>'
   +(adm?'<div style="margin-top:10px"><button class="btn" onclick="closeM();expM()">+ إضافة مصروف لهذه الفئة</button></div>':'');
- modal(html)}
+ modal(html+'</div><div class="bgm-foot"><button class="btn g" onclick="closeM()">إغلاق</button></div></div>')}
 function catCalc(){
  var C=cfg(),M={},desc=catDescMap();
  function g(n){if(!M[n])M[n]={n:n,b:+C.cats[n]||0,spent:0,committed:0,cnt:0,d:desc[n]||""};return M[n]}
@@ -1292,11 +1316,11 @@ function setBudget(){
  budApplyVal(v,"set","تعيين الميزانية الإجمالية");toast("تم حفظ الميزانية ✓")}
 function budOpen(){
  if(!needAdmin("إدارة الميزانية للمشرفين فقط"))return;
- modal('<h3 style="margin:0">تعديل الميزانية</h3><p class="note">الميزانية الحالية: '+fm(+cfg().total||0)+EG+'</p>'
+ modal('<div class="bgm-modal"><div class="bgm-head"><h3 style="margin:0">تعديل الميزانية</h3></div><div class="bgm-body"><p class="note">الميزانية الحالية: '+fm(+cfg().total||0)+EG+'</p>'
  +'<select id="bo_k"><option value="add">إيداع (زيادة)</option><option value="wd">سحب (تقليل)</option><option value="set">تعيين قيمة جديدة</option></select>'
  +'<input id="bo_a" type="number" min="0" step="any" placeholder="المبلغ (ج.م)">'
  +'<input id="bo_n" placeholder="السبب (إلزامي)">'
- +'<div class="row"><button class="btn" onclick="budApply()">تنفيذ</button><button class="btn g" onclick="closeM()">إلغاء</button></div>')}
+ +'</div><div class="bgm-foot"><button class="btn" onclick="budApply()">تنفيذ</button><button class="btn g" onclick="closeM()">إلغاء</button></div></div>')}
 function budApply(){
  if(!needAdmin("إدارة الميزانية للمشرفين فقط"))return;
  var k=$("bo_k").value,a=mcNum2($("bo_a").value),n=$("bo_n").value.trim(),cur=+cfg().total||0;
@@ -1332,11 +1356,11 @@ function catUse(n){return D.exp.filter(function(e){return (e.c||"مصروفات 
 function catEdit(i){
  if(!needAdmin("إدارة الفئات للمشرفين فقط"))return;
  var n=cfg().list[i];if(!n)return;var c=catCalc().filter(function(x){return x.n==n})[0]||{d:""};
- modal('<h3 style="margin:0">تعديل الفئة</h3>'
+ modal('<div class="bgm-modal"><div class="bgm-head"><h3 style="margin:0">تعديل الفئة</h3></div><div class="bgm-body">'
  +'<input id="ce_n" value="'+esc(n)+'" placeholder="اسم الفئة">'
  +'<input id="ce_d" value="'+esc(c.d||"")+'" placeholder="وصف مختصر">'
  +'<p class="note">تغيير الاسم يُطبَّق على المصروفات والمكونات المرتبطة بالفئة.</p>'
- +'<div class="row"><button class="btn" onclick="catSaveEdit('+i+')">حفظ</button><button class="btn g" onclick="closeM()">إلغاء</button></div>')}
+ +'</div><div class="bgm-foot"><button class="btn" onclick="catSaveEdit('+i+')">حفظ</button><button class="btn g" onclick="closeM()">إلغاء</button></div></div>')}
 function catSaveEdit(i){
  if(!needAdmin("إدارة الفئات للمشرفين فقط"))return;
  var L=cfg().list,old=L[i],nn=$("ce_n").value.trim(),nd=$("ce_d").value.trim();
@@ -1357,9 +1381,9 @@ function delCat(i){
  var used=catUse(n);
  if(!used){if(!confirm("حذف الفئة «"+n+"»؟"))return;catsSave(L.filter(function(x,j){return j!=i}),null,"💰 حذف فئة «"+n+"»");return}
  var opts=L.filter(function(x){return x!=n}).map(function(x){return'<option>'+esc(x)+'</option>'}).join("");
- modal('<h3 style="margin:0">حذف الفئة «'+esc(n)+'»</h3><p class="note">مرتبطة بـ '+fm(used)+' عنصر (مصروفات ومكونات). اختر فئة لنقلها إليها أولًا:</p>'
+ modal('<div class="bgm-modal"><div class="bgm-head"><h3 style="margin:0">حذف الفئة «'+esc(n)+'»</h3></div><div class="bgm-body"><p class="note">مرتبطة بـ '+fm(used)+' عنصر (مصروفات ومكونات). اختر فئة لنقلها إليها أولًا:</p>'
  +'<select id="cm_t">'+opts+'</select>'
- +'<div class="row"><button class="btn" onclick="catMoveDo('+i+')">نقل وحذف</button><button class="btn g" onclick="closeM()">إلغاء</button></div>')}
+ +'</div><div class="bgm-foot"><button class="btn" onclick="catMoveDo('+i+')">نقل وحذف</button><button class="btn g" onclick="closeM()">إلغاء</button></div></div>')}
 function catMoveDo(i){
  if(!needAdmin("إدارة الفئات للمشرفين فقط"))return;
  var L=cfg().list,n=L[i],t=$("cm_t").value;if(!n||!t)return;
