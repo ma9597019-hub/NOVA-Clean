@@ -232,7 +232,7 @@ function autoTheme(){var h=new Date().getHours(),t=(h>=6&&h<18)?"light":"dark",m
  if(m&&m.seg==themeSeg()&&(m.t=="light"||m.t=="dark"))t=m.t;
  if(document.documentElement.getAttribute("data-theme")!=t)document.documentElement.setAttribute("data-theme",t)}
 autoTheme();setInterval(autoTheme,60000);document.addEventListener("visibilitychange",autoTheme);
-</script></head>
+</script><style id="cats-css">.cat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:8px 0}.cat-card{background:var(--card,#121c3a);border:1px solid var(--bd,#223058);border-radius:14px;padding:14px 16px;cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden}.cat-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px #0004}.cat-card .cc-icon{font-size:2rem;margin-bottom:6px}.cat-card .cc-name{font-weight:700;font-size:.92rem;margin-bottom:2px}.cat-card .cc-en{font-size:.74rem;color:var(--mut,#93a0c4);margin-bottom:8px}.cat-card .cc-row{display:flex;justify-content:space-between;font-size:.8rem;margin-top:4px}.cat-card .cc-bar{height:4px;border-radius:2px;background:var(--bd,#223058);margin-top:8px}.cat-card .cc-bar i{display:block;height:100%;border-radius:2px;transition:width .4s}.cat-card .cc-stripe{position:absolute;top:0;right:0;width:4px;height:100%}.cat-detail-wrap{max-height:72vh;overflow-y:auto}</style></head>
 <body>
 <aside id="nav"></aside>
 <main>
@@ -1119,8 +1119,10 @@ function mcPanel(){
 /* ===== الميزانية والفئات (مرتبطة بالتكاليف والمكونات) ===== */
 if(!D.bhist)D.bhist=[];
 var FSUB=false,FB={from:"",to:""},CATQ="",BKL={set:"تعيين",add:"إيداع",wd:"سحب",cat:"ميزانية فئة"};
-var CAT_SUG=["المكونات الإلكترونية","المتحكمات ووحدات المعالجة","الحساسات وأجهزة القياس","المحركات وأنظمة الحركة","البطاريات ومصادر الطاقة","الهيكل والتصنيع والطباعة ثلاثية الأبعاد","الأسلاك والتوصيلات والإكسسوارات","البرمجة والبرمجيات","أدوات الاختبار والصيانة","النقل والشحن","مصروفات أخرى"];
-var CAT_DESC={"المكونات الإلكترونية":"المكونات والدوائر الإلكترونية الأساسية","المتحكمات ووحدات المعالجة":"لوحات ESP32 وغيرها من المتحكمات","الحساسات وأجهزة القياس":"حساسات العوائق والحواف وأجهزة القياس","المحركات وأنظمة الحركة":"المحركات والعجلات ودرايفرات التحكم","البطاريات ومصادر الطاقة":"البطاريات ووحدات الشحن ومنظمات الجهد","الهيكل والتصنيع والطباعة ثلاثية الأبعاد":"ألواح الهيكل والطباعة ثلاثية الأبعاد","الأسلاك والتوصيلات والإكسسوارات":"الأسلاك والموصلات ومواد التثبيت","البرمجة والبرمجيات":"التراخيص والخدمات البرمجية","أدوات الاختبار والصيانة":"أدوات القياس والصيانة والاختبار","النقل والشحن":"تكاليف النقل والشحن والتوصيل","مصروفات أخرى":"أي مصروف لا يندرج تحت فئة أخرى"};
+var CAT_SUG=["المتحكمات (Controllers)", "الحساسات (Sensors)", "المحركات (Motors)", "البطاريات والطاقة (Power & Batteries)", "نظام الشفط والتنظيف (Vacuum & Cleaning)", "أنظمة الاتصال (Communication)", "الهيكل والتصنيع (Chassis & Manufacturing)", "الدوائر الإلكترونية (Electronics)", "التوصيلات والملحقات (Wiring & Accessories)", "قطع الغيار (Spare Parts)", "الشحن والتوصيل (Shipping)", "أخرى (Other)"];
+var CAT_DESC={"المتحكمات (Controllers)": "Arduino وRaspberry Pi وESP32 ووحدات التحكم", "الحساسات (Sensors)": "حساسات الموجات فوق الصوتية وIR وLiDAR وMPU6050 وغيرها", "المحركات (Motors)": "محركات العجلات ومحركات الفرش ومحرك الشفط", "البطاريات والطاقة (Power & Batteries)": "البطاريات وBMS ومنظمات الجهد ومصادر الطاقة", "نظام الشفط والتنظيف (Vacuum & Cleaning)": "نظام سحب الأتربة والفلاتر والفرش وحاوية الغبار", "أنظمة الاتصال (Communication)": "وحدات Wi-Fi وBluetooth ووسائل الاتصال بين المكونات", "الهيكل والتصنيع (Chassis & Manufacturing)": "الهيكل والطباعة ثلاثية الأبعاد وقواعد تثبيت المكونات", "الدوائر الإلكترونية (Electronics)": "لوحات الدوائر والمقاومات والمكثفات ووحدات الحماية", "التوصيلات والملحقات (Wiring & Accessories)": "الأسلاك والكابلات والموصلات والمسامير والحوامل", "قطع الغيار (Spare Parts)": "المكونات البديلة المستخدمة في الصيانة والإصلاح", "الشحن والتوصيل (Shipping)": "مصاريف نقل وشحن المكونات", "أخرى (Other)": "أي مصروفات لا تنتمي إلى الفئات السابقة"};
+var CAT_ICON={"المتحكمات (Controllers)": "🖥️", "الحساسات (Sensors)": "📡", "المحركات (Motors)": "⚙️", "البطاريات والطاقة (Power & Batteries)": "🔋", "نظام الشفط والتنظيف (Vacuum & Cleaning)": "🌪️", "أنظمة الاتصال (Communication)": "📶", "الهيكل والتصنيع (Chassis & Manufacturing)": "🔩", "الدوائر الإلكترونية (Electronics)": "💡", "التوصيلات والملحقات (Wiring & Accessories)": "🔌", "قطع الغيار (Spare Parts)": "🛠️", "الشحن والتوصيل (Shipping)": "🚚", "أخرى (Other)": "📦"};
+var CAT_COL={"المتحكمات (Controllers)": "#3b82f6", "الحساسات (Sensors)": "#06b6d4", "المحركات (Motors)": "#8b5cf6", "البطاريات والطاقة (Power & Batteries)": "#10b981", "نظام الشفط والتنظيف (Vacuum & Cleaning)": "#f97316", "أنظمة الاتصال (Communication)": "#ec4899", "الهيكل والتصنيع (Chassis & Manufacturing)": "#64748b", "الدوائر الإلكترونية (Electronics)": "#f59e0b", "التوصيلات والملحقات (Wiring & Accessories)": "#6366f1", "قطع الغيار (Spare Parts)": "#14b8a6", "الشحن والتوصيل (Shipping)": "#84cc16", "أخرى (Other)": "#94a3b8"};
 
 function needAdmin(m){if(!isCostAdmin()){toast(m||"هذا الإجراء للمشرفين فقط");return false}return true}
 function mcNum2(v){var s=String(v==null?"":v).trim();if(s==="")return NaN;var n=Number(s);return isFinite(n)?n:NaN}
@@ -1154,6 +1156,35 @@ function partCat(id,v){
  partPut(id,{cat:v});act("غيّر فئة «"+p.n+"» إلى «"+v+"»")}
 
 /* حساب الفئات: المكوّن المرتبط بمصروف يُحسب من المصروف فقط، فلا يُحسب مرتين */
+
+function openCatDetail(cname){
+ var exps=D.exp.filter(function(x){return x.c==cname});
+ var money=function(v){return fm(v)+' ج.م'};
+ var adm=isCostAdmin();
+ var rows=exps.map(function(e){
+  var tot=totOf(e),pd=paidOf(e),img=e.img?'<a href="#" onclick="event.preventDefault();window.open(su(\''+esc(e.img)+'\'),\'_blank\')">📎</a>':'';
+  return'<tr>'
+   +'<td><b>'+esc(e.n||'—')+'</b></td>'
+   +'<td>'+esc(e.pay||'—')+'</td>'
+   +'<td>'+(e.q||1)+'</td>'
+   +'<td>'+money(+e.u||0)+'</td>'
+   +'<td>'+money(tot)+'</td>'
+   +'<td>'+(e.d||'—')+'</td>'
+   +'<td>'+img+'</td>'
+   +(adm?'<td><button class="btn" style="padding:2px 10px;font-size:.8rem" onclick="closeM();expM(\''+e.id+'\')">تعديل</button></td>':'')
+   +'</tr>'}).join('');
+ var icon=CAT_ICON[cname]||'📂',col=CAT_COL[cname]||'#3b82f6',desc=CAT_DESC[cname]||'';
+ var total=exps.reduce(function(a,e){return a+totOf(e)},0);
+ var html='<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">'
+  +'<span style="font-size:2rem">'+icon+'</span>'
+  +'<div><h3 style="margin:0">'+esc(cname)+'</h3><div class="muted" style="font-size:.8rem">'+esc(desc)+'</div></div></div>'
+  +'<div class="note" style="margin-bottom:10px">عدد المصروفات: <b>'+exps.length+'</b> — الإجمالي: <b style="color:'+col+'">'+money(total)+'</b></div>'
+  +'<div class="cat-detail-wrap">'
+  +(rows?'<div class="wrapx"><table><tr><th>الاسم</th><th>الدافع</th><th>الكمية</th><th>سعر الوحدة</th><th>الإجمالي</th><th>التاريخ</th><th>فاتورة</th>'+(adm?'<th></th>':'')+'</tr>'+rows+'</table></div>'
+   :'<div class="empty">لا توجد مصروفات في هذه الفئة بعد.'+(adm?' <button class=\'btn\' onclick=\'closeM();expM()\'>+ إضافة مصروف</button>':'')+'</div>')
+  +'</div>'
+  +(adm?'<div style="margin-top:10px"><button class="btn" onclick="closeM();expM()">+ إضافة مصروف لهذه الفئة</button></div>':'');
+ modal(html)}
 function catCalc(){
  var C=cfg(),M={},desc=catDescMap();
  function g(n){if(!M[n])M[n]={n:n,b:+C.cats[n]||0,spent:0,committed:0,cnt:0,d:desc[n]||""};return M[n]}
@@ -1586,9 +1617,20 @@ function costNew(){
  else if(total&&use>=80)al+='<div class="alert">تم استهلاك '+use+'% من الميزانية</div>';
  if(nd)al+='<div class="alert">'+fm(nd)+' عضو لم يُحدَّد لهم المطلوب بعد.</div>';
  /* الفئات */
- var catRows=cats.length?cats.map(function(c,i){var p=c.b?pc(c.spent,c.b):0,col=c.b&&c.spent>=c.b?'#ef4444':(p>=80?'#f59e0b':PAL[i%PAL.length]);
-  return'<tr><td><b>'+esc(c.n)+'</b></td><td>'+money(c.b)+'</td><td>'+money(c.spent)+'</td><td>'+money(c.b-c.spent)+'</td><td style="min-width:110px"><div class="bar"><i style="width:'+Math.min(100,p)+'%;background:'+col+'"></i></div><span class="muted">'+(c.b?p+'%':'—')+'</span></td></tr>'}).join(""):'';
- var catBox='<div class="box"><h3>الفئات الرئيسية</h3>'+(catRows?'<div class="wrapx"><table><tr><th>الفئة</th><th>الميزانية</th><th>المصروف</th><th>المتبقي</th><th>الاستهلاك</th></tr>'+catRows+'</table></div>':'<div class="empty">لا توجد فئات</div>')+'</div>';
+ var catCards=cats.map(function(c,i){
+  var col=CAT_COL[c.n]||PAL[i%PAL.length],icon=CAT_ICON[c.n]||'📦';
+  var ar=c.b?Math.min(100,Math.round(c.spent/c.b*100)):0,oc=c.b&&c.spent>=c.b?'#ef4444':(ar>=80?'#f59e0b':col);
+  var en=(c.n.match(/\(([^)]+)\)/)||['',''])[1],ar2=c.n.replace(/\s*\([^)]*\)/,'');
+  return'<div class="cat-card" onclick="openCatDetail(\''+esc(c.n)+'\')" title="'+esc(CAT_DESC[c.n]||c.n)+'">'
+  +'<div class="cc-stripe" style="background:'+col+'"></div>'
+  +'<div class="cc-icon">'+icon+'</div>'
+  +'<div class="cc-name">'+esc(ar2)+'</div>'
+  +(en?'<div class="cc-en">'+esc(en)+'</div>':'')
+  +'<div class="cc-row"><span class="muted">مصروف</span><b>'+fm(c.spent)+' ج.م</b></div>'
+  +'<div class="cc-row"><span class="muted">عناصر</span><span>'+c.cnt+'</span></div>'
+  +(c.b?'<div class="cc-bar"><i style="width:'+Math.min(100,ar)+'%;background:'+oc+'"></i></div>':'')
+  +'</div>'}).join('');
+ var catBox='<div class="box"><div class="row" style="border:0;padding:0 0 10px"><h3 style="margin:0">الفئات الرئيسية</h3>'+(isCostAdmin()?'<button class="nb" onclick="budOpen()">إدارة الفئات</button>':'')+'</div><div class="cat-cards">'+catCards+'</div></div>';
  /* مساهمات الفريق */
  var mRows=M.map(function(n,i){var m=mcOf(n),pd=mcPaid(m),s=mcSt(m),r=m.due==null?null:m.due-pd,clr={"s-d":["#064e3b","#6ee7b7"],"s-n":["#4c1d1d","#fca5a5"],"s-b":["#4a3405","#fcd34d"],"s-p":["#1e2a5e","#93c5fd"]}[s.c]||["#1e2a4a","#e8edfb"];
   return'<tr class="cl"'+(adm?' onclick="mcModal('+i+')"':'')+'><td><b>'+esc(n)+'</b></td><td>'+(m.due==null?'<span class="muted">لم يُحدَّد</span>':money(m.due))+'</td><td>'+money(pd)+'</td><td>'+(r==null?'—':r<0?'زيادة '+money(-r):money(r))+'</td><td><span class="pl" style="background:'+clr[0]+';color:'+clr[1]+'">'+s.t+'</span></td></tr>'}).join("");
