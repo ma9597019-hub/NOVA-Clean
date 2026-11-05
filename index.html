@@ -226,7 +226,13 @@ button.tk-mem{cursor:pointer}
 .inst-rm img{width:110px;height:80px;object-fit:cover;border-radius:8px}
 .inst-rm span{display:flex;gap:4px;align-items:center;color:var(--mut)}
 </style>
-<style>html.bt #lg{visibility:hidden}.tbl td a{color:var(--pri);text-decoration:none;font-weight:500}.tbl td a:hover{text-decoration:underline}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tbl td a{color:#67e8f9}}:root[data-theme="dark"] .tbl td a{color:#67e8f9}</style></head>
+<style>html.bt #lg{visibility:hidden}.tbl td a{color:var(--pri);text-decoration:none;font-weight:500}.tbl td a:hover{text-decoration:underline}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tbl td a{color:#67e8f9}}:root[data-theme="dark"] .tbl td a{color:#67e8f9}</style><script>
+function themeSeg(){var d=new Date(),h=d.getHours();if(h<6)d=new Date(d-864e5);return(h>=6&&h<18?"light":"dark")+"@"+d.toDateString()}
+function autoTheme(){var h=new Date().getHours(),t=(h>=6&&h<18)?"light":"dark",m=null;try{m=JSON.parse(localStorage.getItem("thm")||"null")}catch(e){}
+ if(m&&m.seg==themeSeg()&&(m.t=="light"||m.t=="dark"))t=m.t;
+ if(document.documentElement.getAttribute("data-theme")!=t)document.documentElement.setAttribute("data-theme",t)}
+autoTheme();setInterval(autoTheme,60000);document.addEventListener("visibilitychange",autoTheme);
+</script></head>
 <body>
 <aside id="nav"></aside>
 <main>
@@ -2124,7 +2130,7 @@ function go(){mergePrices();try{if(SB.sess)localStorage.setItem("sbme",JSON.stri
  $("ttl").textContent=p[1];$("v").innerHTML=V[h]();
  $("who").innerHTML=(me?'<span>🟢 '+esc(me)+'</span><button class="btn g" onclick="logout()">خروج</button>':'<span class="note">وضع المشاهدة</span><button class="btn" onclick="loginM()">دخول الفريق</button>')+(own?'<span>🔑 المسئول — دخول كـ</span><select onchange="asM(this.value)"><option value="المالك">المسئول</option>'+everyone().map(function(n){return '<option'+(n==me?' selected':'')+'>'+esc(n)+'</option>'}).join("")+'</select><button class="btn g" onclick="outO()">خروج المسئول</button>':'');
  $("nav").innerHTML='<div class="logo">'+NOVA_MARK+'<div><b>NOVA Clean</b><small>لوحة التحكم</small></div></div>'+PAGES.filter(function(x){return x[0]=="log"?own:(x[0]=="msgs"||x[0]=="visitors"||x[0]=="chats")?!!me:true}).map(function(x){return '<a href="#'+x[0]+'" class="'+(x[0]==h?"on":"")+'">'+x[1]+'</a>'}).join("")+'<div class="sp"></div><button class="tg" onclick="tg()">🌙 الوضع الليلي</button>'}
-function tg(){var r=document.documentElement,d=r.getAttribute("data-theme")=="dark"||(!r.getAttribute("data-theme")&&matchMedia("(prefers-color-scheme:dark)").matches);r.setAttribute("data-theme",d?"light":"dark")}
+function tg(){var r=document.documentElement,n=r.getAttribute("data-theme")=="dark"?"light":"dark";r.setAttribute("data-theme",n);try{localStorage.setItem("thm",JSON.stringify({seg:themeSeg(),t:n}))}catch(e){}}
 buildLogin();setTimeout(function(){document.documentElement.classList.remove("bt")},8000);addEventListener("hashchange",go);boot();setInterval(rbTick,1000);
 </script>
 </body>
