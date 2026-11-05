@@ -291,6 +291,32 @@ autoTheme();setInterval(autoTheme,60000);document.addEventListener("visibilitych
  #md #mb .expf-foot{padding:10px 16px}
  #md #mb .expf-foot button{flex:1 1 auto;padding:10px 16px}
 }
+</style><style id="mcf-fix-css">
+/* إصلاح نافذة مساهمات أعضاء الفريق فقط (mcModal) */
+#md:has(.mcf-modal){place-items:center;padding:16px;box-sizing:border-box}
+#md #mb:has(.mcf-modal){width:min(760px,calc(100vw - 32px));max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);height:auto;padding:0;margin:0;background:var(--card);border:1px solid var(--bd,#223058);border-radius:16px;display:flex;flex-direction:column;overflow:hidden;box-sizing:border-box;gap:0;min-height:0}
+#md #mb .mcf-modal{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;width:100%;max-width:100%;box-sizing:border-box;overflow:hidden}
+#md #mb .mcf-head{padding:16px 20px 12px;border-bottom:1px solid var(--bd,#223058);flex-shrink:0;min-width:0}
+#md #mb .mcf-body{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:14px 20px;min-width:0}
+#md #mb .mcf-body>*{max-width:100%;min-width:0;box-sizing:border-box}
+#md #mb .mcf-body .card{min-width:0}
+#md #mb .mcf-body .row{flex-wrap:wrap;min-width:0}
+#md #mb .mcf-body input,#md #mb .mcf-body select,#md #mb .mcf-body textarea{max-width:100%;min-width:0;box-sizing:border-box}
+#md #mb .mcf-body input:not([type=number]):not([type=date]),#md #mb .mcf-body textarea{flex:1 1 160px}
+#md #mb .mcf-body .wrap,#md #mb .mcf-body .wrapx{max-width:100%;overflow-x:auto}
+#md #mb .mcf-body .kpi{min-width:0}
+#md #mb .mcf-foot{padding:12px 20px;border-top:1px solid var(--bd,#223058);display:flex;justify-content:flex-end;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
+#md #mb .mcf-foot .btn{min-height:42px;min-width:120px;padding:10px 24px;border-radius:9px;cursor:pointer;transition:transform .12s,filter .15s,box-shadow .15s}
+#md #mb .mcf-foot .btn:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 4px 14px #0003}
+#md #mb .mcf-foot .btn:active{transform:translateY(0) scale(.97)}
+@media(max-width:600px){
+ #md:has(.mcf-modal){padding:8px}
+ #md #mb:has(.mcf-modal){width:calc(100vw - 16px);max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);border-radius:14px}
+ #md #mb .mcf-head{padding:14px 16px 10px}
+ #md #mb .mcf-body{padding:12px 16px}
+ #md #mb .mcf-foot{padding:10px 16px}
+ #md #mb .mcf-foot .btn{flex:1 1 0;min-width:0}
+}
 </style>
 </head>
 <body>
@@ -1136,13 +1162,13 @@ function mcModal(i){
  var admin=adm?'<div class="card" style="padding:12px"><h3 style="margin-bottom:8px">تحديد المطلوب</h3><div class="row"><input id="mcd'+i+'" type="number" min="0" step="any" value="'+(m.due==null?"":m.due)+'" placeholder="المبلغ المطلوب (ج.م)"><button class="btn" onclick="mcSetDue('+i+')">حفظ</button><button class="btn g" onclick="mcDueUndo('+i+')">إلغاء</button></div></div>'
   +'<div class="card" style="padding:12px"><h3 style="margin-bottom:8px">تسجيل دفعة جديدة</h3><div class="row" style="flex-wrap:wrap"><input id="mp_a" type="number" min="0.01" step="any" placeholder="المبلغ"><input id="mp_d" type="date" value="'+new Date().toISOString().slice(0,10)+'"><input id="mp_n" placeholder="ملاحظة (اختياري)"><button class="btn" onclick="mcAddPay('+i+')">تسجيل</button></div></div>'
   +'<div class="card" style="padding:12px"><h3 style="margin-bottom:8px">ملاحظات المشرف</h3><textarea id="mc_nt" rows="2" style="width:100%">'+esc(m.nt||"")+'</textarea><div class="row" style="margin-top:8px"><button class="btn" onclick="mcSaveNt('+i+')">حفظ الملاحظات</button></div></div>':'';
- modal('<h3 style="margin:0">'+esc(n)+'</h3>'
+ modal('<div class="mcf-modal"><div class="mcf-head"><h3 style="margin:0">'+esc(n)+'</h3></div><div class="mcf-body">'
   +'<div class="kpi" style="gap:10px;flex-wrap:wrap"><div class="upd" style="flex:1">المطلوب<b style="display:block">'+(m.due==null?"غير محدد":fm(m.due)+EG)+'</b></div><div class="upd" style="flex:1">المدفوع<b style="display:block">'+fm(pd)+EG+'</b></div><div class="upd" style="flex:1">المتبقي<b style="display:block">'+rem+'</b></div></div>'
   +'<p><span class="pill '+s.c+'">'+s.t+'</span></p>'
   +'<h3 style="margin:10px 0 6px;font-size:15px">سجل الدفعات</h3>'+ph
   +admin
   +'<h3 style="margin:10px 0 6px;font-size:15px">سجل التغييرات</h3><div style="max-height:30vh;overflow:auto">'+lh+'</div>'
-  +'<div class="row" style="margin-top:8px"><button class="btn g" onclick="closeM()">إغلاق</button></div>')}
+  +'</div><div class="mcf-foot"><button class="btn g mcf-cancel" onclick="closeM()">إلغاء</button></div></div>')}
 
 /* لوحة التكاليف: الإحصاءات + الملخص + جدول الأعضاء */
 function mcRows(){
