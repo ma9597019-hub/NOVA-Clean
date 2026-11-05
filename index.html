@@ -233,32 +233,35 @@ function autoTheme(){var h=new Date().getHours(),t=(h>=6&&h<18)?"light":"dark",m
  if(document.documentElement.getAttribute("data-theme")!=t)document.documentElement.setAttribute("data-theme",t)}
 autoTheme();setInterval(autoTheme,60000);document.addEventListener("visibilitychange",autoTheme);
 </script><style id="cats-css">.cat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:8px 0}.cat-card{background:var(--card,#121c3a);border:1px solid var(--bd,#223058);border-radius:14px;padding:14px 16px;cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden}.cat-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px #0004}.cat-card .cc-icon{font-size:2rem;margin-bottom:6px}.cat-card .cc-name{font-weight:700;font-size:.92rem;margin-bottom:2px}.cat-card .cc-en{font-size:.74rem;color:var(--mut,#93a0c4);margin-bottom:8px}.cat-card .cc-row{display:flex;justify-content:space-between;font-size:.8rem;margin-top:4px}.cat-card .cc-bar{height:4px;border-radius:2px;background:var(--bd,#223058);margin-top:8px}.cat-card .cc-bar i{display:block;height:100%;border-radius:2px;transition:width .4s}.cat-card .cc-stripe{position:absolute;top:0;right:0;width:4px;height:100%}.cat-detail-wrap{max-height:72vh;overflow-y:auto}</style><style id="expf-css">
-.expf-modal{display:flex;flex-direction:column;width:min(680px,96vw);height:min(90vh,720px);border-radius:18px;overflow:hidden;background:var(--bg,#0b1226)}
-.expf-head{padding:18px 20px 14px;border-bottom:1px solid var(--bd,#223058);flex-shrink:0}
-.expf-head h3{margin:0 0 2px;font-size:1.1rem}
-.expf-head p{margin:0;font-size:.78rem;color:var(--mut,#93a0c4)}
-.expf-body{overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px;flex:1;min-height:0}
-.expf-sec{background:var(--soft,#18244a);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
-.expf-sec-title{font-size:.78rem;font-weight:700;color:var(--mut,#93a0c4);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
-.expf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:500px){.expf-row{grid-template-columns:1fr}}
-.expf-field{display:flex;flex-direction:column;gap:4px}
-.expf-field label{font-size:.8rem;font-weight:600;color:var(--tx,#e8edfb)}
-.expf-field input,.expf-field select,.expf-field textarea{background:var(--card,#121c3a);border:1px solid var(--bd,#223058);border-radius:8px;padding:9px 12px;color:var(--tx,#e8edfb);font-size:.88rem;width:100%;box-sizing:border-box;transition:border-color .15s}
+.expf-modal{display:flex;flex-direction:column;width:min(1100px,92vw);max-height:min(92vh,860px);border-radius:18px;overflow:hidden;background:var(--bg,#0b1226)}
+#mb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box}
+.expf-head{padding:16px 24px 12px;border-bottom:1px solid var(--bd,#223058);flex-shrink:0}
+.expf-head h3{margin:0 0 2px;font-size:1.05rem}
+.expf-head p{margin:0;font-size:.77rem;color:var(--mut,#93a0c4)}
+.expf-body{overflow-y:auto;padding:18px 24px;display:flex;flex-direction:column;gap:12px;flex:1;min-height:0}
+.expf-sec{background:var(--soft,#18244a);border-radius:12px;padding:14px 16px}
+.expf-sec-title{font-size:.74rem;font-weight:700;color:var(--mut,#93a0c4);letter-spacing:.05em;margin-bottom:10px}
+.expf-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.expf-grid.g3{grid-template-columns:1fr 1fr 1fr}
+.expf-grid.full{grid-template-columns:1fr}
+@media(max-width:600px){.expf-grid,.expf-grid.g3{grid-template-columns:1fr}}
+.expf-field{display:flex;flex-direction:column;gap:5px}
+.expf-field label{font-size:.79rem;font-weight:600;color:var(--tx,#e8edfb)}
+.expf-field input,.expf-field select,.expf-field textarea{background:var(--card,#121c3a);border:1px solid var(--bd,#223058);border-radius:8px;padding:9px 12px;color:var(--tx,#e8edfb);font-size:.87rem;width:100%;box-sizing:border-box;transition:border-color .15s}
 .expf-field input:focus,.expf-field select:focus,.expf-field textarea:focus{outline:none;border-color:var(--pri,#3b82f6)}
-.expf-field .expf-err{font-size:.75rem;color:#ef4444;display:none;margin-top:1px}
+.expf-field .expf-err{font-size:.74rem;color:#ef4444;display:none}
 .expf-field.has-err input,.expf-field.has-err select{border-color:#ef4444}
 .expf-field.has-err .expf-err{display:block}
-.expf-total{background:var(--card,#121c3a);border-radius:10px;padding:12px 14px;text-align:center;border:1px solid var(--bd,#223058)}
-.expf-total .lbl{font-size:.78rem;color:var(--mut,#93a0c4);margin-bottom:4px}
-.expf-total .val{font-size:1.5rem;font-weight:800;color:var(--pri,#3b82f6)}
-.expf-drop{border:2px dashed var(--bd,#223058);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:border-color .15s;position:relative}
+.expf-total-box{background:var(--card,#121c3a);border:1px solid var(--bd,#223058);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;justify-content:center}
+.expf-total-box .lbl{font-size:.75rem;color:var(--mut,#93a0c4);margin-bottom:4px}
+.expf-total-box .val{font-size:1.4rem;font-weight:800;color:var(--pri,#3b82f6)}
+.expf-drop{border:2px dashed var(--bd,#223058);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:border-color .15s;position:relative}
 .expf-drop:hover,.expf-drop.drag{border-color:var(--pri,#3b82f6)}
 .expf-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.expf-drop .expf-drop-txt{font-size:.82rem;color:var(--mut,#93a0c4);pointer-events:none}
-.expf-preview{max-width:100%;max-height:160px;border-radius:10px;display:none;margin:8px auto 0}
-.expf-foot{padding:14px 20px;border-top:1px solid var(--bd,#223058);display:flex;gap:10px;flex-shrink:0;justify-content:flex-end}
-.expf-foot button{padding:10px 24px;border-radius:9px;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:opacity .15s}
+.expf-drop-txt{font-size:.8rem;color:var(--mut,#93a0c4);pointer-events:none}
+.expf-preview{max-width:100%;max-height:140px;border-radius:10px;display:none;margin:8px auto 0}
+.expf-foot{padding:12px 24px;border-top:1px solid var(--bd,#223058);display:flex;gap:10px;flex-shrink:0;justify-content:flex-end;align-items:center}
+.expf-foot button{padding:10px 28px;border-radius:9px;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:opacity .15s}
 .expf-foot .expf-save{background:var(--pri,#3b82f6);color:#fff}
 .expf-foot .expf-save:disabled{opacity:.5;cursor:not-allowed}
 .expf-foot .expf-cancel{background:var(--soft,#18244a);color:var(--tx,#e8edfb)}
@@ -1757,64 +1760,75 @@ function expM(id){if(!need())return;if(!needAdmin('تسجيل المصروفات
  EI=id||null;EXC=null;
  var e=id?D.exp.filter(function(x){return x.id==id})[0]:{q:1,u:'',st:'u',d:new Date().toISOString().slice(0,10)};
  var c=cfg(),cats=c.list,isEdit=!!id;
- var allCats=CAT_SUG.slice();cats.forEach(function(c){if(allCats.indexOf(c)<0)allCats.push(c)});if(e.c&&allCats.indexOf(e.c)<0)allCats.push(e.c);
+ var allCats=CAT_SUG.slice();cats.forEach(function(x){if(allCats.indexOf(x)<0)allCats.push(x)});if(e.c&&allCats.indexOf(e.c)<0)allCats.push(e.c);
  var catOpts='<option value="">— اختر الفئة —</option>'+allCats.map(function(n){return'<option value="'+esc(n)+'"'+(n==e.c?' selected':'')+'>'+esc(n)+'</option>'}).join('');
- var pmOpts=['نقدًا','تحويل بنكي','محفظة إلكترونية','بطاقة ائتمانية','أخرى'].map(function(v){return'<option value="'+v+'"'+(e.m==v?' selected':'')+'>'+v+'</option>'}).join('');
+ var pmOpts=['','نقدًا','تحويل بنكي','محفظة إلكترونية','بطاقة ائتمانية','أخرى'].map(function(v){return'<option value="'+v+'"'+(e.m==v?' selected':'')+'>'+v+'</option>'}).join('');
  var stOpts=Object.keys(SL).map(function(k){return'<option value="'+k+'"'+(k==e.st?' selected':'')+'>'+SL[k]+'</option>'}).join('');
  var partOpts='<option value="">غير مرتبط بمكوّن</option>'+D.parts.map(function(p){return'<option value="'+p.id+'"'+(p.id==e.pid?' selected':'')+'>'+esc(p.n)+'</option>'}).join('');
- var curImg=e.img?'<div class="note" style="margin-top:4px">المرفق الحالي: <a href="'+su(e.img)+'" data-sp="'+esc(e.img)+'" target="_blank">عرض</a> · <a href="#" onclick="delExpImg();return false">حذف</a></div>':'';
+ var curImg=e.img?'<div class="note" style="margin-top:4px;font-size:.8rem">المرفق الحالي: <a href="'+su(e.img)+'" data-sp="'+esc(e.img)+'" target="_blank">عرض</a> · <a href="#" onclick="delExpImg();return false">حذف</a> — اختيار صورة جديدة يستبدله</div>':'';
  var html='<div class="expf-modal">'
   +'<div class="expf-head">'
   +'<h3>'+(isEdit?'✏️ تعديل مصروف':'➕ إضافة مصروف جديد')+'</h3>'
   +'<p>'+(isEdit?'عدّل بيانات المصروف ثم احفظ التغييرات':'سجّل مصروفًا جديدًا وأرفق صورة الفاتورة إن وجدت')+'</p>'
   +'</div>'
   +'<div class="expf-body">'
-  // section 1
+  // ---- section 1: بيانات المصروف ----
   +'<div class="expf-sec">'
   +'<div class="expf-sec-title">📋 بيانات المصروف</div>'
+  +'<div class="expf-grid">'
   +'<div class="expf-field" id="xf_n"><label>اسم المصروف أو المكوّن <span style="color:#ef4444">*</span></label><input id="x_n" placeholder="مثال: لوحة Arduino Mega" value="'+esc(e.n||'')+'"><span class="expf-err">هذا الحقل مطلوب</span></div>'
-  +'<div class="expf-field"><label>الفئة الرئيسية <span style="color:#ef4444">*</span></label><select id="x_c">'+catOpts+'</select></div>'
-  +'<div class="expf-field"><label>الربط بمكوّن (اختياري)</label><select id="x_pid">'+partOpts+'</select></div>'
-  +'<div class="expf-field"><label>وصف مختصر</label><input id="x_ds" placeholder="وصف اختياري للمصروف" value="'+esc(e.ds||'')+'"></div>'
+  +'<div class="expf-field" id="xf_c"><label>الفئة الرئيسية <span style="color:#ef4444">*</span></label><select id="x_c">'+catOpts+'</select><span class="expf-err">اختر الفئة</span></div>'
   +'</div>'
-  // section 2
+  +'<div class="expf-grid" style="margin-top:10px">'
+  +'<div class="expf-field"><label>وصف مختصر</label><input id="x_ds" placeholder="وصف اختياري للمصروف" value="'+esc(e.ds||'')+'"></div>'
+  +'<div class="expf-field"><label>الربط بمكوّن (اختياري)</label><select id="x_pid">'+partOpts+'</select></div>'
+  +'</div>'
+  +'</div>'
+  // ---- section 2: التفاصيل المالية ----
   +'<div class="expf-sec">'
   +'<div class="expf-sec-title">💰 التفاصيل المالية</div>'
-  +'<div class="expf-row">'
+  +'<div class="expf-grid g3">'
   +'<div class="expf-field" id="xf_q"><label>الكمية <span style="color:#ef4444">*</span></label><input id="x_q" type="number" min="1" step="any" placeholder="1" value="'+(e.q||'')+'" oninput="xtNew()"><span class="expf-err">أدخل كمية أكبر من صفر</span></div>'
   +'<div class="expf-field" id="xf_u"><label>سعر الوحدة (ج.م) <span style="color:#ef4444">*</span></label><input id="x_u" type="number" min="0" step="any" placeholder="0.00" value="'+(e.u===''?'':e.u)+'" oninput="xtNew()"><span class="expf-err">أدخل سعرًا صحيحًا</span></div>'
+  +'<div class="expf-total-box"><div class="lbl">الإجمالي = الكمية × السعر</div><div class="val" id="x_t">'+fm((e.q||0)*(+e.u||0))+' ج.م</div></div>'
   +'</div>'
-  +'<div class="expf-total"><div class="lbl">الإجمالي = الكمية × السعر</div><div class="val" id="x_t">'+fm((e.q||0)*(+e.u||0))+' ج.م</div></div>'
   +'</div>'
-  // section 3
+  // ---- section 3: بيانات الدفع ----
   +'<div class="expf-sec">'
   +'<div class="expf-sec-title">🏦 بيانات الدفع</div>'
-  +'<div class="expf-row">'
+  +'<div class="expf-grid">'
   +'<div class="expf-field" id="xf_d"><label>تاريخ المصروف <span style="color:#ef4444">*</span></label><input id="x_d" type="date" value="'+esc(e.d||'')+'"><span class="expf-err">اختر تاريخًا</span></div>'
   +'<div class="expf-field"><label>اسم الشخص الدافع</label><input id="x_pay" placeholder="من دفع؟" value="'+esc(e.pay||'')+'"></div>'
   +'</div>'
-  +'<div class="expf-row">'
-  +'<div class="expf-field"><label>طريقة الدفع</label><select id="x_m"><option value="">اختر طريقة الدفع</option>'+pmOpts+'</select></div>'
-  +'<div class="expf-field"><label>حالة الدفع</label><select id="x_st">'+stOpts+'</select></div>'
+  +'<div class="expf-grid" style="margin-top:10px">'
+  +'<div class="expf-field"><label>طريقة الدفع</label><select id="x_m">'+pmOpts+'</select></div>'
+  +'<div class="expf-field"><label>حالة الدفع</label><select id="x_st" onchange="var pf=document.getElementById(\'xf_pa\');if(pf)pf.style.display=this.value==\'h\'?\'flex\':\'none\'">'+stOpts+'</select></div>'
   +'</div>'
-  +'<div class="expf-field" id="xf_pa" style="'+(e.st=='h'?'':'display:none')+'">'
-  +'<label>المبلغ المدفوع جزئيًا (ج.م)</label>'
-  +'<input id="x_pa" type="number" min="0" step="any" placeholder="المبلغ المدفوع حتى الآن" value="'+(e.st=='h'?e.pa:'')+'">'
-  +'</div>'
+  +'<div class="expf-grid" style="margin-top:10px">'
+  +'<div class="expf-field" id="xf_pa" style="'+(e.st=='h'?'display:flex':'display:none')+';flex-direction:column;gap:5px"><label>المبلغ المدفوع جزئيًا (ج.م)</label><input id="x_pa" type="number" min="0" step="any" placeholder="المبلغ المدفوع حتى الآن" value="'+(e.st=='h'?e.pa:'')+'"></div>'
   +'<div class="expf-field"><label>اسم المورد (اختياري)</label><input id="x_s" placeholder="مثال: Amazon أو محل الإلكترونيات" value="'+esc(e.s||'')+'"></div>'
+  +'</div>'
+  +'<div class="expf-grid full" style="margin-top:10px">'
   +'<div class="expf-field"><label>ملاحظات</label><textarea id="x_nt" rows="2" placeholder="أي ملاحظات إضافية">'+esc(e.nt||'')+'</textarea></div>'
   +'</div>'
-  // section 4
+  +'</div>'
+  // ---- section 4: المرفقات ----
   +'<div class="expf-sec">'
   +'<div class="expf-sec-title">📎 المرفقات</div>'
+  +'<div class="expf-grid">'
+  +'<div>'
   +'<div class="expf-drop" ondragover="event.preventDefault();this.classList.add(\'drag\')" ondragleave="this.classList.remove(\'drag\')" ondrop="event.preventDefault();this.classList.remove(\'drag\');dropF(event,\'x_f\',\'x_pv\')">'
   +'<input id="x_f" type="file" accept="image/jpeg,image/png,image/webp" onchange="prevF(this,\'x_pv\')">'
   +'<div class="expf-drop-txt">📷 اسحب صورة الفاتورة هنا أو اضغط للاختيار<br><span style="font-size:.74rem">JPG / PNG / WEBP — الحد الأقصى '+fm(UP.max)+' ميجا</span></div>'
   +'</div>'
-  +'<img id="x_pv" class="expf-preview" alt="معاينة الفاتورة">'
   +curImg
-  +'<button class="btn g" type="button" onclick="aiInv()" style="margin-top:4px">🤖 تحليل الفاتورة بالذكاء الاصطناعي</button>'
+  +'</div>'
+  +'<div style="display:flex;flex-direction:column;gap:8px;justify-content:center">'
+  +'<img id="x_pv" class="expf-preview" alt="معاينة الفاتورة">'
+  +'<button class="btn g" type="button" onclick="aiInv()" style="width:100%">🤖 تحليل الفاتورة بالذكاء الاصطناعي</button>'
   +'<div id="x_ai" class="note"></div>'
+  +'</div>'
+  +'</div>'
   +'</div>'
   +'</div>'
   +'<div class="expf-foot">'
@@ -1822,9 +1836,8 @@ function expM(id){if(!need())return;if(!needAdmin('تسجيل المصروفات
   +'<button class="expf-save" id="x_b" onclick="saveE()">💾 '+(isEdit?'حفظ التعديلات':'حفظ المصروف')+'</button>'
   +'</div>'
   +'</div>';
- modal(html);
+ modal(html)}
 
-}
 function xtNew(){var q=+$("x_q").value,u=+$("x_u").value,t=$("x_t");if(t)t.textContent=fm(isFinite(q*u)?q*u:0)+" ج.م"}
 
 async function saveE(){if(!needAdmin('تسجيل المصروفات للمشرفين فقط'))return;var q=+$("x_q").value,u=$("x_u").value,n=$("x_n").value.trim(),d=$("x_d").value,st=$("x_st").value,pa=+$("x_pa").value;
