@@ -1,21 +1,2 @@
-// SHA-256 hashes only (the same ones already in the original page). Passwords are NOT changed.
-module.exports={OH:"9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b",HP:{
- "د. محمود محروس": "9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b",
- "م. دعاء": "9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b",
- "رامز طارق محمد": "9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b",
- "محمد ناصر عبدالحميد": "9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b",
- "محمود نادر محمود عوض": "636b3392e7d8057963a44e9712871eeb73627adb9f3dd67f21dc03247a9096fd",
- "محمد علي عنتر جلال": "9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b",
- "محمد سامي سيد": "66c77f943981d53c04e7cf35a6af047092262347425eb1ffbc357bc117169a24",
- "محمد حسين عبد المبدي": "4b29030130a6bb41c6e2dc43951b04692367d2db80d919911815d82aca91dabe",
- "محمود صالح عبدالرازق صالح": "17066212fbec374089c71fc8d2105455cc50a06714e2326c48e5eb5fd77c8f7b",
- "محمد ضياء علي": "d66a051c9318c5aee083065e5fb8713354a5ee42a241be31ff3eb9cb6eff0f5a",
- "أمير وائل شحاته": "97e387f295485615768efff982d5cc870b7ee81a41b42aa2b288fca7708ec697",
- "خالد جاد عبيد الله خالد": "a81f3e3b22f20826f8262daf6b0053cdd9676d9970fc3539652ed2b278b62561",
- "أحمد حلمى فاروق": "5a2aaa59902b2c3e268c6397443b06419bb26027ce8a168f6a02a0f9ddfbc5d5",
- "الحسن علي محمد محمود": "6b69e857fb9f1020303b038ff3534550cde92fac00184ef58e24ac3e8374d4f0",
- "السيد عبداللاه السيد": "415fbe67f4b3cc309a8bf8aa9abd89ab16588624d0ae4ca3f10978f70395962e",
- "أيمن منصور محمد": "6bbfb0d6a6407a06ca0bc325f76bfc377c4cfacb2be6dbd7ce7828dbb39ae6bc",
- "أحمد هاشم محمد عبدالمنعم": "38d12676c08f3812ff10a5296495894194321656e7a71837a015ea82dd1b6486",
- "ريمون نادي زخاري": "a7743c16883faadcd9ab7e39413f3c0109b615743b9e85da9df83b56130f1d26"
-}};
+// Only the owner-password hash lives in the repo. Members are stored in the private Supabase table "members".
+module.exports={OH:"9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b"};
