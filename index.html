@@ -265,7 +265,34 @@ autoTheme();setInterval(autoTheme,60000);document.addEventListener("visibilitych
 .expf-foot .expf-save{background:var(--pri,#3b82f6);color:#fff}
 .expf-foot .expf-save:disabled{opacity:.5;cursor:not-allowed}
 .expf-foot .expf-cancel{background:var(--soft,#18244a);color:var(--tx,#e8edfb)}
-</style></head>
+</style><style id="expf-fix-css">
+/* إصلاح نافذة إضافة/تعديل المصروف فقط */
+#md:has(.expf-modal){place-items:center;padding:16px;box-sizing:border-box}
+#md #mb:has(.expf-modal){width:min(1100px,calc(100vw - 32px));max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);height:auto;padding:0;margin:0;background:transparent;border:0;border-radius:18px;display:flex;flex-direction:column;overflow:hidden;box-sizing:border-box;gap:0;min-height:0}
+#md #mb .expf-modal{width:100%;max-width:100%;max-height:none;min-height:0;flex:1 1 auto;box-sizing:border-box;border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+#md #mb .expf-head,#md #mb .expf-foot{flex-shrink:0}
+#md #mb .expf-body{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+#md #mb .expf-body>*{min-width:0;max-width:100%}
+#md #mb .expf-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+#md #mb .expf-grid.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+#md #mb .expf-grid.full{grid-template-columns:minmax(0,1fr)}
+#md #mb .expf-field{min-width:0}
+#md #mb .expf-field input,#md #mb .expf-field select,#md #mb .expf-field textarea{width:100%;max-width:100%;min-width:0}
+#md #mb .expf-total-box{min-width:0}
+#md #mb .expf-foot{flex-wrap:wrap}
+@media(max-width:700px){#md #mb .expf-grid.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){
+ #md:has(.expf-modal){padding:8px}
+ #md #mb .expf-grid,#md #mb .expf-grid.g3{grid-template-columns:minmax(0,1fr)}
+ #md #mb:has(.expf-modal){width:calc(100vw - 16px);max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);border-radius:14px}
+ #md #mb .expf-modal{border-radius:14px}
+ #md #mb .expf-head{padding:14px 16px 10px}
+ #md #mb .expf-body{padding:14px 16px}
+ #md #mb .expf-foot{padding:10px 16px}
+ #md #mb .expf-foot button{flex:1 1 auto;padding:10px 16px}
+}
+</style>
+</head>
 <body>
 <aside id="nav"></aside>
 <main>
