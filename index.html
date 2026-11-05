@@ -232,7 +232,37 @@ function autoTheme(){var h=new Date().getHours(),t=(h>=6&&h<18)?"light":"dark",m
  if(m&&m.seg==themeSeg()&&(m.t=="light"||m.t=="dark"))t=m.t;
  if(document.documentElement.getAttribute("data-theme")!=t)document.documentElement.setAttribute("data-theme",t)}
 autoTheme();setInterval(autoTheme,60000);document.addEventListener("visibilitychange",autoTheme);
-</script><style id="cats-css">.cat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:8px 0}.cat-card{background:var(--card,#121c3a);border:1px solid var(--bd,#223058);border-radius:14px;padding:14px 16px;cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden}.cat-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px #0004}.cat-card .cc-icon{font-size:2rem;margin-bottom:6px}.cat-card .cc-name{font-weight:700;font-size:.92rem;margin-bottom:2px}.cat-card .cc-en{font-size:.74rem;color:var(--mut,#93a0c4);margin-bottom:8px}.cat-card .cc-row{display:flex;justify-content:space-between;font-size:.8rem;margin-top:4px}.cat-card .cc-bar{height:4px;border-radius:2px;background:var(--bd,#223058);margin-top:8px}.cat-card .cc-bar i{display:block;height:100%;border-radius:2px;transition:width .4s}.cat-card .cc-stripe{position:absolute;top:0;right:0;width:4px;height:100%}.cat-detail-wrap{max-height:72vh;overflow-y:auto}</style></head>
+</script><style id="cats-css">.cat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:8px 0}.cat-card{background:var(--card,#121c3a);border:1px solid var(--bd,#223058);border-radius:14px;padding:14px 16px;cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden}.cat-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px #0004}.cat-card .cc-icon{font-size:2rem;margin-bottom:6px}.cat-card .cc-name{font-weight:700;font-size:.92rem;margin-bottom:2px}.cat-card .cc-en{font-size:.74rem;color:var(--mut,#93a0c4);margin-bottom:8px}.cat-card .cc-row{display:flex;justify-content:space-between;font-size:.8rem;margin-top:4px}.cat-card .cc-bar{height:4px;border-radius:2px;background:var(--bd,#223058);margin-top:8px}.cat-card .cc-bar i{display:block;height:100%;border-radius:2px;transition:width .4s}.cat-card .cc-stripe{position:absolute;top:0;right:0;width:4px;height:100%}.cat-detail-wrap{max-height:72vh;overflow-y:auto}</style><style id="expf-css">
+.expf-modal{display:flex;flex-direction:column;width:min(680px,96vw);max-height:90vh;border-radius:18px;overflow:hidden}
+.expf-head{padding:18px 20px 14px;border-bottom:1px solid var(--bd,#223058);flex-shrink:0}
+.expf-head h3{margin:0 0 2px;font-size:1.1rem}
+.expf-head p{margin:0;font-size:.78rem;color:var(--mut,#93a0c4)}
+.expf-body{overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px;flex:1}
+.expf-sec{background:var(--soft,#18244a);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.expf-sec-title{font-size:.78rem;font-weight:700;color:var(--mut,#93a0c4);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+.expf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:500px){.expf-row{grid-template-columns:1fr}}
+.expf-field{display:flex;flex-direction:column;gap:4px}
+.expf-field label{font-size:.8rem;font-weight:600;color:var(--tx,#e8edfb)}
+.expf-field input,.expf-field select,.expf-field textarea{background:var(--card,#121c3a);border:1px solid var(--bd,#223058);border-radius:8px;padding:9px 12px;color:var(--tx,#e8edfb);font-size:.88rem;width:100%;box-sizing:border-box;transition:border-color .15s}
+.expf-field input:focus,.expf-field select:focus,.expf-field textarea:focus{outline:none;border-color:var(--pri,#3b82f6)}
+.expf-field .expf-err{font-size:.75rem;color:#ef4444;display:none;margin-top:1px}
+.expf-field.has-err input,.expf-field.has-err select{border-color:#ef4444}
+.expf-field.has-err .expf-err{display:block}
+.expf-total{background:var(--card,#121c3a);border-radius:10px;padding:12px 14px;text-align:center;border:1px solid var(--bd,#223058)}
+.expf-total .lbl{font-size:.78rem;color:var(--mut,#93a0c4);margin-bottom:4px}
+.expf-total .val{font-size:1.5rem;font-weight:800;color:var(--pri,#3b82f6)}
+.expf-drop{border:2px dashed var(--bd,#223058);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:border-color .15s;position:relative}
+.expf-drop:hover,.expf-drop.drag{border-color:var(--pri,#3b82f6)}
+.expf-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.expf-drop .expf-drop-txt{font-size:.82rem;color:var(--mut,#93a0c4);pointer-events:none}
+.expf-preview{max-width:100%;max-height:160px;border-radius:10px;display:none;margin:8px auto 0}
+.expf-foot{padding:14px 20px;border-top:1px solid var(--bd,#223058);display:flex;gap:10px;flex-shrink:0;justify-content:flex-end}
+.expf-foot button{padding:10px 24px;border-radius:9px;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:opacity .15s}
+.expf-foot .expf-save{background:var(--pri,#3b82f6);color:#fff}
+.expf-foot .expf-save:disabled{opacity:.5;cursor:not-allowed}
+.expf-foot .expf-cancel{background:var(--soft,#18244a);color:var(--tx,#e8edfb)}
+</style></head>
 <body>
 <aside id="nav"></aside>
 <main>
@@ -1723,8 +1753,79 @@ function qf(m){var t=new Date(),d=function(x){return x.toISOString().slice(0,10)
 function bars(rows,col){var mx=Math.max.apply(null,rows.map(function(r){return r[1]}).concat([1]));return rows.length?rows.map(function(r){return'<div class="upd">'+esc(r[0])+' <small>'+fm(r[1])+EG+'</small><div class="bar"><i style="width:'+Math.round(r[1]/mx*100)+'%;background:'+(r[2]||col)+'"></i></div></div>'}).join(""):'<p class="note">لا توجد بيانات في هذه الفترة.</p>'}
 function syncParts(ids,o){ids.forEach(function(pid){if(!pid)return;var p=D.parts.filter(function(x){return x.id==pid})[0];if(!p)return;var l=D.exp.filter(function(e){return e.id!=o.id}).concat(o._del?[]:[o]).filter(function(e){return e.pid==pid});put("parts",Object.assign({},p,{qb:l.reduce(function(a,e){return a+e.q},0),pc:l.reduce(function(a,e){return a+totOf(e)},0)}))})}
 function xt(){$("x_t").textContent=fm((+$("x_q").value||0)*(+$("x_u").value||0))+EG}
-function expM(id){if(!need())return;if(!needAdmin('تسجيل المصروفات للمشرفين فقط'))return;EI=id||null;EXC=null;var e=id?D.exp.filter(function(x){return x.id==id})[0]:{q:1,u:"",st:"u",d:new Date().toISOString().slice(0,10)},c=cfg();
- modal('<h3 style="margin:0">'+(id?"تعديل مصروف":"إضافة مصروف")+'</h3><div style="max-height:68vh;overflow:auto;display:flex;flex-direction:column;gap:8px"><input id="x_n" placeholder="اسم المصروف" value="'+esc(e.n||"")+'"><select id="x_c">'+c.list.concat(e.c&&c.list.indexOf(e.c)<0?[e.c]:[]).map(function(n){return'<option'+(n==e.c?" selected":"")+'>'+esc(n)+'</option>'}).join("")+'</select><input id="x_q" type="number" min="1" step="any" oninput="xt()" placeholder="الكمية" value="'+(e.q||"")+'"><input id="x_u" type="number" min="0" step="any" oninput="xt()" placeholder="سعر الوحدة (ج.م)" value="'+(e.u===""?"":e.u)+'"><div class="note">الإجمالي = الكمية × السعر: <b id="x_t">'+fm((e.q||0)*(+e.u||0))+EG+'</b></div><input id="x_d" type="date" value="'+esc(e.d||"")+'"><input id="x_s" placeholder="اسم المورد" value="'+esc(e.s||"")+'"><input id="x_m" placeholder="طريقة الدفع (نقدًا، تحويل…)" value="'+esc(e.m||"")+'"><input id="x_pay" placeholder="الدافع (اسم الشخص)" value="'+esc(e.pay||"")+'"><select id="x_st">'+Object.keys(SL).map(function(k){return'<option value="'+k+'"'+(k==e.st?" selected":"")+'>'+SL[k]+'</option>'}).join("")+'</select><input id="x_pa" type="number" min="0" step="any" placeholder="المبلغ المدفوع (للدفع الجزئي)" value="'+(e.st=="h"?e.pa:"")+'"><select id="x_pid"><option value="">غير مرتبط بمكوّن</option>'+D.parts.map(function(p){return'<option value="'+p.id+'"'+(p.id==e.pid?" selected":"")+'>'+esc(p.n)+'</option>'}).join("")+'</select><input id="x_ds" placeholder="وصف المصروف" value="'+esc(e.ds||"")+'"><textarea id="x_nt" rows="2" placeholder="ملاحظات">'+esc(e.nt||"")+'</textarea><label class="note">فاتورة / إيصال (صورة)</label><div ondragover="event.preventDefault()" ondrop="event.preventDefault();dropF(event,\'x_f\',\'x_pv\')"><input id="x_f" type="file" accept="image/jpeg,image/png,image/webp" onchange="prevF(this,\'x_pv\')"><div class="note">JPG / PNG / WEBP — الحد الأقصى '+fm(UP.max)+' ميجا (يمكنك سحب الصورة وإفلاتها هنا)</div></div><img id="x_pv" alt="" style="display:none;max-width:100%;max-height:180px;border-radius:10px"><button class="btn g" type="button" onclick="aiInv()">تحليل الفاتورة بالذكاء الاصطناعي</button><div id="x_ai" class="note"></div>'+(e.img?'<div class="note">المرفق الحالي: <a href="'+su(e.img)+'" data-sp="'+esc(e.img)+'" target="_blank">عرض</a> · <a href="#" onclick="delExpImg();return false">حذف المرفق</a> — اختيار صورة جديدة يستبدله</div>':'')+'</div><div class="row"><button class="btn" id="x_b" onclick="saveE()">حفظ</button><button class="btn g" onclick="closeM()">إلغاء</button></div>')}
+function expM(id){if(!need())return;if(!needAdmin('تسجيل المصروفات للمشرفين فقط'))return;
+ EI=id||null;EXC=null;
+ var e=id?D.exp.filter(function(x){return x.id==id})[0]:{q:1,u:'',st:'u',d:new Date().toISOString().slice(0,10)};
+ var c=cfg(),cats=c.list,isEdit=!!id;
+ var catOpts=cats.concat(e.c&&cats.indexOf(e.c)<0?[e.c]:[]).map(function(n){return'<option value="'+esc(n)+'"'+(n==e.c?' selected':'')+'>'+esc(n)+'</option>'}).join('');
+ var pmOpts=['نقدًا','تحويل بنكي','محفظة إلكترونية','بطاقة ائتمانية','أخرى'].map(function(v){return'<option value="'+v+'"'+(e.m==v?' selected':'')+'>'+v+'</option>'}).join('');
+ var stOpts=Object.keys(SL).map(function(k){return'<option value="'+k+'"'+(k==e.st?' selected':'')+'>'+SL[k]+'</option>'}).join('');
+ var partOpts='<option value="">غير مرتبط بمكوّن</option>'+D.parts.map(function(p){return'<option value="'+p.id+'"'+(p.id==e.pid?' selected':'')+'>'+esc(p.n)+'</option>'}).join('');
+ var curImg=e.img?'<div class="note" style="margin-top:4px">المرفق الحالي: <a href="'+su(e.img)+'" data-sp="'+esc(e.img)+'" target="_blank">عرض</a> · <a href="#" onclick="delExpImg();return false">حذف</a></div>':'';
+ var html='<div class="expf-modal">'
+  +'<div class="expf-head">'
+  +'<h3>'+(isEdit?'✏️ تعديل مصروف':'➕ إضافة مصروف جديد')+'</h3>'
+  +'<p>'+(isEdit?'عدّل بيانات المصروف ثم احفظ التغييرات':'سجّل مصروفًا جديدًا وأرفق صورة الفاتورة إن وجدت')+'</p>'
+  +'</div>'
+  +'<div class="expf-body">'
+  // section 1
+  +'<div class="expf-sec">'
+  +'<div class="expf-sec-title">📋 بيانات المصروف</div>'
+  +'<div class="expf-field" id="xf_n"><label>اسم المصروف أو المكوّن <span style="color:#ef4444">*</span></label><input id="x_n" placeholder="مثال: لوحة Arduino Mega" value="'+esc(e.n||'')+'"><span class="expf-err">هذا الحقل مطلوب</span></div>'
+  +'<div class="expf-field"><label>الفئة الرئيسية <span style="color:#ef4444">*</span></label><select id="x_c">'+catOpts+'</select></div>'
+  +'<div class="expf-field"><label>الربط بمكوّن (اختياري)</label><select id="x_pid">'+partOpts+'</select></div>'
+  +'<div class="expf-field"><label>وصف مختصر</label><input id="x_ds" placeholder="وصف اختياري للمصروف" value="'+esc(e.ds||'')+'"></div>'
+  +'</div>'
+  // section 2
+  +'<div class="expf-sec">'
+  +'<div class="expf-sec-title">💰 التفاصيل المالية</div>'
+  +'<div class="expf-row">'
+  +'<div class="expf-field" id="xf_q"><label>الكمية <span style="color:#ef4444">*</span></label><input id="x_q" type="number" min="1" step="any" placeholder="1" value="'+(e.q||'')+'" oninput="xtNew()"><span class="expf-err">أدخل كمية أكبر من صفر</span></div>'
+  +'<div class="expf-field" id="xf_u"><label>سعر الوحدة (ج.م) <span style="color:#ef4444">*</span></label><input id="x_u" type="number" min="0" step="any" placeholder="0.00" value="'+(e.u===''?'':e.u)+'" oninput="xtNew()"><span class="expf-err">أدخل سعرًا صحيحًا</span></div>'
+  +'</div>'
+  +'<div class="expf-total"><div class="lbl">الإجمالي = الكمية × السعر</div><div class="val" id="x_t">'+fm((e.q||0)*(+e.u||0))+' ج.م</div></div>'
+  +'</div>'
+  // section 3
+  +'<div class="expf-sec">'
+  +'<div class="expf-sec-title">🏦 بيانات الدفع</div>'
+  +'<div class="expf-row">'
+  +'<div class="expf-field" id="xf_d"><label>تاريخ المصروف <span style="color:#ef4444">*</span></label><input id="x_d" type="date" value="'+esc(e.d||'')+'"><span class="expf-err">اختر تاريخًا</span></div>'
+  +'<div class="expf-field"><label>اسم الشخص الدافع</label><input id="x_pay" placeholder="من دفع؟" value="'+esc(e.pay||'')+'"></div>'
+  +'</div>'
+  +'<div class="expf-row">'
+  +'<div class="expf-field"><label>طريقة الدفع</label><select id="x_m"><option value="">اختر طريقة الدفع</option>'+pmOpts+'</select></div>'
+  +'<div class="expf-field"><label>حالة الدفع</label><select id="x_st">'+stOpts+'</select></div>'
+  +'</div>'
+  +'<div class="expf-field" id="xf_pa" style="'+(e.st=='h'?'':'display:none')+'">'
+  +'<label>المبلغ المدفوع جزئيًا (ج.م)</label>'
+  +'<input id="x_pa" type="number" min="0" step="any" placeholder="المبلغ المدفوع حتى الآن" value="'+(e.st=='h'?e.pa:'')+'">'
+  +'</div>'
+  +'<div class="expf-field"><label>اسم المورد (اختياري)</label><input id="x_s" placeholder="مثال: Amazon أو محل الإلكترونيات" value="'+esc(e.s||'')+'"></div>'
+  +'<div class="expf-field"><label>ملاحظات</label><textarea id="x_nt" rows="2" placeholder="أي ملاحظات إضافية">'+esc(e.nt||'')+'</textarea></div>'
+  +'</div>'
+  // section 4
+  +'<div class="expf-sec">'
+  +'<div class="expf-sec-title">📎 المرفقات</div>'
+  +'<div class="expf-drop" ondragover="event.preventDefault();this.classList.add(\'drag\')" ondragleave="this.classList.remove(\'drag\')" ondrop="event.preventDefault();this.classList.remove(\'drag\');dropF(event,\'x_f\',\'x_pv\')">'
+  +'<input id="x_f" type="file" accept="image/jpeg,image/png,image/webp" onchange="prevF(this,\'x_pv\')">'
+  +'<div class="expf-drop-txt">📷 اسحب صورة الفاتورة هنا أو اضغط للاختيار<br><span style="font-size:.74rem">JPG / PNG / WEBP — الحد الأقصى '+fm(UP.max)+' ميجا</span></div>'
+  +'</div>'
+  +'<img id="x_pv" class="expf-preview" alt="معاينة الفاتورة">'
+  +curImg
+  +'<button class="btn g" type="button" onclick="aiInv()" style="margin-top:4px">🤖 تحليل الفاتورة بالذكاء الاصطناعي</button>'
+  +'<div id="x_ai" class="note"></div>'
+  +'</div>'
+  +'</div>'
+  +'<div class="expf-foot">'
+  +'<button class="expf-cancel" onclick="closeM()">إلغاء</button>'
+  +'<button class="expf-save" id="x_b" onclick="saveE()">💾 '+(isEdit?'حفظ التعديلات':'حفظ المصروف')+'</button>'
+  +'</div>'
+  +'</div>';
+ modal(html);
+
+}
+function xtNew(){var q=+$("x_q").value,u=+$("x_u").value,t=$("x_t");if(t)t.textContent=fm(isFinite(q*u)?q*u:0)+" ج.م"}
+
 async function saveE(){if(!needAdmin('تسجيل المصروفات للمشرفين فقط'))return;var q=+$("x_q").value,u=$("x_u").value,n=$("x_n").value.trim(),d=$("x_d").value,st=$("x_st").value,pa=+$("x_pa").value;
  if(!n){toast("اكتب اسم المصروف");return}if(!(q>0)){toast("الكمية يجب أن تكون أكبر من صفر");return}if(u===""||!(+u>=0)){toast("أدخل سعر وحدة صحيحًا");return}if(!d){toast("اختر تاريخ الشراء");return}
  if(st=="h"&&!(pa>0&&pa<q*u)){toast("المبلغ المدفوع جزئيًا يجب أن يكون أكبر من صفر وأقل من الإجمالي");return}
