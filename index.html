@@ -4,14 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOVA Clean - لوحة التحكم الذكية</title>
-    <!-- Tailwind CSS for modern responsive styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Chart.js for statistics -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; color: #1e293b; }
         .hidden-section { display: none !important; }
@@ -19,130 +14,45 @@
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
 
-    <!-- Top Navigation Bar -->
     <header class="bg-slate-900 text-white shadow-md">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3 space-x-reverse">
                 <span class="bg-blue-600 text-white p-2 rounded-xl font-bold text-xl"><i class="fa-solid fa-robot"></i></span>
                 <div>
                     <h1 class="text-lg font-bold">NOVA Clean</h1>
-                    <p class="text-xs text-slate-400">نظام الإدارة الذكي لتنظيف وتفريغ الأتربة</p>
+                    <p class="text-xs text-slate-400">روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة[cite: 3]</p>
                 </div>
             </div>
             <div id="user-profile-section" class="flex items-center gap-4">
-                <span id="current-user-badge" class="text-sm bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">جاري التحقق من المستخدم...</span>
+                <span id="current-user-badge" class="text-sm bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">جاري التحقق...</span>
                 <button onclick="handleLogout()" class="text-red-400 hover:text-red-300 text-sm"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
     <div class="container mx-auto px-4 py-6 flex-1 flex flex-col md:flex-row gap-6">
-        
-        <!-- Sidebar Navigation -->
         <aside class="w-full md:w-64 bg-white rounded-2xl shadow-sm border border-slate-100 p-4 flex flex-row md:flex-col justify-between">
             <nav class="space-y-1 w-full flex md:flex-col overflow-x-auto gap-2 md:gap-1">
                 <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full text-right px-4 py-2.5 rounded-xl text-sm font-medium transition flex items-center gap-3 bg-blue-50 text-blue-600">
                     <i class="fa-solid fa-chart-pie w-5"></i> لوحة المؤشرات
                 </button>
-                <button onclick="switchTab('tasks')" id="nav-tasks" class="nav-btn w-full text-right px-4 py-2.5 rounded-xl text-sm font-medium transition flex items-center gap-3 text-slate-600 hover:bg-slate-50">
-                    <i class="fa-solid fa-list-check w-5"></i> المهام
-                </button>
                 <button onclick="switchTab('attendance')" id="nav-attendance" class="nav-btn w-full text-right px-4 py-2.5 rounded-xl text-sm font-medium transition flex items-center gap-3 text-slate-600 hover:bg-slate-50">
                     <i class="fa-solid fa-user-check w-5"></i> الغياب والحضور
                 </button>
-                <button onclick="switchTab('expenses')" id="nav-expenses" class="nav-btn w-full text-right px-4 py-2.5 rounded-xl text-sm font-medium transition flex items-center gap-3 text-slate-600 hover:bg-slate-50">
-                    <i class="fa-solid fa-wallet w-5"></i> المصروفات
-                </button>
-                <button onclick="switchTab('components')" id="nav-components" class="nav-btn w-full text-right px-4 py-2.5 rounded-xl text-sm font-medium transition flex items-center gap-3 text-slate-600 hover:bg-slate-50">
-                    <i class="fa-solid fa-microchip w-5"></i> المكونات والتركيبات
-                </button>
             </nav>
-            <div class="hidden md:block pt-4 border-t border-slate-100 text-xs text-slate-400 text-center">
-                NOVA Clean v2.5 © 2026
-            </div>
         </aside>
 
-        <!-- Dynamic Content Area -->
         <main class="flex-1 bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
-            
-            <!-- 1. Dashboard Tab -->
             <section id="tab-dashboard" class="tab-content space-y-6">
                 <h2 class="text-xl font-bold text-slate-800">لوحة المؤشرات والتحليلات</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="p-4 rounded-2xl bg-blue-50 border border-blue-100">
-                        <p class="text-xs text-blue-600 font-semibold">إجمالي الحضور</p>
-                        <h3 id="stat-attendance-count" class="text-2xl font-bold text-blue-900 mt-1">0</h3>
-                    </div>
-                    <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-100">
-                        <p class="text-xs text-emerald-600 font-semibold">المهام المنجزة</p>
-                        <h3 id="stat-tasks-count" class="text-2xl font-bold text-emerald-900 mt-1">0</h3>
-                    </div>
-                    <div class="p-4 rounded-2xl bg-amber-50 border border-amber-100">
-                        <p class="text-xs text-amber-600 font-semibold">المصروفات العامة</p>
-                        <h3 id="stat-expenses-sum" class="text-2xl font-bold text-amber-900 mt-1">0 ج.م</h3>
-                    </div>
-                    <div class="p-4 rounded-2xl bg-purple-50 border border-purple-100">
-                        <p class="text-xs text-purple-600 font-semibold">المكونات المسجلة</p>
-                        <h3 id="stat-components-count" class="text-2xl font-bold text-purple-900 mt-1">0</h3>
-                    </div>
-                </div>
+                <p class="text-slate-600">مرحباً بك في نظام إدارة نوفا كلين.</p>
             </section>
 
-            <!-- 2. Tasks Tab -->
-            <section id="tab-tasks" class="tab-content hidden-section space-y-6">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-bold text-slate-800">إدارة المهام</h2>
-                    <button onclick="openAddTaskModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition"><i class="fa-solid fa-plus ml-2"></i> إضافة مهمة</button>
-                </div>
-                <div id="tasks-container" class="space-y-3">
-                    <!-- المهام تظهر هنا مع تفعيل الحذف الفوري -->
-                </div>
-            </section>
-
-            <!-- 3. Attendance Tab (قسم الغياب والحضور الجديد) -->
             <section id="tab-attendance" class="tab-content hidden-section space-y-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800">سجل الغياب والحضور للمقابلات</h2>
-                        <p class="text-xs text-slate-500 mt-1">متابعة حضور أعضاء الفريق أثناء المقابلات مع صلاحيات مخصصة.</p>
-                    </div>
-                    <button id="add-attendance-btn" onclick="openAttendanceModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition"><i class="fa-solid fa-user-plus ml-2"></i> تسجيل حضور جديد</button>
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-slate-800">سجل الغياب والحضور</h2>
+                    <button id="add-attendance-btn" onclick="openAttendanceModal()" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm">تسجيل حضور جديد</button>
                 </div>
-
-                <!-- Filters & Search -->
-                <div class="flex flex-wrap gap-3 items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100">
-                    <div class="flex items-center gap-2 flex-1 min-w-[240px]">
-                        <i class="fa-solid fa-search text-slate-400"></i>
-                        <input type="text" id="attendance-search" oninput="filterAttendance()" placeholder="بحث باسم العضو..." class="w-full bg-transparent border-none text-sm focus:outline-none">
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <input type="date" id="attendance-date-filter" onchange="filterAttendance()" class="bg-white border border-slate-200 text-sm rounded-lg px-3 py-1.5 focus:outline-none">
-                        <button onclick="resetAttendanceFilter()" class="text-xs bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-2 rounded-lg transition">إعادة ضبط</button>
-                    </div>
-                </div>
-
-                <!-- Attendance Statistics Summary -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <div class="bg-green-50 border border-green-100 p-3 rounded-xl text-center">
-                        <span class="text-xs text-green-600 block">حاضر</span>
-                        <strong id="att-stat-present" class="text-lg font-bold text-green-800">0</strong>
-                    </div>
-                    <div class="bg-red-50 border border-red-100 p-3 rounded-xl text-center">
-                        <span class="text-xs text-red-600 block">غائب</span>
-                        <strong id="att-stat-absent" class="text-lg font-bold text-red-800">0</strong>
-                    </div>
-                    <div class="bg-amber-50 border border-amber-100 p-3 rounded-xl text-center">
-                        <span class="text-xs text-amber-600 block">متأخر</span>
-                        <strong id="att-stat-late" class="text-lg font-bold text-amber-800">0</strong>
-                    </div>
-                    <div class="bg-blue-50 border border-blue-100 p-3 rounded-xl text-center">
-                        <span class="text-xs text-blue-600 block">غياب بعذر</span>
-                        <strong id="att-stat-excused" class="text-lg font-bold text-blue-800">0</strong>
-                    </div>
-                </div>
-
-                <!-- Attendance Table -->
                 <div class="overflow-x-auto border border-slate-100 rounded-xl">
                     <table class="w-full text-right border-collapse text-sm">
                         <thead>
@@ -150,325 +60,59 @@
                                 <th class="p-3">تاريخ المقابلة</th>
                                 <th class="p-3">اسم العضو</th>
                                 <th class="p-3">الحالة</th>
-                                <th class="p-3">الملاحظات</th>
-                                <th class="p-3">مسجل بواسطة</th>
-                                <th class="p-3 text-center">الإجراءات</th>
+                                <th class="p-3">الإجراءات</th>
                             </tr>
                         </thead>
                         <tbody id="attendance-table-body">
-                            <!-- Data injected dynamically -->
+                            <tr><td colspan="4" class="text-center p-4 text-slate-400">جاري التحميل...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </section>
-
-            <!-- 4. Expenses Tab -->
-            <section id="tab-expenses" class="tab-content hidden-section space-y-6">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-bold text-slate-800">إدارة المصروفات</h2>
-                    <button onclick="openAddExpenseModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition"><i class="fa-solid fa-plus ml-2"></i> إضافة مصروف</button>
-                </div>
-                <div id="expenses-container" class="space-y-3"></div>
-            </section>
-
-            <!-- 5. Components Tab -->
-            <section id="tab-components" class="tab-content hidden-section space-y-6">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-bold text-slate-800">المكونات والتركيبات</h2>
-                    <button onclick="openAddComponentModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition"><i class="fa-solid fa-plus ml-2"></i> إضافة مكون</button>
-                </div>
-                <div id="components-container" class="space-y-3"></div>
-            </section>
-
         </main>
     </div>
 
-    <!-- Attendance Modal (Form) -->
-    <div id="attendance-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 id="attendance-modal-title" class="font-bold text-slate-800">تسجيل حضور / غياب جديد</h3>
-                <button onclick="closeAttendanceModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <form id="attendance-form" onsubmit="saveAttendance(event)" class="space-y-4">
-                <input type="hidden" id="att-id">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">تاريخ المقابلة</label>
-                    <input type="date" id="att-meeting-date" required class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">اسم العضو</label>
-                    <input type="text" id="att-member-name" placeholder="أدخل اسم العضو كاملاً" required class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">حالة الحضور</label>
-                    <select id="att-status" required class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                        <option value="حاضر">حاضر</option>
-                        <option value="غائب">غائب</option>
-                        <option value="متأخر">متأخر</option>
-                        <option value="غياب بعذر">غياب بعذر</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">ملاحظات اختيارية</label>
-                    <textarea id="att-notes" rows="2" placeholder="أي تفاصيل أو أسباب إضافية..." class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500"></textarea>
-                </div>
-                <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeAttendanceModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-medium transition">إلغاء</button>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-medium transition">حفظ البيانات</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Application Script (Supabase Integration & Core Logic) -->
     <script>
-        // إعدادات اتصال Supabase
+        // ضع مفاتيحك هنا بشكل صحيح
         const SUPABASE_URL = 'https://your-project.supabase.co';
         const SUPABASE_ANON_KEY = 'your-anon-key';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        let supabaseClient = null;
+        try {
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } catch (e) {
+            console.error("خطأ في إنشاء اتصال Supabase:", e);
+        }
 
-        // قائمة المصرح لهم بتسجيل وتعديل وحذف الحضور والغياب (المؤقتة)
-        const AUTHORIZED_ATTENDANCE_USERS = [
-            "د. محمود محروس",
-            "م. دعاء",
-            "محمد علي"
-        ];
-
-        let currentUser = null;
-        let attendanceList = [];
-
-        // تبديل التبويبات بسلاسة
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden-section'));
-            document.querySelectorAll('.nav-btn').forEach(el => {
-                el.classList.remove('bg-blue-50', 'text-blue-600');
-                el.classList.add('text-slate-600', 'hover:bg-slate-50');
-            });
-            document.getElementById(`tab-${tabId}`).classList.remove('hidden-section');
-            const activeNav = document.getElementById(`nav-${tabId}`);
-            if(activeNav) {
-                activeNav.classList.remove('text-slate-600', 'hover:bg-slate-50');
-                activeNav.classList.add('bg-blue-50', 'text-blue-600');
-            }
+            const target = document.getElementById(`tab-${tabId}`);
+            if(target) target.classList.remove('hidden-section');
         }
 
-        // تهيئة النظام والتحقق من المستخدم وصلاحياته
         async function initApp() {
             try {
-                const { data: { user } } = await supabaseClient.auth.getUser();
-                if (user) {
-                    currentUser = user;
-                    const userName = user.user_metadata?.full_name || user.email;
-                    document.getElementById('current-user-badge').innerText = `مرحباً: ${userName}`;
-                    
-                    // التحقق من الصلاحيات لقسم الغياب
-                    checkAttendancePermissions(userName);
+                if(!supabaseClient) return;
+                const { data } = await supabaseClient.auth.getUser();
+                if (data && data.user) {
+                    document.getElementById('current-user-badge').innerText = `مرحباً: ${data.user.email}`;
                 } else {
-                    document.getElementById('current-user-badge').innerText = 'وضع الزائر / غير مسجل';
-                    const addAttBtn = document.getElementById('add-attendance-btn');
-                    if (addAttBtn) addAttBtn.style.display = 'none';
+                    document.getElementById('current-user-badge').innerText = 'وضع الزائر';
                 }
-                
-                // جلب بيانات الغياب والحضور
-                await fetchAttendanceData();
-                setupRealtimeSubscription();
             } catch (err) {
-                console.error("خطأ في تهيئة التطبيق:", err);
+                console.warn("تنبيه في الاتصال:", err);
+                document.getElementById('current-user-badge').innerText = 'وضع غير متصل';
             }
         }
 
-        // فحص صلاحيات الأفراد الثلاثة أو المدير الكامل
-        function checkAttendancePermissions(userName) {
-            const isAuthorized = AUTHORIZED_ATTENDANCE_USERS.includes(userName) || currentUser?.role === 'admin';
-            const addBtn = document.getElementById('add-attendance-btn');
-            if (addBtn) {
-                addBtn.style.display = isAuthorized ? 'inline-flex' : 'none';
-            }
-        }
-
-        // جلب سجلات الغياب والحضور من جدول attendance في Supabase
-        async function fetchAttendanceData() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('attendance')
-                    .select('*')
-                    .order('meeting_date', { ascending: false });
-
-                if (error) throw error;
-                attendanceList = data || [];
-                renderAttendanceTable(attendanceList);
-                updateAttendanceStats(attendanceList);
-            } catch (err) {
-                console.error("خطأ في جلب بيانات الحضور:", err);
-            }
-        }
-
-        // عرض جدول الحضور والغياب مع خيارات الحذف الفوري والتعديل
-        function renderAttendanceTable(data) {
-            const tbody = document.getElementById('attendance-table-body');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-
-            if (data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center p-6 text-slate-400">لا توجد سجلات غياب أو حضور مسجلة حالياً.</td></tr>`;
-                return;
-            }
-
-            data.forEach(item => {
-                let badgeColor = 'bg-slate-100 text-slate-700';
-                if (item.status === 'حاضر') badgeColor = 'bg-green-100 text-green-700';
-                else if (item.status === 'غائب') badgeColor = 'bg-red-100 text-red-700';
-                else if (item.status === 'متأخر') badgeColor = 'bg-amber-100 text-amber-700';
-                else if (item.status === 'غياب بعذر') badgeColor = 'bg-blue-100 text-blue-700';
-
-                const tr = document.createElement('tr');
-                tr.className = 'border-b border-slate-50 hover:bg-slate-50/50 transition';
-                tr.innerHTML = `
-                    <td class="p-3 text-slate-600">${item.meeting_date}</td>
-                    <td class="p-3 font-semibold text-slate-800">${item.member_name}</td>
-                    <td class="p-3"><span class="px-2.5 py-1 rounded-full text-xs font-medium ${badgeColor}">${item.status}</span></td>
-                    <td class="p-3 text-slate-500 text-xs">${item.notes || '-'}</td>
-                    <td class="p-3 text-slate-500 text-xs">${item.recorded_by || 'غير معروف'}</td>
-                    <td class="p-3 text-center space-x-2 space-x-reverse">
-                        <button onclick="editAttendance('${item.id}')" class="text-blue-600 hover:text-blue-800 text-xs"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="hardDeleteAttendance('${item.id}')" class="text-red-600 hover:text-red-800 text-xs"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        // تحديث إحصائيات الغياب والحضور الفورية
-        function updateAttendanceStats(data) {
-            const present = data.filter(i => i.status === 'حاضر').length;
-            const absent = data.filter(i => i.status === 'غائب').length;
-            const late = data.filter(i => i.status === 'متأخر').length;
-            const excused = data.filter(i => i.status === 'غياب بعذر').length;
-
-            const elPresent = document.getElementById('att-stat-present');
-            const elAbsent = document.getElementById('att-stat-absent');
-            const elLate = document.getElementById('att-stat-late');
-            const elExcused = document.getElementById('att-stat-excused');
-            const elTotalCount = document.getElementById('stat-attendance-count');
-
-            if (elPresent) elPresent.innerText = present;
-            if (elAbsent) elAbsent.innerText = absent;
-            if (elLate) elLate.innerText = late;
-            if (elExcused) elExcused.innerText = excused;
-            if (elTotalCount) elTotalCount.innerText = data.length;
-        }
-
-        // البحث والفلترة في السجلات
-        function filterAttendance() {
-            const query = document.getElementById('attendance-search').value.toLowerCase();
-            const dateFilter = document.getElementById('attendance-date-filter').value;
-
-            const filtered = attendanceList.filter(item => {
-                const matchName = item.member_name.toLowerCase().includes(query);
-                const matchDate = dateFilter ? item.meeting_date === dateFilter : true;
-                return matchName && matchDate;
-            });
-            renderAttendanceTable(filtered);
-        }
-
-        function resetAttendanceFilter() {
-            document.getElementById('attendance-search').value = '';
-            document.getElementById('attendance-date-filter').value = '';
-            renderAttendanceTable(attendanceList);
-        }
-
-        // فتح وإغلاق النافذة المنبثقة للغياب
         function openAttendanceModal() {
-            document.getElementById('att-id').value = '';
-            document.getElementById('attendance-form').reset();
-            document.getElementById('attendance-modal-title').innerText = 'تسجيل حضور / غياب جديد';
-            document.getElementById('attendance-modal').classList.remove('hidden-section');
-        }
-
-        function closeAttendanceModal() {
-            document.getElementById('attendance-modal').classList.add('hidden-section');
-        }
-
-        // حفظ أو تحديث سجل الغياب والحضور مع منع التكرار في المقابلة نفسها
-        async function saveAttendance(event) {
-            event.preventDefault();
-            const id = document.getElementById('att-id').value;
-            const meeting_date = document.getElementById('att-meeting-date').value;
-            const member_name = document.getElementById('att-member-name').value;
-            const status = document.getElementById('att-status').value;
-            const notes = document.getElementById('att-notes').value;
-            const recorded_by = currentUser?.user_metadata?.full_name || currentUser?.email || 'مشرف النظام';
-
-            const payload = { meeting_date, member_name, status, notes, recorded_by };
-
-            try {
-                if (id) {
-                    // تحديث سجل موجود
-                    const { error } = await supabaseClient.from('attendance').update(payload).eq('id', id);
-                    if (error) throw error;
-                } else {
-                    // إضافة سجل جديد مع التحقق من عدم التكرار
-                    const { error } = await supabaseClient.from('attendance').insert([payload]);
-                    if (error) {
-                        if (error.code === '23505') {
-                            alert('عذراً، هذا العضو مسجل بالفعل في نفس تاريخ المقابلة!');
-                            return;
-                        }
-                        throw error;
-                    }
-                }
-                closeAttendanceModal();
-                fetchAttendanceData();
-            } catch (err) {
-                alert('حدث خطأ أثناء الحفظ: ' + err.message);
-            }
-        }
-
-        // تعديل سجل حضور
-        function editAttendance(id) {
-            const item = attendanceList.find(i => i.id === id);
-            if (!item) return;
-
-            document.getElementById('att-id').value = item.id;
-            document.getElementById('att-meeting-date').value = item.meeting_date;
-            document.getElementById('att-member-name').value = item.member_name;
-            document.getElementById('att-status').value = item.status;
-            document.getElementById('att-notes').value = item.notes || '';
-            document.getElementById('attendance-modal-title').innerText = 'تعديل سجل الحضور';
-            document.getElementById('attendance-modal').classList.remove('hidden-section');
-        }
-
-        // الحذف الفوري والنهائي (Hard Delete) من Supabase
-        async function hardDeleteAttendance(id) {
-            if (!confirm('هل أنت متأكد من الحذف النهائي لهذا السجل من قاعدة البيانات؟ لا يمكن التراجع عن هذه العملية.')) return;
-
-            try {
-                const { error } = await supabaseClient.from('attendance').delete().eq('id', id);
-                if (error) throw error;
-                fetchAttendanceData();
-            } catch (err) {
-                alert('فشل الحذف من قاعدة البيانات: ' + err.message);
-            }
-        }
-
-        // مزامنة البيانات بالوقت الحقيقي (Realtime Sync) لجميع المستخدمين المتصلين
-        function setupRealtimeSubscription() {
-            supabaseClient
-                .channel('public:attendance')
-                .on('postgres_changes', { event: '*', schema: 'public', table: 'attendance' }, payload => {
-                    fetchAttendanceData();
-                })
-                .subscribe();
+            alert('نافذة التسجيل');
         }
 
         function handleLogout() {
-            supabaseClient.auth.signOut().then(() => {
-                window.location.reload();
-            });
+            if(supabaseClient) supabaseClient.auth.signOut().then(() => location.reload());
         }
 
-        // بدء تشغيل التطبيق عند تحميل الصفحة
         window.onload = initApp;
     </script>
 </body>
