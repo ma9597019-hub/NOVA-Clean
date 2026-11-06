@@ -416,16 +416,26 @@ async function delStored(p,strict){
   if(r.error)throw r.error;
   if(!r.data||!r.data.length){var v=await st.createSignedUrl(p,10);if(v.error&&/not.?found|object/i.test(v.error.message||""))return true;var x=new Error("لا تملك صلاحية حذف هذه الصورة");x.own=1;throw x}
   delete SU[p];return true}
- catch(e){if(strict)throw new Error(e&&e.own?e.message:upMsg(e));return false}}
+ catch(e){console.error("[delStored] فشل حذف الملف من Storage:",p,e);if(strict)throw new Error(e&&e.own?e.message:upMsg(e));return false}}
 /* kv database with the same interface the app already uses (collection/doc/onSnapshot) */
 function sbDb(){var L=[];
- function load(c,cb){SB.c.from("kv").select("id,data").eq("collection",c).then(function(r){if(r.error){console.warn(r.error.message);return}cb({docs:r.data.map(function(x){return{id:x.id,data:function(){return x.data}}})})})}
+ function load(c,cb){return SB.c.from("kv").select("id,data").eq("collection",c).then(function(r){if(r.error){console.warn(r.error.message);return}cb({docs:r.data.map(function(x){return{id:x.id,data:function(){return x.data}}})})})}
  SB.refresh=function(){L.forEach(function(l){load(l.c,l.cb)})};
+ SB.reload=function(c){return Promise.all(L.filter(function(l){return l.c==c}).map(function(l){return load(l.c,l.cb)}))};
  SB.c.channel("kv-ch").on("postgres_changes",{event:"*",schema:"public",table:"kv"},function(p){var c=(p.new&&p.new.collection)||(p.old&&p.old.collection);L.forEach(function(l){if(!c||l.c==c)load(l.c,l.cb)})}).subscribe();
  function chk(r){if(r&&r.error){var e=new Error(r.error.message);e.code=r.error.code||r.error.message;throw e}}
  return{collection:function(c){return{doc:function(id){return{
   set:function(x){var row={collection:c,id:id,data:x,updated_at:new Date().toISOString()},q=SB.sess?SB.c.from("kv").upsert(row):SB.c.from("kv").insert(row);return q.then(chk)},
-  delete:function(){return SB.c.from("kv").delete().eq("collection",c).eq("id",id).then(chk)}}},
+  delete:function(){
+   /* ROOT-CAUSE FIX: بدون select() يرجع Supabase نجاحًا (بلا خطأ) حتى لو حذف 0 صف بسبب RLS.
+      هنا نطلب الصفوف المحذوفة فعليًا ونتحقق منها، ثم نعيد فحص قاعدة البيانات للتأكد من اختفاء السجل. */
+   return SB.c.from("kv").delete().eq("collection",c).eq("id",id).select("id").then(function(r){
+    chk(r);
+    if(r.data&&r.data.length)return true;
+    return SB.c.from("kv").select("id").eq("collection",c).eq("id",id).maybeSingle().then(function(v){
+     chk(v);
+     if(v.data){var e=new Error("رفضت سياسات Supabase (RLS) حذف هذا السجل — ليست لديك صلاحية الحذف");e.code="RLS_DENIED";throw e}
+     return true})})}}},
   onSnapshot:function(cb){var l={c:c,cb:cb};L.push(l);load(c,cb);return function(){var i=L.indexOf(l);if(i>=0)L.splice(i,1)}}}}}}
 /* AI inspection through the secured /api/analyze (key stays on the server) */
 function b2b64(f){return new Promise(function(ok,no){var r=new FileReader();r.onload=function(){ok(String(r.result).split(",")[1])};r.onerror=function(){no(new Error("تعذّر قراءة الصورة"))};r.readAsDataURL(f)})}
@@ -455,11 +465,31 @@ function toast(m){var t=$("toast");t.textContent=m;t.style.display="block";clear
 function seedData(){D.tasks=[];D.parts=B0.map(function(b,i){return{id:"p"+(i+10),n:b[0],q:b[1],u:b[2],s:i<9?1:0}})}
 /* data layer: shared db when available, local memory otherwise */
 function put(c,o){var id=o.id;if(db){var x={};for(var k in o)if(k!="id")x[k]=o[k];return db.collection(c).doc(id).set(x).then(function(){return true}).catch(function(e){toast("تعذّر الحفظ: "+(e&&e.code||"")+"");return false})}var i=D[c].findIndex(function(z){return z.id==id});if(i<0)D[c].push(o);else D[c][i]=o;go();return Promise.resolve(true)}
-function rm(c,id){if(db)return db.collection(c).doc(id).delete();D[c]=D[c].filter(function(z){return z.id!=id});go();return Promise.resolve()}
+function delMsg(e){var m=((e&&e.message)||"")+"",c=String((e&&e.code)||"");
+ if(c=="RLS_DENIED")return m;
+ if(c=="NOSESS"||/jwt|expired|invalid token/i.test(m))return SBM.exp;
+ if(c=="42501"||/row-level|policy|permission denied/i.test(m))return "ليست لديك صلاحية حذف هذا السجل (سياسات Supabase رفضت العملية)";
+ if(c=="23503"||/foreign key/i.test(m))return "لا يمكن حذف السجل لأنه مرتبط ببيانات أخرى";
+ if(/failed to fetch|network/i.test(m))return SBM.net;
+ return m||c||"خطأ غير معروف"}
+/* يرجع true فقط بعد التأكد الفعلي من الحذف في قاعدة البيانات، وإلا false مع إظهار السبب الحقيقي */
+async function rm(c,id,o){o=o||{};
+ try{
+  if(db){
+   if(!SBR()){var se=new Error(SBM.exp);se.code="NOSESS";throw se}
+   await db.collection(c).doc(id).delete();
+   D[c]=(D[c]||[]).filter(function(z){return z.id!=id});
+   try{if(SB.reload)await SB.reload(c)}catch(x){console.warn("[rm] reload",x)}
+   go();return true}
+  D[c]=(D[c]||[]).filter(function(z){return z.id!=id});go();return true
+ }catch(e){
+  console.error("[delete] فشل حذف السجل من «"+c+"» id="+id,e);
+  if(!o.quiet)toast("تعذّر الحذف: "+delMsg(e));
+  return false}}
 function act(t){put("logs",{id:"l"+Date.now()+Math.floor(Math.random()*99),w:(own&&me&&me!="المالك"?"المسئول كـ "+me:me||"زائر"),t:t,ts:Date.now()})}
 function sub(c,seed){return db.collection(c).onSnapshot(function(sn){var a=sn.docs.map(function(d){var o=d.data();var r={id:d.id};for(var k in o)r[k]=o[k];return r});
  if(!a.length&&seed&&!seeded[c]&&me){seeded[c]=1;D[c].forEach(function(o){put(c,o)});return}
- if(c=="tasks"){a=a.filter(function(t){if(/^t(1[0-9]|2[01])$/.test(t.id)){rm("tasks",t.id);return false}return true})}
+ if(c=="tasks"){a=a.filter(function(t){if(/^t(1[0-9]|2[01])$/.test(t.id)){rm("tasks",t.id,{quiet:true});return false}return true})}
  D[c]=a;go()},function(){})}
 async function boot(){seedData();
  try{await sbInit();db=sbDb();S=sbAI();await sbRestore()}catch(e){db=null;S=null;setTimeout(function(){toast("تعذّر الاتصال بـ Supabase: "+(e&&e.message||e))},300)}
@@ -489,7 +519,7 @@ function sendDM(e){e.preventDefault();if(!me||!CH)return;var f=e.target,t=f.elem
 function dmCard(){var l=D.dms.filter(function(m){return m.to==me}).sort(function(a,b){return b.ts-a.ts}).slice(0,15);return '<div class="card"><h3>رسائل خاصة إليك</h3>'+(l.map(function(m){return '<div class="upd row" style="align-items:flex-start"><div>'+esc(m.t)+'<small>'+esc(m.w)+' · '+dt(m.ts)+'</small></div><button class="pill s-p" onclick="chatM(\''+esc(m.w)+'\')">رد</button></div>'}).join("")||'<p class="note">لا توجد رسائل خاصة. للمراسلة افتح صفحة «الفريق» واضغط 💬 بجوار أي شخص.</p>')+'</div>'}
 function visM(){modal('<h3 style="margin:0">رسالة للفريق (للزوار)</h3><input id="vn" placeholder="اسمك"><textarea id="vt" rows="3" placeholder="رسالتك"></textarea><div class="row"><button class="btn" onclick="sendVis()">إرسال</button><button class="btn g" onclick="closeM()">إلغاء</button></div>')}
 async function sendVis(){var n=$("vn").value.trim()||"زائر",t=$("vt").value.trim();if(!t){toast("اكتب الرسالة");return}await put("vis",{id:"v"+Date.now(),n:n,t:t,ts:Date.now()});closeM();toast("تم إرسال رسالتك ✓")}
-function delV(id){if(!need())return;if(!confirm("حذف الرسالة؟"))return;rm("vis",id);act("حذف رسالة زائر")}
+async function delV(id){if(!need())return;if(!confirm("حذف الرسالة؟"))return;if(!await rm("vis",id))return;act("حذف رسالة زائر");toast("تم الحذف بنجاح ✓")}
 function need(){if(!me){loginM();return false}return true}
 async function sha2(b){var d=await crypto.subtle.digest("SHA-256",await b.arrayBuffer());return Array.from(new Uint8Array(d)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
 function inbox(){return D.msgs.filter(function(m){return me&&(m.to.indexOf("*")>=0||m.to.indexOf(me)>=0)}).sort(function(a,b){return b.ts-a.ts})}
@@ -510,7 +540,7 @@ async function cycleT(id){if(!need())return;var t=D.tasks.filter(function(x){ret
  if(!canChangeT(t)){toast("غير مسموح لك بتغيير حالة هذه المهمة. التغيير متاح للشخص المسؤول عنها فقط");return}
  var n={d:"n",n:"p",p:"d"}[t.s],o=Object.assign({},t,{s:n});
  var ok=await put("tasks",o);if(!ok)return;act("غيّر حالة المهمة «"+t.n+"» إلى "+ST[n])}
-function delT(id){if(!need())return;var t=D.tasks.filter(function(x){return x.id==id})[0];if(!t)return;if(!canDeleteT(t)){toast("غير مسموح لك بحذف هذه المهمة. الحذف متاح لمن أضافها أو للمصرح لهم فقط");return}if(!confirm("حذف المهمة؟"))return;rm("tasks",id);act("حذف المهمة «"+t.n+"»")}
+async function delT(id){if(!need())return;var t=D.tasks.filter(function(x){return x.id==id})[0];if(!t)return;if(!canDeleteT(t)){toast("غير مسموح لك بحذف هذه المهمة. الحذف متاح لمن أضافها أو للمصرح لهم فقط");return}if(!confirm("حذف المهمة؟"))return;if(!await rm("tasks",id))return;act("حذف المهمة «"+t.n+"»");toast("تم الحذف بنجاح ✓")}
 function addT(e){e.preventDefault();if(!need())return;var f=e.target,o={id:"t"+Date.now(),n:f.n.value,o:f.o.value,ph:+f.ph.value,s:"n",due:f.d.value||END,desc:(f.desc?f.desc.value:"").trim(),by:me};put("tasks",o);act("أضاف مهمة «"+o.n+"» في قسم "+PH[o.ph][0]);f.reset()}
 function setPart(id,v){var p=D.parts.filter(function(x){return x.id==id})[0];v=+v;
  if(!me){loginM();go();return}
@@ -535,10 +565,10 @@ function prevF(i,pv){var f=i.files[0],im=$(pv);if(!f){im.style.display="none";re
 function dropF(e,fi,pv){var i=$(fi);if(e.dataTransfer.files.length){i.files=e.dataTransfer.files;prevF(i,pv)}}
 async function delImg(id){if(!need())return;var p=D.parts.filter(function(x){return x.id==id})[0];if(!p||!p.img||!confirm("حذف صورة الإثبات؟ سيعود البند لحالة ما قبل الاعتماد."))return;if(!SBR()){toast(NOUP);return}
  try{await delStored(p.img,true)}catch(e){toast(e.message);return}
- await put("parts",Object.assign({},p,{img:"",note:"",h:"",ap:"",pv:"",imf:"",imt:"",ims:0,imu:"",imts:0,s:p.s==1?0:p.s==3?2:p.s}));act("حذف صورة إثبات «"+p.n+"»");toast("تم حذف الصورة")}
+ if(!await put("parts",Object.assign({},p,{img:"",note:"",h:"",ap:"",pv:"",imf:"",imt:"",ims:0,imu:"",imts:0,s:p.s==1?0:p.s==3?2:p.s})))return;act("حذف صورة إثبات «"+p.n+"»");toast("تم حذف الصورة بنجاح ✓")}
 async function delExpImg(){var e=D.exp.filter(function(x){return x.id==EI})[0];if(!e||!e.img||!confirm("حذف مرفق الفاتورة؟"))return;if(!SBR()){toast(NOUP);return}
  try{await delStored(e.img,true)}catch(x){toast(x.message);return}
- await put("exp",Object.assign({},e,{img:"",h:"",imf:"",imt:"",ims:0,imu:"",imts:0}));act("حذف مرفق مصروف «"+e.n+"»");closeM();toast("تم حذف المرفق")}
+ if(!await put("exp",Object.assign({},e,{img:"",h:"",imf:"",imt:"",ims:0,imu:"",imts:0})))return;act("حذف مرفق مصروف «"+e.n+"»");closeM();toast("تم حذف المرفق بنجاح ✓")}
 async function aiInv(){var st=$("x_ai"),f=$("x_f").files[0],er=await chkImg(f);if(er){st.textContent=er;return}
  if(!S){st.textContent="التحليل بالذكاء الاصطناعي غير متاح الآن";return}
  try{var lim=await S.limits();if(!lim.images){st.textContent="فحص الصور غير مفعّل حاليًا";return}
@@ -628,9 +658,10 @@ async function addI(e){e.preventDefault();if(!need())return;var f=e.target,txt=f
 async function delI(id){if(!need())return;var r=D.inst.filter(function(x){return x.id==id})[0];if(!r)return;
  if(!canManageI(r)){toast("غير مسموح لك بحذف هذا المنشور");return}
  if(!confirm("حذف التحديث نهائيًا؟"))return;
- try{await rm("inst",id)}catch(x){toast("لم يُحذف التحديث: "+(x&&x.message||""));return}
- act("حذف تحديث تركيب"+(r.title?": "+r.title.slice(0,60):""));
- var ps=instImgs(r);for(var i=0;i<ps.length;i++){try{await delStored(ps[i],false)}catch(y){}}}
+  if(!await rm("inst",id))return;
+  act("حذف تحديث تركيب"+(r.title?": "+r.title.slice(0,60):""));
+  var ps=instImgs(r),bad=0;for(var i=0;i<ps.length;i++){var k=false;try{k=await delStored(ps[i],false)}catch(y){console.error(y)}if(!k)bad++}
+  toast(bad?"تم حذف التحديث، لكن تعذّر حذف "+bad+" صورة من التخزين (راجع Console)":"تم الحذف بنجاح ✓")}
 /* views */
 function cnt(){var c={d:0,p:0,n:0};D.tasks.forEach(function(t){c[t.s]++});return c}
 function donut(d,center,sub,size){var r=52,C=2*Math.PI*r,off=0,tot=d.reduce(function(a,x){return a+x[1]},0)||1,s='<svg width="'+size+'" height="'+size+'" viewBox="0 0 140 140"><circle cx="70" cy="70" r="52" fill="none" stroke="var(--soft)" stroke-width="16"/>';
@@ -919,7 +950,7 @@ tests:function(){var l=D.tests.slice().sort(function(a,b){return b.d<a.d?-1:1}),
 };
 function addQ(e){e.preventDefault();if(!need())return;var f=e.target,o={id:"q"+Date.now(),n:f.n.value,g:f.g.value,x:f.x.value,a:f.a.value,s:f.s.value,d:f.d.value||new Date().toISOString().slice(0,10),o:f.o.value,nt:f.nt.value};put("tests",o);act("سجّل اختبارًا «"+o.n+"»");f.reset()}
 function cycQ(id){if(!need())return;var t=D.tests.filter(function(x){return x.id==id})[0],n={r:"p",p:"f",f:"r"}[t.s];put("tests",Object.assign({},t,{s:n}));act("غيّر حالة الاختبار «"+t.n+"»")}
-function delQ(id){if(!need())return;if(!confirm("حذف الاختبار؟"))return;rm("tests",id);act("حذف اختبار")}
+async function delQ(id){if(!need())return;if(!confirm("حذف الاختبار؟"))return;if(!await rm("tests",id))return;act("حذف اختبار");toast("تم الحذف بنجاح ✓")}
 var QS={p:["ناجح","s-d"],f:["فاشل","s-n"],r:["قيد الاختبار","s-p"]};
 function day(){return new Date().toISOString().slice(0,10)}
 async function saveFile(name,blob){try{var u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);toast("تم تجهيز الملف ✓")}catch(e){toast("تعذّر التنزيل: "+(e&&e.message||""))}}
@@ -1001,7 +1032,7 @@ function bkDl(id){if(!own)return;var r=D.bk.filter(function(x){return x.id==id})
  saveFile("backup-"+dt(r.at).replace(/[: ]/g,"-")+".json",new Blob([r.p],{type:"application/json"}))}
 function bkDel(id){if(!own)return;var r=D.bk.filter(function(x){return x.id==id})[0];if(!r)return;
  if(!confirm("حذف النسخة بتاريخ «"+dt(r.at)+"» نهائيًا؟ لا يمكن التراجع."))return;
- Promise.resolve(rm("bk",id)).then(function(){act("حذف نسخة احتياطية بتاريخ "+dt(r.at));toast("تم حذف النسخة")},function(e){toast("تعذّر الحذف: "+(e&&e.message||""))})}
+ rm("bk",id).then(function(ok){if(!ok)return;act("حذف نسخة احتياطية بتاريخ "+dt(r.at));toast("تم حذف النسخة بنجاح ✓")})}
 
 /* ---- التصدير: أقسام منفصلة وصيغ XLSX / CSV / JSON ---- */
 function bkRows(){
@@ -1531,11 +1562,11 @@ function mSaveEdit(id){
  var t=$("me_t").value.trim();
  if(!t&&!(m.att||[]).length){toast("لا يمكن ترك الرسالة فارغة");return}
  put("msgs",Object.assign({},m,{t:t,ed:Date.now(),ein:me||""}));act("عدّل رسالة");closeM();toast("تم الحفظ ✓")}
-function mDel(id){
+async function mDel(id){
  var m=D.msgs.filter(function(x){return x.id==id})[0];
  if(!mCanEdit(m)){toast("لا تملك صلاحية حذف هذه الرسالة");return}
- if(!confirm("حذف الرسالة نهائيًا؟"))return;
- rm("msgs",id);act("حذف رسالة")}
+if(!confirm("حذف الرسالة نهائيًا؟"))return;
+  if(!await rm("msgs",id))return;act("حذف رسالة");toast("تم الحذف بنجاح ✓")}
 function mPin(id){
  if(!isCostAdmin()){toast("التثبيت للمشرفين فقط");return}
  var m=D.msgs.filter(function(x){return x.id==id})[0];if(!m)return;
@@ -1742,12 +1773,8 @@ async function attDel(id){
  if(!isAttAdmin()){toast("الحذف مقتصر على المصرح لهم فقط");return}
  var r=D.attendance.filter(function(x){return x.id==id})[0];if(!r)return;
  if(!confirm("حذف سجل حضور «"+r.member_name+"» في "+r.meeting_date+"؟ لا يمكن التراجع."))return;
- var ok;
- try{
-  if(db){var res=await db.collection("attendance").doc(id).delete();ok=true}
-  else{D.attendance=D.attendance.filter(function(x){return x.id!=id});go();ok=true}
- }catch(e){toast("تعذّر الحذف: "+(e&&e.message||""));return}
- if(ok){act("👥 حذف سجل حضور «"+r.member_name+"» في "+r.meeting_date);toast("تم الحذف ✓")}}
+  var ok=await rm("attendance",id);
+  if(ok){act("👥 حذف سجل حضور «"+r.member_name+"» في "+r.meeting_date);toast("تم الحذف بنجاح ✓")}}
 
 /* ===== هوية NOVA Clean وتنظيم قسم التكاليف ===== */
 var NOVA_MARK='<svg width="40" height="40" viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="navNb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs> <defs> <linearGradient id="navNb" x1="0" y1="0" x2="1" y2="1"> <stop offset="0" stop-color="#3b82f6"/> <stop offset="1" stop-color="#06b6d4"/> </linearGradient> </defs> <circle cx="100" cy="100" r="96" fill="#0a1433"/> <path d="M 36 100 A 64 64 0 0 0 164 100" fill="none" stroke="#67e8f9" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 14" opacity="0.9"/> <circle cx="100" cy="100" r="58" fill="url(#navNb)"/> <circle cx="100" cy="100" r="36" fill="#0a1433"/> <circle cx="100" cy="100" r="12" fill="#22d3ee"/> <path d="M 100 36 L 103 46 L 100 56 L 97 46 Z" fill="#ffffff"/> <path d="M 150 60 L 152.5 66.5 L 159 69 L 152.5 71.5 L 150 78 L 147.5 71.5 L 141 69 L 147.5 66.5 Z" fill="#ffffff" opacity="0.95"/> </svg>'; function secHead(t,b){return b?'<div class="card" style="padding:10px 14px;background:var(--soft);margin-bottom:10px"><h2 style="margin:0;font-size:17px">'+t+'</h2></div>'+b:''}
@@ -1929,14 +1956,14 @@ function partAdd(e){
  put("parts",{id:id,n:n,q:q,u:u,s:0,qb:0,pc:0});
  put("prices",{id:id,u:u,cat:cat,by:me||"",ts:Date.now()});
  act("أضاف مكونًا «"+n+"»");f.reset();toast("تمت إضافة المكون ✓")}
-function partDel(id){
+async function partDel(id){
  if(!needAdmin("حذف المكونات للمشرفين فقط"))return;
  var p=D.parts.filter(function(x){return x.id==id})[0];if(!p)return;
  if(linkedP(id)){toast("لا يمكن حذف «"+p.n+"» لأنه مرتبط بمصروف. احذف المصروف المرتبط أولًا");return}
  if(!confirm("حذف المكون «"+p.n+"» نهائيًا؟"))return;
- rm("parts",id);
- if(D.prices.some(function(x){return x.id==id}))rm("prices",id);
- act("حذف مكونًا «"+p.n+"»");toast("تم حذف المكون")}
+  if(!await rm("parts",id))return;
+  var pOk=true;if((D.prices||[]).some(function(x){return x.id==id}))pOk=await rm("prices",id);
+  act("حذف مكونًا «"+p.n+"»");if(pOk)toast("تم حذف المكون بنجاح ✓")}
 /* ===== ربط المكونات بالميزانية: خصم تلقائي عند «تم الشراء» ===== */
 var PSYNC={},SYNC_READY=false;
 setTimeout(function(){SYNC_READY=true},6000);
@@ -1956,7 +1983,7 @@ function syncPurchases(){
    return}
   if(!bought&&e&&e.auto){
    if(PSYNC[p.id])return; PSYNC[p.id]=1;
-   rm("exp",e.id);act("💰 أُلغي خصم «"+p.n+"» لأن حالته لم تعد «تم الشراء»");
+   rm("exp",e.id,{quiet:true}).then(function(k){if(k)act("💰 أُلغي خصم «"+p.n+"» لأن حالته لم تعد «تم الشراء»")});
    return}
   delete PSYNC[p.id]})}
 setInterval(syncPurchases,2000);
@@ -2078,7 +2105,12 @@ async function saveE(){if(!needAdmin('تسجيل المصروفات للمشرف
  var old=EI?D.exp.filter(function(x){return x.id==EI})[0]:null,o={id:EI||"e"+Date.now(),n:n,c:$("x_c").value,q:q,u:+u,d:d,s:$("x_s").value.trim(),m:$("x_m").value.trim(),pay:$("x_pay")?$("x_pay").value.trim():"",st:st,pa:st=="h"?pa:0,pid:$("x_pid").value,ds:$("x_ds")?$("x_ds").value.trim():"",nt:$("x_nt").value.trim(),img:old&&old.img||"",ts:old&&old.ts||Date.now(),w:old&&old.w||me},f=$("x_f").files[0],b=$("x_b");b.disabled=true;
  try{if(old)["h","imf","imt","ims","imu","imts","ai"].forEach(function(k){if(old[k]!==undefined&&o[k]===undefined)o[k]=old[k]});if(f){var er=await chkImg(f);if(er){toast(er);b.disabled=false;return}var kk=await kind(f),hh=await sha2(f),du=D.exp.filter(function(x){return x.id!=o.id&&x.h==hh})[0]||D.parts.filter(function(x){return x.h==hh})[0];if(du){toast("هذه الصورة مرفوعة من قبل، ارفع صورة مختلفة");b.disabled=false;return}toast("جاري رفع الصورة…");var up=await upImg(f,"invoices");if(old&&old.img){await delStored(old.img)}o.img=up.id;o.h=hh;o.imf=f.name||"";o.imt=kk;o.ims=f.size;o.imu=me||"";o.imts=Date.now()}if(EXC)o.ai=EXC;await put("exp",o);syncParts([old&&old.pid,o.pid],o)}catch(x){toast("تعذّر الحفظ: "+(x&&x.message||""));b.disabled=false;return}
  act("💰 "+(old?"عدّل مصروف «"+n+"»"+(old.st!=st?" — حالة الدفع: "+SL[st]:"")+(totOf(old)!=q*u?" — الإجمالي: "+fm(q*u)+EG:""):"أضاف مصروف «"+n+"» بقيمة "+fm(q*u)+EG));closeM();toast("تم الحفظ ✓")}
-async function delE(id){if(!needAdmin('حذف المصروفات للمشرفين فقط'))return;var e=D.exp.filter(function(x){return x.id==id})[0];if(e&&e.img&&confirm("حذف المصروف «"+e.n+"» وصورته المرتبطة؟ لا يمكن التراجع.")){try{await delStored(e.img,true)}catch(x){toast("لم يُحذف المصروف: "+x.message);return}rm("exp",id);syncParts([e.pid],{id:id,_del:1});act("💰 حذف مصروف «"+e.n+"» بقيمة "+fm(totOf(e))+EG);return}if(!e||!confirm("حذف المصروف «"+e.n+"»؟ لا يمكن التراجع."))return;rm("exp",id);syncParts([e.pid],{id:id,_del:1});act("💰 حذف مصروف «"+e.n+"» بقيمة "+fm(totOf(e))+EG)}
+async function delE(id){if(!needAdmin('حذف المصروفات للمشرفين فقط'))return;var e=D.exp.filter(function(x){return x.id==id})[0];if(!e)return;
+ if(!confirm(e.img?"حذف المصروف «"+e.n+"» وصورته المرتبطة؟ لا يمكن التراجع.":"حذف المصروف «"+e.n+"»؟ لا يمكن التراجع."))return;
+ if(!await rm("exp",id))return;
+ var imgOk=true;if(e.img){try{imgOk=await delStored(e.img,false)}catch(x){imgOk=false;console.error(x)}}
+ syncParts([e.pid],{id:id,_del:1});act("💰 حذف مصروف «"+e.n+"» بقيمة "+fm(totOf(e))+EG);
+ toast(imgOk?"تم الحذف بنجاح ✓":"تم حذف المصروف، لكن تعذّر حذف صورته من التخزين (راجع Console)")}
 function detE(id){var e=D.exp.filter(function(x){return x.id==id})[0],p=D.parts.filter(function(x){return x.id==e.pid})[0];modal('<h3 style="margin:0">'+esc(e.n)+'</h3><div class="note" style="line-height:1.9">الفئة: '+esc(e.c)+'<br>الكمية × السعر: '+fm(e.q)+' × '+fm(e.u)+' = <b>'+fm(totOf(e))+EG+'</b><br>التاريخ: '+esc(e.d)+'<br>المورد: '+esc(e.s||"—")+'<br>طريقة الدفع: '+esc(e.m||"—")+'<br>الحالة: '+SL[e.st]+' — المدفوع '+fm(paidOf(e))+EG+'، المتبقي '+fm(totOf(e)-paidOf(e))+EG+'<br>المكوّن: '+(p?esc(p.n):"غير مرتبط")+'<br>ملاحظات: '+esc(e.nt||"—")+'<br>سجّله: '+esc(e.w||"—")+'</div>'+(e.img?'<a href="'+su(e.img)+'" data-sp="'+esc(e.img)+'" target="_blank"><img src="'+su(e.img)+'" data-sp="'+esc(e.img)+'" alt="" style="max-width:100%;border-radius:10px"></a>':'<p class="note">لا يوجد مرفق.</p>')+'<div class="row"><button class="btn g" onclick="closeM()">إغلاق</button></div>')}
 function exportFin(){if(!me)return;if(!window.XLSX){toast("مكتبة Excel لم تُحمَّل");return}var W=XLSX.utils.book_new(),E='#,##0 "EGP"',c=cfg();W.Workbook={Views:[{RTL:true}]};
  var r1=[["المصروف","الفئة","الكمية","سعر الوحدة","الإجمالي","التاريخ","المورد","طريقة الدفع","الحالة","المدفوع","المتبقي","ملاحظات"]].concat(D.exp.map(function(e,i){var r=i+2;return[e.n,e.c,e.q,{t:"n",v:e.u,z:E},{t:"n",v:totOf(e),f:"C"+r+"*D"+r,z:E},e.d,e.s,e.m,SL[e.st],{t:"n",v:paidOf(e),z:E},{t:"n",v:totOf(e)-paidOf(e),f:"E"+r+"-J"+r,z:E},e.nt]})),n=D.exp.length+1;r1.push(["الإجمالي","","","",{t:"n",v:D.exp.reduce(function(a,e){return a+totOf(e)},0),f:"SUM(E2:E"+n+")",z:E},"","","","",{t:"n",v:D.exp.reduce(function(a,e){return a+paidOf(e)},0),f:"SUM(J2:J"+n+")",z:E},{t:"n",v:D.exp.reduce(function(a,e){return a+totOf(e)-paidOf(e)},0),f:"SUM(K2:K"+n+")",z:E},""]);
