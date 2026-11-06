@@ -3,117 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOVA Clean - لوحة التحكم الذكية</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>لوحة تحكم مشروع NOVA Clean</title>
+    <!-- مكتبة Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; color: #1e293b; }
-        .hidden-section { display: none !important; }
-    </style>
+    <!-- ملف الـ CSS الأساسي -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col">
-
-    <header class="bg-slate-900 text-white shadow-md">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <span class="bg-blue-600 text-white p-2 rounded-xl font-bold text-xl"><i class="fa-solid fa-robot"></i></span>
-                <div>
-                    <h1 class="text-lg font-bold">NOVA Clean</h1>
-                    <p class="text-xs text-slate-400">روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة[cite: 3]</p>
-                </div>
-            </div>
-            <div id="user-profile-section" class="flex items-center gap-4">
-                <span id="current-user-badge" class="text-sm bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">جاري التحقق...</span>
-                <button onclick="handleLogout()" class="text-red-400 hover:text-red-300 text-sm"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
-            </div>
-        </div>
-    </header>
-
-    <div class="container mx-auto px-4 py-6 flex-1 flex flex-col md:flex-row gap-6">
-        <aside class="w-full md:w-64 bg-white rounded-2xl shadow-sm border border-slate-100 p-4 flex flex-row md:flex-col justify-between">
-            <nav class="space-y-1 w-full flex md:flex-col overflow-x-auto gap-2 md:gap-1">
-                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full text-right px-4 py-2.5 rounded-xl text-sm font-medium transition flex items-center gap-3 bg-blue-50 text-blue-600">
-                    <i class="fa-solid fa-chart-pie w-5"></i> لوحة المؤشرات
-                </button>
-                <button onclick="switchTab('attendance')" id="nav-attendance" class="nav-btn w-full text-right px-4 py-2.5 rounded-xl text-sm font-medium transition flex items-center gap-3 text-slate-600 hover:bg-slate-50">
-                    <i class="fa-solid fa-user-check w-5"></i> الغياب والحضور
-                </button>
-            </nav>
+<body>
+    <div class="dashboard-container">
+        <!-- الشريط الجانبي (تمت إزالة قسم الرسائل منه نهائياً) -->
+        <aside class="sidebar">
+            <h2>NOVA Clean</h2>
+            <ul class="nav-links">
+                <li><a href="#dashboard" class="active">الرئيسية</a></li>
+                <li><a href="#tasks">المهام</a></li>
+                <li><a href="#components">المكونات</a></li>
+                <li><a href="#expenses">المصروفات</a></li>
+                <li><a href="#attendance" id="nav-attendance">الغياب والحضور</a></li>
+                <li><a href="#tests">الاختبارات</a></li>
+            </ul>
         </aside>
 
-        <main class="flex-1 bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
-            <section id="tab-dashboard" class="tab-content space-y-6">
-                <h2 class="text-xl font-bold text-slate-800">لوحة المؤشرات والتحليلات</h2>
-                <p class="text-slate-600">مرحباً بك في نظام إدارة نوفا كلين.</p>
-            </section>
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- قسم الغياب والحضور الجديد -->
+            <section id="attendance-section" class="content-section">
+                <h2>قسم الغياب والحضور للمقابلات</h2>
+                
+                <!-- لوحة الإحصائيات -->
+                <div class="stats-cards">
+                    <div class="card">حاضر: <span id="count-present">0</span></div>
+                    <div class="card">غائب: <span id="count-absent">0</span></div>
+                    <div class="card">متأخر: <span id="count-late">0</span></div>
+                    <div class="card">غياب بعذر: <span id="count-excused">0</span></div>
+                </div>
 
-            <section id="tab-attendance" class="tab-content hidden-section space-y-6">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-bold text-slate-800">سجل الغياب والحضور</h2>
-                    <button id="add-attendance-btn" onclick="openAttendanceModal()" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm">تسجيل حضور جديد</button>
+                <!-- نموذج وسائط البحث والإضافة -->
+                <div class="controls-bar">
+                    <input type="text" id="search-member" placeholder="بحث بالاسم..." oninput="filterAttendance()">
+                    <input type="date" id="filter-date" onchange="filterAttendance()">
                 </div>
-                <div class="overflow-x-auto border border-slate-100 rounded-xl">
-                    <table class="w-full text-right border-collapse text-sm">
-                        <thead>
-                            <tr class="bg-slate-50 text-slate-600 border-b border-slate-100">
-                                <th class="p-3">تاريخ المقابلة</th>
-                                <th class="p-3">اسم العضو</th>
-                                <th class="p-3">الحالة</th>
-                                <th class="p-3">الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="attendance-table-body">
-                            <tr><td colspan="4" class="text-center p-4 text-slate-400">جاري التحميل...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+
+                <!-- جدول الحضور والغياب -->
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>التاريخ</th>
+                            <th>اسم العضو</th>
+                            <th>الحالة</th>
+                            <th>ملاحظات</th>
+                            <th>بواسطة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-tbody">
+                        <!-- يتم تعبئتها ديناميكياً من الجافاسكريبت -->
+                    </tbody>
+                </table>
             </section>
         </main>
     </div>
 
-    <script>
-        // ضع مفاتيحك هنا بشكل صحيح
-        const SUPABASE_URL = 'https://your-project.supabase.co';
-        const SUPABASE_ANON_KEY = 'your-anon-key';
-        
-        let supabaseClient = null;
-        try {
-            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        } catch (e) {
-            console.error("خطأ في إنشاء اتصال Supabase:", e);
-        }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden-section'));
-            const target = document.getElementById(`tab-${tabId}`);
-            if(target) target.classList.remove('hidden-section');
-        }
-
-        async function initApp() {
-            try {
-                if(!supabaseClient) return;
-                const { data } = await supabaseClient.auth.getUser();
-                if (data && data.user) {
-                    document.getElementById('current-user-badge').innerText = `مرحباً: ${data.user.email}`;
-                } else {
-                    document.getElementById('current-user-badge').innerText = 'وضع الزائر';
-                }
-            } catch (err) {
-                console.warn("تنبيه في الاتصال:", err);
-                document.getElementById('current-user-badge').innerText = 'وضع غير متصل';
-            }
-        }
-
-        function openAttendanceModal() {
-            alert('نافذة التسجيل');
-        }
-
-        function handleLogout() {
-            if(supabaseClient) supabaseClient.auth.signOut().then(() => location.reload());
-        }
-
-        window.onload = initApp;
-    </script>
+    <!-- ملف السكريبت الرئيسي -->
+    <script src="app.js"></script>
 </body>
 </html>
