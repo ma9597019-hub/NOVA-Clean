@@ -3147,8 +3147,8 @@ function buildTopBar(h,p){
  var avEmoji=isDev?"\uD83D\uDC68\u200D\uD83D\uDCBB":isSup?"\uD83D\uDC51":"\uD83D\uDC64";
  var dropItems='<a href="#team"><span>\uD83D\uDC64</span> \u0627\u0644\u0645\u0644\u0641 \u0627\u0644\u0634\u062E\u0635\u064A</a>';
  dropItems+='<a href="#team"><span>\u2139\uFE0F</span> \u0645\u0639\u0644\u0648\u0645\u0627\u062A \u0627\u0644\u062D\u0633\u0627\u0628</a>';
- if((typeof isVip==="function"&&isVip())||own)dropItems+='<a href="#supervisors"><span>\u2699\uFE0F</span> \u0644\u0648\u062D\u0629 \u0627\u0644\u0645\u0634\u0631\u0641\u064A\u0646</a>';
- if((typeof canManageTeam==="function"&&canManageTeam())||own)dropItems+='<a href="#teammanage"><span>\uD83D\uDEE1\uFE0F</span> \u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u0641\u0631\u064A\u0642</a>';
+ if(typeof isVip==="function"&&isVip())dropItems+='<a href="#supervisors"><span>\u2699\uFE0F</span> \u0644\u0648\u062D\u0629 \u0627\u0644\u0645\u0634\u0631\u0641\u064A\u0646</a>';
+ if(typeof canManageTeam==="function"&&canManageTeam())dropItems+='<a href="#teammanage"><span>\uD83D\uDEE1\uFE0F</span> \u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u0641\u0631\u064A\u0642</a>';
  dropItems+='<div class="td-sep"></div>';
  dropItems+='<button class="td-item td-logout" onclick="logout();closeTopMenu()"><span>\uD83D\uDEAA</span> \u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062E\u0631\u0648\u062C</button>';
  var adminRow=own?'<div class="top-admin-row">\uD83D\uDD11 <select onchange="asM(this.value)"><option value="\u0627\u0644\u0645\u0627\u0644\u0643">\u0627\u0644\u0645\u0633\u0626\u0648\u0644</option>'+(typeof everyone==="function"?everyone().map(function(n){return'<option'+(n==me?' selected':'')+'>'+esc(n)+'</option>'}).join(""):"")+"</select></div>":"";
@@ -3177,9 +3177,9 @@ var VIP_PROFILES={
 };
 
 /* التحقق من صلاحيات VIP */
-function isVip(){return VIP_ALL.indexOf(me)>=0||own}
-function isVipSup(){return VIP_SUPS.indexOf(me)>=0||own}
-function isVipDev(){return VIP_DEVS.indexOf(me)>=0||own}
+function isVip(){return VIP_ALL.indexOf(me)>=0}
+function isVipSup(){return VIP_SUPS.indexOf(me)>=0}
+function isVipDev(){return VIP_DEVS.indexOf(me)>=0}
 
 /* حساب إحصاءات الفريق من البيانات الحقيقية */
 function vipStats(){
@@ -3590,7 +3590,7 @@ function tmFiltered(){
 
 /* هل المستخدم يملك صلاحية إدارة الفريق؟ */
 function canManageTeam(){
- return me===TM_SUPER_ADMIN||own||TM_SUPERVISORS.indexOf(me)>=0;
+ return TM_SUPERVISORS.indexOf(me)>=0;
 }
 
 /* ---- نافذة تفاصيل العضو ---- */
