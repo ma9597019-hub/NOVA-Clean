@@ -824,8 +824,8 @@ function lock(t,f,b){return '<div class="card row"><span>'+t+'</span><button cla
 function recent(){if(own)return '<div class="card"><h3>آخر الحركات</h3>'+(D.logs.slice().sort(function(a,b){return b.ts-a.ts}).slice(0,4).map(function(l){return '<div class="upd">'+esc(l.t)+'<small>'+dt(l.ts)+' · '+esc(l.w)+'</small></div>'}).join("")||'<p class="note">لا توجد حركات بعد.</p>')+'<a href="#log" style="color:var(--pri);font-size:14px">عرض كل الحركات</a></div>';
  return '<div class="card"><h3>آخر الحركات</h3>'+(D.logs.slice().sort(function(a,b){return b.ts-a.ts}).slice(0,4).map(function(l){return '<div class="upd">'+esc(l.t)+'<small>'+dt(l.ts)+' · '+esc(l.w)+'</small></div>'}).join("")||'<p class="note">لا توجد حركات بعد.</p>')+'</div>'}
 var ROSTER_FULL_ACCESS=["د. محمود محروس","م. دعاء","محمد علي عنتر جلال","رامز طارق محمد","محمد ناصر عبدالحميد"];
-function canSeeAllContacts(){return own||ROSTER_FULL_ACCESS.indexOf(me)>=0}
-function canSeeFullTeam(){return own||ROSTER_FULL_ACCESS.indexOf(me)>=0}
+function canSeeAllContacts(){return ROSTER_FULL_ACCESS.indexOf(me)>=0}
+function canSeeFullTeam(){return ROSTER_FULL_ACCESS.indexOf(me)>=0}
 function roster(){var showAllCT=CT&&canSeeAllContacts();var rows=everyone().map(function(n,i){var c=CT&&CT[n],isMe=(n==me),showC=showAllCT||isMe,tk=D.tasks.filter(function(t){return t.o==n}),dn=tk.filter(function(t){return t.s=="d"}).length;return '<tr><td>'+esc(n)+'</td><td>'+(n==LEAD?"القائدة":n==SUP?"المشرف":"عضو")+'</td><td>'+fm(dn)+' من '+fm(tk.length)+'</td>'+(CT?'<td dir="ltr" style="text-align:right">'+(showC&&c?'<a href="tel:'+esc(c[0])+'">'+esc(c[0])+'</a>':"—")+'</td><td dir="ltr" style="text-align:right">'+(showC&&c?'<a href="mailto:'+esc(c[1])+'">'+esc(c[1])+'</a>':"—")+'</td>':'')+(me?'<td>'+(n==me?'<span class="note">أنت</span>':'<button class="pill s-p" onclick="chatI('+i+')">💬 محادثة</button>')+'</td>':'')+'</tr>'}).join("");
  return '<div class="card"><h3>أعضاء الفريق ('+fm(everyone().length)+')</h3><div class="row" style="margin-bottom:10px"><span class="note">'+(me?'اضغط 💬 بجوار أي شخص لمراسلته برسالة خاصة.':'سجّل دخولك لمراسلة الأعضاء.')+(canSeeAllContacts()?'':' تظهر لك بيانات اتصالك أنت فقط.')+'</span>'+(me?'':'<button class="btn" onclick="loginM()">دخول الفريق</button>')+'</div><div class="wrap"><table class="tbl"><tr><th>الاسم</th><th>الدور</th><th>المهام المكتملة</th>'+(CT?'<th>الهاتف</th><th>البريد</th>':'')+(me?'<th>مراسلة</th>':'')+'</tr>'+rows+'</table></div></div>'}
 /* actions */
@@ -3590,7 +3590,7 @@ function tmFiltered(){
 
 /* هل المستخدم يملك صلاحية إدارة الفريق؟ */
 function canManageTeam(){
- return TM_SUPERVISORS.indexOf(me)>=0;
+ return TM_SUPERVISORS.indexOf(me)>=0||me==="محمد علي عنتر جلال";
 }
 
 /* ---- نافذة تفاصيل العضو ---- */
