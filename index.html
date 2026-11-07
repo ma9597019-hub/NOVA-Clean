@@ -3847,7 +3847,7 @@ async function tmToggleAccount(name, activate){
   toast(res.message||"تم ✓");
   closeM();
   // تحديث حالة الحساب في الجدول
-  if(TM.accountStatus)TM.accountStatus[name]={banned:!activate,loaded:true};
+  delete TM_ACCT_STATUS[name];
   go();
  }else{if(btn){btn.disabled=false;btn.textContent=activate?"تفعيل الحساب":"إيقاف الحساب"}}
 }
@@ -3930,7 +3930,7 @@ async function tmConfirmSetPassword(name){
 /* ---- جلب حالة الحساب الفعلية ---- */
 var TM_ACCT_STATUS={};
 async function tmLoadAccountStatus(name){
- if(TM_ACCT_STATUS[name])return TM_ACCT_STATUS[name];
+ if(TM_ACCT_STATUS[name]&&TM_ACCT_STATUS[name].ok)return TM_ACCT_STATUS[name];
  var res=await tmAdminCall("get_status",name);
  if(res&&res.ok){TM_ACCT_STATUS[name]=res;return res}
  return null;
