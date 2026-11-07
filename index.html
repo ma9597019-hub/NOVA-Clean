@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl" class="bt">
 <head>
 <meta charset="utf-8">
@@ -373,6 +373,143 @@ button.tk-mem{cursor:pointer}
 .vip-decision{background:#0f1f4b;border-right:3px solid #2563eb;border-radius:0 10px 10px 0;padding:10px 14px;margin-bottom:8px}
 .vip-decision .vip-decision-title{font-size:14px;color:#e2e8f0;font-weight:600}
 .vip-decision .vip-decision-meta{font-size:11px;color:#475569;margin-top:3px}
+
+/* ===== TEAM MANAGEMENT PAGE CSS ===== */
+.tm-wrap{direction:rtl;animation:vipFadeIn .4s ease}
+.tm-hero{background:linear-gradient(135deg,#0a1433,#1e3a8a 50%,#0a1433);border-radius:20px;padding:28px 24px;margin-bottom:20px;border:1px solid #2563eb44;position:relative;overflow:hidden}
+.tm-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,#3b82f622,transparent 70%);pointer-events:none}
+.tm-hero-inner{position:relative;z-index:1;display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.tm-hero-icon{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,#2563eb,#8b5cf6);display:grid;place-items:center;font-size:26px;flex-shrink:0;box-shadow:0 0 28px #2563eb55}
+.tm-hero-text h2{margin:0 0 4px;font-size:22px;color:#f0f9ff}
+.tm-hero-text p{margin:0;color:#93c5fd;font-size:13px}
+.tm-stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.tm-stat{background:linear-gradient(160deg,#0f1f4b,#0a1433);border:1px solid #1e3a8a55;border-radius:14px;padding:16px;text-align:center}
+.tm-stat b{display:block;font-size:28px;font-weight:700;color:#f0f9ff;line-height:1.1}
+.tm-stat span{font-size:12px;color:#64748b;margin-top:4px;display:block}
+.tm-stat.ok b{color:#22c55e}
+.tm-stat.warn b{color:#f59e0b}
+.tm-stat.info b{color:#3b82f6}
+.tm-stat.purple b{color:#8b5cf6}
+.tm-toolbar{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px 16px;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tm-toolbar input[type=search]{flex:1;min-width:200px;background:var(--soft);border:1px solid var(--bd);border-radius:9px;padding:9px 12px;color:var(--tx);font:inherit;outline:none}
+.tm-toolbar input[type=search]:focus{border-color:var(--pri)}
+.tm-toolbar select{background:var(--soft);border:1px solid var(--bd);border-radius:9px;padding:9px 12px;color:var(--tx);font:inherit;outline:none}
+.tm-table-wrap{background:var(--card);border:1px solid var(--bd);border-radius:16px;overflow:hidden;margin-bottom:20px}
+.tm-tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tm-tbl th{background:linear-gradient(90deg,#0f1f4b,#0a1433);color:#93c5fd;font-size:12px;font-weight:600;padding:12px 14px;text-align:right;border-bottom:1px solid #1e3a8a44;white-space:nowrap}
+.tm-tbl td{padding:12px 14px;border-bottom:1px solid var(--bd);color:var(--tx);vertical-align:middle}
+.tm-tbl tr:last-child td{border-bottom:none}
+.tm-tbl tr:hover td{background:var(--soft)}
+.tm-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:17px;flex-shrink:0;border:2px solid #2563eb44}
+.tm-avatar.dev{background:linear-gradient(135deg,#8b5cf6,#ec4899);border-color:#8b5cf644}
+.tm-avatar.sup{background:linear-gradient(135deg,#2563eb,#06b6d4);border-color:#2563eb44}
+.tm-avatar.mem{background:linear-gradient(135deg,#0f1f4b,#1e3a8a);border-color:#1e3a8a44}
+.tm-name-cell{display:flex;align-items:center;gap:10px}
+.tm-name-cell b{display:block;font-size:14px;color:var(--tx)}
+.tm-name-cell small{color:var(--mut);font-size:12px}
+.tm-role-badge{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap}
+.tm-role-badge.dev{background:linear-gradient(135deg,#4c1d95,#7c3aed);color:#ddd6fe}
+.tm-role-badge.sup{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#bfdbfe}
+.tm-role-badge.mem{background:#1e293b;color:#94a3b8;border:1px solid #334155}
+.tm-status-dot{display:inline-flex;align-items:center;gap:5px;font-size:12px}
+.tm-status-dot::before{content:'';width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.tm-status-dot.active::before{background:#22c55e;box-shadow:0 0 6px #22c55e88}
+.tm-status-dot.inactive::before{background:#ef4444}
+.tm-status-dot.active{color:#22c55e}
+.tm-status-dot.inactive{color:#ef4444}
+.tm-action-btns{display:flex;gap:6px;flex-wrap:nowrap}
+.tm-btn{border:0;border-radius:8px;padding:5px 11px;font-size:12px;font-family:inherit;cursor:pointer;font-weight:600;transition:opacity .15s,transform .1s;white-space:nowrap}
+.tm-btn:hover{opacity:.85;transform:translateY(-1px)}
+.tm-btn.info{background:linear-gradient(135deg,#0f1f4b,#1e3a8a);color:#93c5fd;border:1px solid #1e3a8a}
+.tm-btn.perm{background:linear-gradient(135deg,#4c1d95,#7c3aed);color:#ddd6fe}
+.tm-btn.acct{background:linear-gradient(135deg,#0f172a,#1e293b);color:#94a3b8;border:1px solid #334155}
+.tm-btn.danger{background:linear-gradient(135deg,#7f1d1d,#dc2626);color:#fca5a5}
+.tm-btn.success{background:linear-gradient(135deg,#14532d,#16a34a);color:#bbf7d0}
+.tm-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+/* Modal styles */
+.tm-modal{display:flex;flex-direction:column;width:min(820px,95vw);max-height:min(92vh,860px);border-radius:18px;overflow:hidden;background:var(--bg,#0b1226)}
+.tm-modal-head{padding:16px 22px 12px;border-bottom:1px solid var(--bd);flex-shrink:0;display:flex;align-items:center;gap:12px}
+.tm-modal-head h3{margin:0;font-size:16px;flex:1}
+.tm-modal-body{flex:1;overflow-y:auto;padding:18px 22px;display:flex;flex-direction:column;gap:14px;min-height:0}
+.tm-modal-foot{padding:12px 22px;border-top:1px solid var(--bd);display:flex;gap:10px;flex-shrink:0;justify-content:flex-end;flex-wrap:wrap}
+.tm-modal-foot button{padding:10px 24px;border-radius:9px;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:opacity .15s}
+.tm-modal-foot .tm-save{background:var(--pri,#3b82f6);color:#fff}
+.tm-modal-foot .tm-cancel{background:var(--soft);color:var(--tx)}
+.tm-modal-foot button:disabled{opacity:.45;cursor:not-allowed}
+/* Permissions table */
+.tm-perm-section{margin-bottom:16px}
+.tm-perm-section-title{font-size:13px;font-weight:700;color:#93c5fd;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #1e3a8a44;display:flex;align-items:center;gap:8px}
+.tm-perm-table{width:100%;border-collapse:collapse;font-size:13px}
+.tm-perm-table th{padding:8px 10px;text-align:center;color:#64748b;font-size:11px;font-weight:600;background:#0a143366;white-space:nowrap}
+.tm-perm-table th:first-child{text-align:right}
+.tm-perm-table td{padding:8px 10px;border-bottom:1px solid #1e3a8a22;text-align:center}
+.tm-perm-table td:first-child{text-align:right;color:#cbd5e1;font-size:13px}
+.tm-perm-table tr:last-child td{border-bottom:none}
+.tm-perm-table tr:hover td{background:#0f1f4b44}
+/* Toggle Switch */
+.tm-toggle{position:relative;display:inline-block;width:40px;height:22px;flex-shrink:0}
+.tm-toggle input{opacity:0;width:0;height:0;position:absolute}
+.tm-toggle-slider{position:absolute;inset:0;background:#1e293b;border-radius:22px;cursor:pointer;transition:background .2s;border:1px solid #334155}
+.tm-toggle-slider::before{content:'';position:absolute;width:16px;height:16px;right:2px;top:2px;background:#64748b;border-radius:50%;transition:transform .2s,background .2s}
+.tm-toggle input:checked+.tm-toggle-slider{background:#1e3a8a;border-color:#2563eb}
+.tm-toggle input:checked+.tm-toggle-slider::before{transform:translateX(-18px);background:#3b82f6}
+.tm-toggle input:disabled+.tm-toggle-slider{opacity:.4;cursor:not-allowed}
+/* Detail view */
+.tm-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tm-detail-item{background:var(--soft);border-radius:10px;padding:10px 12px}
+.tm-detail-item span{display:block;font-size:11px;color:var(--mut);margin-bottom:4px}
+.tm-detail-item b{font-size:14px;color:var(--tx)}
+.tm-perm-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tm-perm-chip{background:#1e3a8a44;border:1px solid #2563eb33;border-radius:20px;padding:3px 10px;font-size:11px;color:#93c5fd}
+.tm-perm-chip.none{background:#1e293b;border-color:#334155;color:#475569}
+.tm-audit-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:13px}
+.tm-audit-item:last-child{border:0}
+.tm-audit-dot{width:8px;height:8px;border-radius:50%;background:#3b82f6;margin-top:4px;flex-shrink:0}
+/* Copy permissions */
+.tm-copy-box{background:var(--soft);border-radius:12px;padding:14px}
+.tm-copy-box label{display:block;font-size:12px;color:var(--mut);margin-bottom:6px}
+.tm-copy-box select{width:100%;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:9px 12px;color:var(--tx);font:inherit}
+/* Account management */
+.tm-acct-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--bd);gap:12px}
+.tm-acct-row:last-child{border:0}
+.tm-acct-row span{font-size:13px;color:var(--mut)}
+.tm-acct-row b{font-size:13px;color:var(--tx)}
+.tm-locked-notice{background:#0f1f4b;border:1px solid #2563eb33;border-radius:10px;padding:12px 14px;font-size:13px;color:#93c5fd;display:flex;align-items:center;gap:8px}
+/* Loading spinner */
+.tm-loading{display:flex;align-items:center;justify-content:center;gap:10px;padding:32px;color:var(--mut);font-size:14px}
+.tm-spin{width:22px;height:22px;border:2px solid var(--bd);border-top-color:var(--pri);border-radius:50%;animation:lgspin .7s linear infinite}
+/* Empty state */
+.tm-empty{text-align:center;padding:32px 16px;color:var(--mut);font-size:14px}
+.tm-empty-icon{font-size:36px;margin-bottom:10px}
+/* Alert box */
+.tm-alert{border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:8px}
+.tm-alert.info{background:#1e3a8a22;border:1px solid #2563eb44;color:#93c5fd}
+.tm-alert.warn{background:#78350f22;border:1px solid #d9770644;color:#fbbf24}
+.tm-alert.success{background:#14532d22;border:1px solid #16a34a44;color:#86efac}
+.tm-alert.danger{background:#7f1d1d22;border:1px solid #dc262644;color:#fca5a5}
+/* Permission summary bar */
+.tm-perm-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tm-perm-count{background:var(--soft);border:1px solid var(--bd);border-radius:20px;padding:3px 12px;font-size:12px;color:var(--tx)}
+.tm-perm-count b{color:var(--pri)}
+/* Mobile */
+@media(max-width:700px){
+ .tm-detail-grid{grid-template-columns:1fr}
+ .tm-action-btns{flex-wrap:wrap}
+ .tm-tbl th,.tm-tbl td{padding:8px 8px;font-size:12px}
+ .tm-modal{width:100vw;max-height:100dvh;border-radius:0}
+}
+#md:has(.tm-modal){place-items:center;padding:16px;box-sizing:border-box}
+#md #mb:has(.tm-modal){width:min(820px,calc(100vw - 32px));max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);height:auto;padding:0;margin:0;background:var(--card);border:1px solid var(--bd);border-radius:18px;display:flex;flex-direction:column;overflow:hidden;box-sizing:border-box;min-height:0}
+#md #mb .tm-modal{width:100%;max-width:100%;max-height:none;min-height:0;flex:1 1 auto;box-sizing:border-box;border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+#md #mb .tm-modal-head,#md #mb .tm-modal-foot{flex-shrink:0}
+#md #mb .tm-modal-body{flex:1 1 auto;min-height:0;overflow-y:auto}
+@media(max-width:600px){
+ #md:has(.tm-modal){padding:0}
+ #md #mb:has(.tm-modal){width:100vw;max-width:100vw;max-height:100dvh;border-radius:0}
+ #md #mb .tm-modal{border-radius:0}
+ .tm-perm-table{font-size:12px}
+ .tm-perm-table th,.tm-perm-table td{padding:6px 6px}
+}
 </style><script>
 function themeSeg(){var d=new Date(),h=d.getHours();if(h<6)d=new Date(d-864e5);return(h>=6&&h<18?"light":"dark")+"@"+d.toDateString()}
 function autoTheme(){var h=new Date().getHours(),t=(h>=6&&h<18)?"light":"dark",m=null;try{m=JSON.parse(localStorage.getItem("thm")||"null")}catch(e){}
@@ -488,24 +625,6 @@ autoTheme();setInterval(autoTheme,60000);document.addEventListener("visibilitych
  #md #mb .bgm-foot{padding:10px 16px}
  #md #mb .bgm-foot .btn{flex:1 1 0;min-width:0}
 }
-</style>
-<style id="login-fix-css">
-#lg{align-items:flex-start;justify-content:center;min-height:100vh;min-height:100dvh;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
-#lg .lgc{margin:auto;width:min(400px,100%);max-width:100%;padding:24px;gap:12px;border-radius:18px}
-.lgi{width:56px;height:56px;border-radius:16px}.lgi svg{width:32px;height:32px}
-.lgc h2{font-size:21px}.lgc h3.lgt{font-size:14px}
-.lgf label{margin-bottom:4px}
-.lgf input[type=text],.lgf input[type=password]{padding:11px 14px;min-height:46px;font-size:15px}
-.lgb{min-height:48px;padding:12px;font-size:16px;border-radius:12px}
-.lgm{min-height:0}.lgm:empty{display:none}
-.lgm.er,.lgm.ok{padding:9px 12px;border-radius:10px;font-size:13px;line-height:1.5}
-.lgm.er{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4)}
-.lgm.ok{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.4)}
-.lgb.ld{pointer-events:none}
-.lgfoot{margin-top:-2px}.lgfoot+p{margin-top:-4px;line-height:1.5}
-#md .box{max-height:calc(100dvh - 32px);overflow-y:auto}
-@media(max-height:680px){#lg .lgc{padding:16px;gap:9px}.lgi{width:44px;height:44px}.lgi svg{width:26px;height:26px}.lgc h2{font-size:18px}.lgf input[type=text],.lgf input[type=password]{min-height:42px;padding:9px 12px}.lgb{min-height:44px}}
-@media(max-width:480px){#lg{padding:12px}#lg .lgc{padding:18px;border-radius:16px}.lgf input[type=text],.lgf input[type=password]{font-size:16px}}
 </style>
 </head>
 <body>
@@ -627,7 +746,7 @@ function sbAI(){var f=async function(q,o){var s=await sbSess(),im=((o&&o.images)
 var OH="9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b",ENC="+fwrIZoqcirEtpY1b9IUOjjLEYwi7KzCqDCsbSa4Dpe/ygx0u38ypNBnJW4wpFmQiY4RsXsb6XCnZKrqfOfxFn0XisC8QAv0XzF/d3FiqkVNPQFhSAdFQ+Eiy4Lm/9RmGfL9dLCJoPFsu6HKdxbjtlbqUQhJu7GQPEpihoWXhOcnEC+EOHMSXWtGa57K6H4sQiX9J2DPyk4GgUwddWtnWYCnX611T1amU8sTUU6aVNqkJuql/mFa6jxWxWy61iYZryyMPWk0sdqmikwgVjMpC2aGVAyZdUfKmee96ui1/4NXUMpeT4NF0RagHGJCzDZAZHeP14gGfeK7eZkwq8BBVTWJtFyWv/txZL37MowYgrMGSDsp+G48XM3rhKyxpgOqupVycTNgYR0NG/8mIJZoEEuG9t+SpWKZiZS+pVUTvpKhI13E+uI3AkDZ6VbJ4vPkhXAAkwxqaL/nTmo54mTnI5prmzuEWVLNElcELrBqjbBivp82qm0uvuPj4r01HOki4g8sQRve2F/VPufJiQQIHbcRjjKWel/X/wr950F8kbjlA8WObVviOccu4YjTnT7enRg3ler3bqYuLlGG0EkyiaTkvTy1lcL71Oo4SdjPlPaLt+EF49kRejHaP1EQ66oZ/4ML23txWS3Qu9bpseHC8vbbLyaH0v97wbLU9g0ANM4iiVvSQgVw2vxona3HhNBmlsmTavRwxqSVO9MDcGKPL9KIpmCFnLFMgs9v5ibvuSiEuyvP8IC6hzWW5gktcYLXMAAhARaytN2+3lKsmGu8NQcG1eLVxJzyCA6cXbkAq3tZkoXu3iU/455qeM8Z5cLLKUcLgbs2gFjuiqii2USiTTY+rtzUDJuU9KscrtqoA9JjTzEi1E9IObt47Y5BgoKgUjfz31ugD8mR9yz4ozJR3uO8KuECzBZONRip39piD996spvkdZiH9fULm9VFWSXyhAN890LaSL2M9VGkXeT3jv2ULP+C/P8m/UvOyC9mduEV56ZOyI7k0Rzuh/T5PY+BL4O4wDTzpt0G+PG9W6KBMImELzHQfy/mWDulb4MdM40P6hg+HMsFH//nS0flrgAKyP2oJPsTJKyQ2rfUpGa0W6BhnDKu4SP3YTAfGLBdJhOnNrsckOeQ1uapCF3u3Yt9XoV30TrrtsWCq5QNupZiyv09jAYQyVBQ1KV1eorvnEKNaBk812Vw9OG/Guw4QlVhSCwEjFMau0tSHy2TOlDSFVJX4Kn7KeU6l3AXanCkoWVQE8byMYLcSw7bRTYryOCd5n9qs9LOph6kn/ALxNUdYlF8znWB9pzwBr/To2We4/Epk1EzEjNNIfSY0/uRRYYnLBeSlz3OPAS1a/X2EfJMNyROErrYeDtBKUI13ngcNlldtuphKkWClcC62gmH1dR/uxaxaV3hz45S+qjDyoIdJYdSf6VwRwWr1ibnUZgfhJVmoxXSOyK7ufLF9mYRvwe9TCVLTO2vNxKE5/MEgFsU/gqQ6PiBSECVtzqwNBF7Xod1hZwAp9s7Zx0OxuowsjSkB698GO437vCd5300VAjk+0mG2HGJt9SYaQNs+zmXFEhWwUC9TL8JFes7+DKhQkhMuxnJ/JXcmMiwBsH1Q8mgtwva0TNkawYKFieCd6BmFZd9VmYx9RLUKnv1r6N4fWpA4WqrRoyABflyEDbXst9EVfkBXPQPL+EvDZPB/loxkprFr0I=";var ENM={"محمود نادر محمود عوض":"qPcgL58I/glPe2bb3H0VAMA/QiwSfEpI1cdDPtSFOo83fO5lOKSNvmnczY7NvVKnX2c+KZzFCMFyWR35Q8p+qnhV6PAlwZCCGpRKhX1JwcKiCG/neQDw4AJjkPZ3B9qn4Yf3QpdhPKGjL9WqSsNLuEV2Sso/oeqcL6rxbKM3qw==","محمد علي عنتر جلال":"g1j1N+etsMz1/FIjBUwNAiyPi5DobPXlQdT+bQjrt2gicVGFCmHJSf4JulUnrRwYKbz3MdTKh2bh49DLjXOLLdbYsPSuQ8OuLJA1VrbvqbqDZ4CjhLVED8T06rXQJiVZWrGrUTnijzioi1mVowpM33QgWFbkyJE=","محمد سامي سيد":"MRgxomx8B58p/U346p7Cvbm6Ng4PnqcIQadYTJvoy4Ep12TXQpODMRwMicndXlG1gSc67EjoszMwT29O1m8bu6+C1Z+iaP9jayAP0zq13SMJEfn5/Grqnh5hrCKPIGGcT8udw5d6KfcUe052+UBMwXZtsOU=","محمد حسين عبد المبدي":"VcQouU0axn7V30m4pChhtezxuI9XVz9cyNxUifpqZJc7F7Tg0meLPCdSVB7D3KAOgFqaDPkw+KSvRPy040YqaXkrg+2nisGouGbhpdXOxm3YMi2bAPJR9sqli5OcH8eghofJVMI64KwYnx+mn2XRpHalWMwRk2n7nRzkxI0=","محمود صالح عبدالرازق صالح":"+KpftVTSAUQ7LRowo/sOOrkU2RSWzBAHF5cTcRXKprzmvpVj6AdANvNRyA2KSjlSVRRrv4yu1DzchEu8tvcVrcB/9T9f7icRw6cBhfbuiK5E8TFql6XNenFIjOMgNGUFuC7Qk8S6idxA1EVVWPFAPC4UwiSRQ3sAMqm/QtId3fhNF3e5fHiKzp5ncyyHMQ==","محمد ناصر عبدالحميد":"HQl4OhryESalD4GwJDvtdJdbertEThPInAGas94G5XLxFX1xfXyNPtGgxF3+C6c60SEAjcjkC+CHW447VN49NG8LH9wZlNswxR7pI6JuwbF3Lu0qx31fT09pwAFTKg46NtDm3700CusrMtXtgVgLTIScGBKuKbT6DZA=","ريمون نادي زخاري":"yNwnM8qRT1zp6BIkYEKS2ThU8WK8YBUtTrIlYDGw+iM5zcRjy/68UOWnNwN5fSLfzjEWKNVpbnB3wIAP5smGPf5NGHLYySccIUhDFCo/eelebbbXNDmh7hh/VBYzwmvehX7/u30V+xh0vu+r7u0RUmm7QwBCyijTmQ==","أمير وائل شحاته":"TBXgXlKIWBxORQUn1NqlPwQSbyTqCN2tgbflOan6SXYV+lJI/Wgz4WdhHXgPLe+37r/R5XUxlq5FkOwBwzpBue25f9neoHBTkBv3ZE0D+MKMvwFw8Xg21s3X2hbj575PJgyZkDTkaW3xRAMOUEneF3hx","خالد جاد عبيد الله خالد":"SS02+KhkcX0JbkHNoyYXP14mBZWP89ldQ8xYK86cq68hdXpR2NXcrz/6P8Q4p+O7dTL9hWgD023gn8H0sNw0Cr+HcZG8iQBsy9n/WbsMPWd9rFQTGovMLwwCtadkP/ofdHQ9znnywQ92h/sEmXt8QClquMe8L4q3JGy7CJ61xw==","أحمد حلمى فاروق":"uTFGLz3YYKsMm5pk75kvRp0dBHru3sYe/ijjrOWl0Qw+tD7iMjhEyaHSVNIAE8IbWsDK+xOesBwUKkCe3Mvf71bcmn29+A4ytUymIjqoOFDPE19PB/mWhYv5bCohwpD7osSmuPxefV/aEo8rnIY/xQhwhYvA3w==","الحسن علي محمد محمود":"5myEC+owLar9mVmCKXJ05XzW25GzNUEbN9eMv5ryeSICPzUAfyc1UP9e1x8AycZ75kZNWSghVlJ65p6AZsEDSbcmSrGXx8+yn5fkw3xRPNaDZCdOJYIkPQ+4/YzaXH2yDaC5CW2aqBRSBaM2mqbT0w92+grbL+6QvLG1tkE=","رامز طارق محمد":"6ki62LQWrWc6y2AuYUpvcF5nC5fVKKHad4xv2Zjoz3dEMsuNR3weFNmLOWQTskdpxpy17HhANzWVMUVQhpiZf+uFs5ou3rRFMMhqkfULqCaycjn3hDHCK7elb+bB1KrnqZucJQAA2PYxezicjXXJStmc","السيد عبداللاه السيد":"i4cDGTfxAjpEiJuIWjeIGDeLQ7zygP4AUkzfTE6gTwOWn2rhqnNrSoTQWsyzqGdhPsHt8gJ6crZKi2EAn9RqjUt7SJTy2tjOc8YYi38tNgTbPkT918Q6jPeEZVkYXgSbMVJOcS6vQfSkOlQZrxHI21USMEaneL1YUOrGsmQxCx4=","أيمن منصور محمد":"CR9CBze4i1SzwTPZpo0pTgbvxjoIOgbm522ZS2HKl3ce4hb+6cq6fuMx72rMP6bZiYwAcOMg6sJD5IXa3SG8oaESI8jOjQCo4TATsRSEr83iQaZWhofzDWX16nJJqGp+OUA1gwsR7+oqZ5dXIucALUUW1+CuN6UI","محمد ضياء علي":"gntGnuJe+yVwddxQa6ntC4DtbLNtEUleJF5pF9pYIQd48m3aoFajsNRCXZqC+fMpFYlhtYfqENF24dx3ckYPwm0oFI9iVP8+DA9i6C+/JV0ikvT+DntdqpsIiqxC/WhsZPHUJgC7D8lTCIEQEDc=","أحمد هاشم محمد عبدالمنعم":"8SfsenEf0CEUxHqJXqCfHS0LXDvNTQHZToJqQYbyVLGagfpfRHkQYdp23PYrv82Nly7Y27+XYN3+Y/QiJShXtHutTDuwTvoGm2DRnjGZ8Lk8hzOiKREyParLEi3IElDt9Kc3+BSUlZfsju4H+G+hlTO4dY6qjjOICCh9/EPo1Sh/aQ=="};var HP={"د. محمود محروس":"9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b","م. دعاء":"9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b","رامز طارق محمد":"9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b","محمد ناصر عبدالحميد":"9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b","محمود نادر محمود عوض":"636b3392e7d8057963a44e9712871eeb73627adb9f3dd67f21dc03247a9096fd","محمد علي عنتر جلال":"9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b","محمد سامي سيد":"66c77f943981d53c04e7cf35a6af047092262347425eb1ffbc357bc117169a24","محمد حسين عبد المبدي":"4b29030130a6bb41c6e2dc43951b04692367d2db80d919911815d82aca91dabe","محمود صالح عبدالرازق صالح":"17066212fbec374089c71fc8d2105455cc50a06714e2326c48e5eb5fd77c8f7b","محمد ضياء علي":"d66a051c9318c5aee083065e5fb8713354a5ee42a241be31ff3eb9cb6eff0f5a","أمير وائل شحاته":"97e387f295485615768efff982d5cc870b7ee81a41b42aa2b288fca7708ec697","خالد جاد عبيد الله خالد":"a81f3e3b22f20826f8262daf6b0053cdd9676d9970fc3539652ed2b278b62561","أحمد حلمى فاروق":"5a2aaa59902b2c3e268c6397443b06419bb26027ce8a168f6a02a0f9ddfbc5d5","الحسن علي محمد محمود":"6b69e857fb9f1020303b038ff3534550cde92fac00184ef58e24ac3e8374d4f0","السيد عبداللاه السيد":"415fbe67f4b3cc309a8bf8aa9abd89ab16588624d0ae4ca3f10978f70395962e","أيمن منصور محمد":"6bbfb0d6a6407a06ca0bc325f76bfc377c4cfacb2be6dbd7ce7828dbb39ae6bc","أحمد هاشم محمد عبدالمنعم":"38d12676c08f3812ff10a5296495894194321656e7a71837a015ea82dd1b6486","ريمون نادي زخاري":"a7743c16883faadcd9ab7e39413f3c0109b615743b9e85da9df83b56130f1d26"},LEAD="م. دعاء",SUP="د. محمود محروس",CH=null,MEM=["رامز طارق محمد","محمد ناصر عبدالحميد","محمود نادر محمود عوض","محمد علي عنتر جلال","محمد سامي سيد","محمد حسين عبد المبدي","محمود صالح عبدالرازق صالح","محمد ضياء علي","أمير وائل شحاته","خالد جاد عبيد الله خالد","أحمد حلمى فاروق","الحسن علي محمد محمود","السيد عبداللاه السيد","أيمن منصور محمد","أحمد هاشم محمد عبدالمنعم","ريمون نادي زخاري"],CT=null,own=false;
 var OLDN=["محمد","أحمد محمود","محمود علي","إبراهيم خالد","عبد الرحمن أحمد"],NA="غير مُسند";
 var START="2026-09-01",END="2027-05-31";
-var PAGES=[["supervisors","👑 المشرفون"],["home","الرئيسية"],["tasks","المهام"],["parts","المكونات"],["cost","التكاليف"],["inst","التركيب"],["robot","حالة الروبوت"],["tests","الاختبارات"],["attendance","الغياب والحضور"],["log","سجل الحركات"],["team","الفريق"]];
+var PAGES=[["home","الرئيسية"],["tasks","المهام"],["parts","المكونات"],["cost","التكاليف"],["inst","التركيب"],["robot","حالة الروبوت"],["tests","الاختبارات"],["attendance","الغياب والحضور"],["log","سجل الحركات"],["team","الفريق"],["supervisors","👑 المشرفون"],["teammanage","🛡️ إدارة الفريق"]];
 var PH=[["التصميم والنمذجة","#22a06b"],["التنفيذ الميكانيكي","#3b82f6"],["البرمجة والأتمتة","#8b6cf0"],["الاختبار والتوثيق","#f5b83d"]];
 var T0=[["دراسة المتطلبات واختيار المكونات","محمد",0,"d","2026-09-15"],["تصميم الدوائر الكهربائية والمنظمات","أحمد محمود",0,"d","2026-10-10"],["تصميم الهيكل بالنمذجة ثلاثية الأبعاد","إبراهيم خالد",0,"d","2026-10-25"],["شراء المكونات الأساسية","محمد",0,"d","2026-11-05"],["بناء الهيكل وتثبيت المحركات والعجلات","عبد الرحمن أحمد",1,"p","2026-11-30"],["تركيب حساسات العوائق والحواف","إبراهيم خالد",1,"p","2026-12-10"],["محطة الشحن والتفريغ الذاتي","عبد الرحمن أحمد",1,"n","2027-03-15"],["برمجة الحركة وتجنب العوائق","محمود علي",2,"p","2027-01-10"],["برمجة العودة التلقائية للشحن","محمود علي",2,"n","2027-02-01"],["تطبيق الهاتف (IoT)","أحمد محمود",2,"p","2027-02-20"],["الاختبار الشامل في بيئة حقيقية","محمد",3,"n","2027-04-30"],["التوثيق الفني وملف الميزانية","محمد",3,"n","2027-05-20"]];
 var B0=[["لوحة ESP32 (واي فاي وبلوتوث)",2,550],["درايفر موتور L298N",2,175],["محركات N20 مع العجلات",4,250],["حساسات HC-SR04",4,100],["مستشعرات IR للحواف",3,120],["بطارية ليثيوم أيون",2,600],["لوحة حماية BMS",2,150],["منظم جهد LM2596",3,100],["وحدة شحن ليثيوم",1,450],["موتور شفط مصغر",2,1500],["عجلة توجيه حرة",2,75],["ألواح MDF وهيكل الروبوت",3,500],["محطة الشحن وميكانيكا التفريغ",1,8500],["موديول ريلاي مزدوج",3,150],["شاشة OLED / LCD",2,400],["أسلاك وموصلات معزولة",5,300],["شيرنك وأفيز ومواد تثبيت",4,200],["صندوق تحكم ومشتتات حرارية",2,750],["طابعة لاصقات ومستلزمات أسلاك",1,1240],["شنيور لاسلكي مع ملحقات",1,3500],["أدوات لحام وقياس",1,3500],["طباعة ثلاثية الأبعاد للنماذج",1,15000],["تطوير تطبيق الهاتف",1,15000],["التشغيل التجريبي والاختبارات والتغليف",1,37290]];
@@ -1025,12 +1144,30 @@ home:function(){
  var kp=function(href,ic,col,v,lab,sub){return'<a class="hm-k" href="#'+href+'"><div class="ic" style="background:'+col+'">'+ic+'</div><div><b>'+v+'</b><span>'+lab+(sub?' · '+sub:'')+'</span></div></a>'};
  var tv=function(v){return n?fm(v):"—"},pv=function(v){return np?fm(v):"—"};
 
- var h='<div class="hm-hero"><div><h2>'+hmGreet()+'، '+esc(me)+' 👋</h2><p class="sub">روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة<br><span dir="ltr">Smart Autonomous Cleaning Robot – Self Operation Vacuum Cleaner</span></p>'
+ /* === SUPERVISORS FIRST SECTION === */
+ var supHtml='<div style="margin-bottom:14px">'
+  +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">'
+  +'<div style="display:flex;align-items:center;gap:10px">'
+  +'<div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#8b5cf6);display:grid;place-items:center;font-size:20px;box-shadow:0 0 20px rgba(37,99,235,.4)">👑</div>'
+  +'<div><div style="font-size:17px;font-weight:700;color:#a5b4fc">المشرفون والمطور</div>'
+  +'<div style="font-size:12px;color:#64748b">الفريق القيادي للمشروع</div></div>'
+  +'</div>'
+  +'<a class="hm-lnk" href="#supervisors" style="color:#818cf8;font-size:13px">لوحة المشرفين الكاملة ←</a>'
+  +'</div>'
+  +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">'
+  +[["م. دعاء","👩‍💼","مهندسة ومشرفة المشروع","VIP • Project Supervisor","linear-gradient(135deg,#2563eb,#06b6d4)","linear-gradient(135deg,rgba(15,31,77,.8),rgba(10,20,51,.95))","rgba(37,99,235,.4)","#bfdbfe"],
+    ["د. محمود محروس","👨‍🏫","الدكتور المشرف على المشروع","VIP • Academic Supervisor","linear-gradient(135deg,#06b6d4,#0891b2)","linear-gradient(135deg,rgba(8,36,55,.8),rgba(10,20,51,.95))","rgba(6,182,212,.4)","#a5f3fc"],
+    ["محمد علي عنتر جلال","👨‍💻","Developer & System Administrator","DEV • Full Access","linear-gradient(135deg,#8b5cf6,#ec4899)","linear-gradient(135deg,rgba(30,10,70,.8),rgba(10,20,51,.95))","rgba(139,92,246,.4)","#ddd6fe"]
+   ].map(function(s){
+    return '<div style="background:'+s[5]+';border:1px solid;border-color:rgba(255,255,255,.08);border-radius:16px;padding:20px;position:relative;overflow:hidden;cursor:pointer;transition:transform .22s,box-shadow .22s" onclick="location.hash=\'#supervisors\'" onmouseover="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 16px 48px '+s[6]+'\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'\'"><div style="position:absolute;top:0;right:0;left:0;height:3px;background:'+s[4]+'"></div><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="width:52px;height:52px;border-radius:50%;background:'+s[4]+';display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 0 20px '+s[6]+';position:relative"><span class="top-online-dot" style="bottom:1px;right:1px"></span></div><div><div style="font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;background:rgba(255,255,255,.1);color:'+s[7]+';letter-spacing:.4px;display:inline-block;margin-bottom:4px">'+esc(s[3])+'</div><div style="font-size:16px;font-weight:700;color:#f0f9ff">'+esc(s[0])+'</div></div></div><div style="font-size:13px;color:#94a3b8;line-height:1.5">'+esc(s[2])+'</div></div>';
+   }).join("")
+  +'</div></div>';
+ var h=supHtml+'<div class="hm-hero"><div><h2>'+hmGreet()+'، '+esc(me)+' 👋</h2><p class="sub">روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة<br><span dir="ltr">Smart Autonomous Cleaning Robot – Self Operation Vacuum Cleaner</span></p>'
   +'<div class="hm-meta"><span>حالة المشروع: <span class="pill '+st[1]+'">'+esc(st[0])+'</span></span>'
   +'<span>آخر تحديث: <b>'+(last?dt(last):"لا توجد حركات مسجّلة")+'</b></span></div></div>'
   +'<div><div class="hm-meta">نسبة الإنجاز الكلية (من المهام)</div>'+(n?'<div class="hm-big">'+fm(pr)+'٪</div><div class="hm-bar"><i style="width:'+pr+'%"></i></div><div class="hm-meta">'+fm(c.d)+' مكتملة من '+fm(n)+' مهمة</div>':'<div class="hm-big">—</div><div class="hm-bar"><i style="width:0"></i></div><div class="hm-meta">لا توجد مهام مسجّلة بعد</div>')+'</div></div>';
  /* KPIs */
- h+='<!--ATT-->'+'<div class="hm-kg">'
+ h+='<div class="hm-kg">'
   +kp("reports","📈","#2563eb",n?fm(pr)+"٪":"—","نسبة الإنجاز")
   +kp("tasks","📋","#0ea5e9",tv(n),"إجمالي المهام")
   +kp("tasks","✅","#22a06b",tv(c.d),"مكتملة")
@@ -1086,26 +1223,29 @@ home:function(){
    :'<div class="demo">لم يتم تحديد الميزانية'+(own?' — حدّدها من صفحة التكاليف.':' — يحددها المسئول.')+'</div><div class="hm-fin" style="margin-top:10px">'+fb("المصروف الفعلي",fm(ac)+EG)+fb("غير المدفوعة",fm(due)+EG)+'</div>')+'</div></div>';
  /* robot + activity */
  var fd=hmFeed();
- h+='<div class="card"><div class="hm-h"><h3>حالة الروبوت</h3><a class="hm-lnk" href="#robot">صفحة حالة الروبوت ←</a></div><div id="hm-rb">'+hmRobotHtml()+'</div></div>';
+ h+='<div class="hm-g2"><div class="card"><div class="hm-h"><h3>حالة الروبوت</h3><a class="hm-lnk" href="#robot">صفحة حالة الروبوت ←</a></div><div id="hm-rb">'+hmRobotHtml()+'</div></div>'
+  +'<div class="card"><div class="hm-h"><h3>آخر النشاطات</h3>'+(own?'<a class="hm-lnk" href="#log">سجل الحركات ←</a>':'')+'</div>'
+  +(fd.length?fd.slice(0,3).map(function(x){return'<div class="upd">'+esc(x.t)+'<small>'+esc(x.w||"—")+' · '+dt(x.ts)+'</small></div>'}).join(""):'<div class="hm-empty">لا توجد نشاطات بعد.</div>')+'</div></div>';
  /* quick links */
  h+='<div class="card"><h3>اختصارات سريعة</h3><div class="hm-quick">'+[["tasks","📋","المهام"],["parts","🔩","المكونات"],["inst","🛠️","التركيب والتنفيذ"],["tests","🧪","الاختبارات"],["cost","💰","التكاليف"],["attendance","👥","الغياب والحضور"],["supervisors","👑","المشرفون"],["robot","🤖","حالة الروبوت"]].map(function(q){return'<a href="#'+q[0]+'"><i>'+q[1]+'</i>'+q[2]+'</a>'}).join("")+'</div></div>';
  /* attendance mini section */
  var attTot={present:0,absent:0,late:0,excused:0};D.attendance.forEach(function(r){if(attTot[r.status]!==undefined)attTot[r.status]++});
  var attTotal=attTot.present+attTot.absent+attTot.late+attTot.excused,attRate=attTotal?Math.round((attTot.present+attTot.late)*100/attTotal):0;
  var myAttRecs=me?D.attendance.filter(function(r){return r.member_name==me}).sort(function(a,b){return b.meeting_date>a.meeting_date?1:-1}).slice(0,3):[];
- var aTile=function(ic,n,l,c){return'<div style="text-align:center;background:'+c+'22;border:1px solid '+c+'66;border-radius:12px;padding:12px 6px"><div style="font-size:18px">'+ic+'</div><div style="font-size:26px;font-weight:700;color:'+c+';line-height:1.2">'+fm(n)+'</div><div style="font-size:12px;color:#94a3b8">'+l+'</div></div>'};
- var attBtns='<a class="btn" href="#attendance" style="text-decoration:none;font-weight:700;padding:11px 18px;background:linear-gradient(135deg,#16a34a,#15803d)">'+(isAttAdmin()?'➕ تسجيل الحضور والغياب':'👤 سجلي الشخصي')+'</a>'+(isAttAdmin()?'<a class="btn g" href="#log" style="text-decoration:none;padding:11px 18px">📋 سجل الحضور (في سجل الحركات)</a>':'');
- var attHtml='<div class="card" id="home-att" style="margin-bottom:16px;border:2px solid rgba(34,197,94,.35);background:linear-gradient(135deg,rgba(5,46,22,.45),rgba(10,20,51,.6))">'
-  +'<div class="hm-h" style="flex-wrap:wrap"><h3 style="color:#86efac;font-size:18px">👥 الحضور والغياب</h3><div style="display:flex;gap:8px;flex-wrap:wrap">'+attBtns+'</div></div>'
-  +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:12px">'
-  +aTile("✅",attTot.present,"حاضر","#22c55e")+aTile("❌",attTot.absent,"غائب","#ef4444")+aTile("🕐",attTot.late,"متأخر","#f59e0b")+aTile("📋",attTot.excused,"بعذر","#a78bfa")
+ h+='<div class="card" style="border:2px solid rgba(34,197,94,.2);background:linear-gradient(135deg,rgba(5,46,22,.4),rgba(10,20,51,.6))">'
+  +'<div class="hm-h"><h3 style="color:#86efac">👥 الحضور والغياب</h3><a class="hm-lnk" href="#attendance" style="color:#4ade80">عرض السجل الكامل ←</a></div>'
+  +'<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">'
+  +'<div style="text-align:center;background:rgba(34,197,94,.1);border-radius:8px;padding:8px"><div style="font-size:22px;font-weight:700;color:#22c55e">'+fm(attTot.present)+'</div><div style="font-size:11px;color:#64748b">حاضر</div></div>'
+  +'<div style="text-align:center;background:rgba(239,68,68,.1);border-radius:8px;padding:8px"><div style="font-size:22px;font-weight:700;color:#ef4444">'+fm(attTot.absent)+'</div><div style="font-size:11px;color:#64748b">غائب</div></div>'
+  +'<div style="text-align:center;background:rgba(245,158,11,.1);border-radius:8px;padding:8px"><div style="font-size:22px;font-weight:700;color:#f59e0b">'+fm(attTot.late)+'</div><div style="font-size:11px;color:#64748b">متأخر</div></div>'
+  +'<div style="text-align:center;background:rgba(139,92,246,.1);border-radius:8px;padding:8px"><div style="font-size:22px;font-weight:700;color:#a78bfa">'+fm(attTot.excused)+'</div><div style="font-size:11px;color:#64748b">بعذر</div></div>'
   +'</div>'
-  +(attTotal?'<div style="margin-bottom:10px"><div class="row" style="font-size:13px"><span style="color:#94a3b8">نسبة الحضور الإجمالية</span><b style="color:#22c55e">'+attRate+'٪</b></div><div class="hm-bar s" style="margin:6px 0 0"><i style="width:'+attRate+'%;background:#22c55e"></i></div><div style="font-size:12px;color:#64748b;margin-top:4px">إجمالي السجلات: '+fm(attTotal)+'</div></div>':'')
-  +(me&&myAttRecs.length?'<div style="font-size:13px;color:#86efac;margin-bottom:6px">آخر سجلاتك (<b>'+esc(me)+'</b>):</div>'
-   +myAttRecs.map(function(r){return'<div class="hm-t" style="margin-bottom:4px"><div>'+esc(r.meeting_date||"")+'</div><span class="pill '+ATT_STATUS_CSS[r.status]+'">'+esc((ATT_STATUS_ICON[r.status]||"")+" "+(ATT_STATUS[r.status]||""))+'</span></div>'}).join("")
-   :'<div style="font-size:12px;color:#64748b;text-align:center">'+(me?'لا توجد سجلات حضور بعد.':'سجّل دخولك لرؤية سجلك الشخصي.')+'</div>')
+  +(me&&myAttRecs.length?'<div style="font-size:13px;color:#86efac;margin-bottom:6px">آخر سجلاتك أنت (<b>'+esc(me)+'</b>):</div>'
+   +myAttRecs.map(function(r){return'<div class="hm-t" style="margin-bottom:4px"><div>'+esc(r.meeting_date||"")+'</div><span class="pill '+ATT_STATUS_CSS[r.status]+'">'+esc(ATT_STATUS[r.status]||"")+'</span></div>'}).join("")
+   :'<div style="font-size:12px;color:#475569;text-align:center">'+(me?'لا توجد سجلات حضور بعد.':'سجّل دخولك لرؤية سجلك الشخصي.')+'</div>')
+  +(attTotal?'<div style="font-size:12px;color:#475569;margin-top:8px">نسبة الحضور الإجمالية: <b style="color:#22c55e">'+attRate+'٪</b> · إجمالي السجلات: '+fm(attTotal)+'</div>':'')
   +'</div>';
- return h.replace('<!--ATT-->',function(){return attHtml})},
+ return h},
 tasks:function(){var h='';
  h+=tkStatsHtml()&&'<div class="card"><h3>لوحة المهام</h3>'+tkStatsHtml()+'</div>';
  h+=tkBar();
@@ -1126,14 +1266,7 @@ inst:function(){var h='<div class="card"><h3>التركيب والتنفيذ —
  h+='<div class="card"><h3>سجل التحديثات (<span id="ins-count">'+fm(D.inst.length)+'</span>)</h3><div id="ins-list">'+instBody()+'</div></div>';
  return h},
 attendance:function(){return attView()},
-log:function(){
- var adm=isAttAdmin();
- if(!own&&!adm)return lock("سجل الحركات متاح للمسئول فقط.","ownM()","دخول المسئول");
- var h='';
- if(own){var l=D.logs.filter(function(x){return (x.t||"").indexOf("👥")!==0}).sort(function(a,b){return b.ts-a.ts});
-  h+='<div class="card"><h3>سجل الحركات — كل إجراء في الموقع مسجّل ('+fm(l.length)+')</h3><p class="note" style="margin:0 0 8px">حركات الحضور والغياب تظهر في قسمها أسفل هذه الصفحة حتى لا تتكرر.</p><div class="wrap"><table class="tbl"><tr><th>الوقت</th><th>بواسطة</th><th>الإجراء</th></tr>'+l.map(function(x){return '<tr><td>'+dt(x.ts)+'</td><td>'+esc(x.w)+'</td><td>'+esc(x.t)+'</td></tr>'}).join("")+'</table></div></div>'}
- if(adm)h+=attLogSection();
- return h},
+log:function(){if(!own)return lock("سجل الحركات متاح للمسئول فقط.","ownM()","دخول المسئول");var l=D.logs.slice().sort(function(a,b){return b.ts-a.ts});return '<div class="card"><h3>سجل الحركات — كل إجراء في الموقع مسجّل ('+fm(l.length)+')</h3><div class="wrap"><table class="tbl"><tr><th>الوقت</th><th>بواسطة</th><th>الإجراء</th></tr>'+l.map(function(x){return '<tr><td>'+dt(x.ts)+'</td><td>'+esc(x.w)+'</td><td>'+esc(x.t)+'</td></tr>'}).join("")+'</table></div></div>'},
 cost:function(){return costNew()},
 reports:function(){var m=["سبت","أكت","نوف","ديس","يناير","فبر","مارس","أبريل","مايو"],pl=[0,12,25,38,52,66,80,92,100],ac=[0,pc(cnt().d,D.tasks.length)],W=620,H=240,x=function(i){return 40+i*(W-60)/8},y=function(v){return H-30-v*(H-60)/100};
  var s='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;max-width:700px">';[0,25,50,75,100].forEach(function(v){s+='<line x1="40" x2="'+(W-20)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="var(--bd)"/><text x="30" y="'+(y(v)+4)+'" font-size="10" text-anchor="end" fill="var(--mut)">'+v+'</text>'});
@@ -1146,6 +1279,7 @@ tests:function(){var l=D.tests.slice().sort(function(a,b){return b.d<a.d?-1:1}),
  h+=me?'<div class="card"><h3>تسجيل اختبار</h3><form class="f" onsubmit="addQ(event)" style="flex-direction:column;align-items:stretch"><input name="n" placeholder="اسم الاختبار" required><input name="g" placeholder="الهدف"><input name="x" placeholder="النتيجة المتوقعة"><input name="a" placeholder="النتيجة الفعلية"><select name="s"><option value="r">قيد الاختبار</option><option value="p">ناجح</option><option value="f">فاشل</option></select><input type="date" name="d"><select name="o">'+everyone().map(function(n){return '<option'+(n==me?' selected':'')+'>'+esc(n)+'</option>'}).join("")+'</select><input name="nt" placeholder="ملاحظات"><div><button class="btn">حفظ</button></div></form></div>':'';
  return h+'<div class="card"><h3>سجل الاختبارات</h3><div class="wrap"><table class="tbl"><tr><th>الاختبار</th><th>الهدف</th><th>المتوقع</th><th>الفعلي</th><th>الحالة</th><th>التاريخ</th><th>المسؤول</th><th>ملاحظات</th>'+(me?'<th></th>':'')+'</tr>'+l.map(function(t){return '<tr><td>'+esc(t.n)+'</td><td>'+esc(t.g)+'</td><td>'+esc(t.x)+'</td><td>'+esc(t.a)+'</td><td><button class="pill '+QS[t.s][1]+'" onclick="cycQ(\''+t.id+'\')">'+QS[t.s][0]+'</button></td><td>'+esc(t.d)+'</td><td>'+esc(t.o)+'</td><td>'+esc(t.nt)+'</td>'+(me?'<td><button class="pill s-n" onclick="delQ(\''+t.id+'\')">حذف</button></td>':'')+'</tr>'}).join("")+'</table></div></div>'},
 supervisors:function(){return vipSupervisorsView()},
+teammanage:function(){var v=teamManageView();setTimeout(tmPreloadPerms,100);return v},
 };
 function addQ(e){e.preventDefault();if(!need())return;var f=e.target,o={id:"q"+Date.now(),n:f.n.value,g:f.g.value,x:f.x.value,a:f.a.value,s:f.s.value,d:f.d.value||new Date().toISOString().slice(0,10),o:f.o.value,nt:f.nt.value};put("tests",o);act("سجّل اختبارًا «"+o.n+"»");f.reset()}
 function cycQ(id){if(!need())return;var t=D.tests.filter(function(x){return x.id==id})[0],n={r:"p",p:"f",f:"r"}[t.s];put("tests",Object.assign({},t,{s:n}));act("غيّر حالة الاختبار «"+t.n+"»")}
@@ -2040,40 +2174,31 @@ function attView(){
   }
   h+='</div>';
 
-  /* السجل الكامل انتقل إلى قسم سجل الحركات */
-  if(adm){h+='<div class="card"><div class="row" style="flex-wrap:wrap"><span class="note">📋 السجل الكامل للحضور والغياب (مع فلاتر العضو والتاريخ ونوع الحركة) أصبح داخل قسم «سجل الحركات».</span><a class="btn" href="#log" style="text-decoration:none">فتح سجل الحركات ←</a></div></div>'}
+  /* ===== جدول كامل للمشرفين فقط مع فلاتر ===== */
+  if(adm){
+   var dates=[];
+   D.attendance.forEach(function(r){if(r.meeting_date&&dates.indexOf(r.meeting_date)<0)dates.push(r.meeting_date)});
+   dates.sort(function(a,b){return b>a?1:-1});
+   h+='<div class="card"><div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:10px">'
+    +'<h3 style="margin:0">📋 السجل الكامل (للمشرفين) — '+fm(D.attendance.length)+' سجل</h3></div>'
+    +'<div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:10px">'
+    +'<select onchange="ATT_F.date=this.value;go()"><option value="">كل التواريخ</option>'
+    +dates.map(function(d){return'<option'+(ATT_F.date==d?' selected':'')+' value="'+d+'">'+d+'</option>'}).join("")+'</select>'
+    +'<input type="search" placeholder="🔍 ابحث باسم العضو" value="'+esc(ATT_F.member)+'" oninput="ATT_F.member=this.value;attList()" style="flex:1;min-width:140px">'
+    +'<select onchange="ATT_F.status=this.value;go()"><option value="">كل الحالات</option>'
+    +'<option value="present"'+(ATT_F.status=="present"?" selected":"")+'>✅ حاضر</option>'
+    +'<option value="absent"'+(ATT_F.status=="absent"?" selected":"")+'>❌ غائب</option>'
+    +'<option value="late"'+(ATT_F.status=="late"?" selected":"")+'>🕐 متأخر</option>'
+    +'<option value="excused"'+(ATT_F.status=="excused"?" selected":"")+'>📋 بعذر</option>'
+    +'</select></div>'
+    +'<div class="wrap"><table class="tbl"><thead><tr>'
+    +'<th>تاريخ المقابلة</th><th>العضو</th><th>الحالة</th><th>ملاحظات</th><th>سجّله</th><th>وقت التسجيل</th><th></th>'
+    +'</tr></thead><tbody id="att-list">'+attListHtml()+'</tbody></table></div>'
+    +'</div>';
+  }
 
   return h
 }
-
-/* ===== سجل الحضور والغياب داخل سجل الحركات ===== */
-function attActType(t){return /حذف/.test(t)?"del":/عد\u0651?ل/.test(t)?"edit":"reg"}
-var ATT_ACT_L={reg:"تسجيل",edit:"تعديل",del:"حذف"};
-function attActsHtml(){
- var q=(ATT_F.member||"").trim(),d=ATT_F.date||"",a=ATT_F.act||"";
- var L=D.logs.filter(function(l){var x=l.t||"";if(x.indexOf("👥")!==0)return false;
-  if(q&&x.indexOf(q)<0)return false;
-  if(d&&x.indexOf(d)<0&&dt(l.ts).slice(0,10)!=d)return false;
-  if(a&&attActType(x)!=a)return false;return true}).sort(function(x,y){return y.ts-x.ts}).slice(0,200);
- if(!L.length)return'<tr><td colspan="4" class="note" style="text-align:center;padding:16px">لا توجد حركات مطابقة.</td></tr>';
- return L.map(function(l){var ty=attActType(l.t||"");return'<tr><td>'+dt(l.ts)+'</td><td><span class="pill '+(ty=="del"?"s-n":ty=="edit"?"s-b":"s-d")+'">'+ATT_ACT_L[ty]+'</span></td><td>'+esc((l.t||"").replace("👥 ",""))+'</td><td>'+esc(l.w||"—")+'</td></tr>'}).join("")}
-function attLogSync(){attList();var b=$("att-acts");if(b)b.innerHTML=attActsHtml()}
-function attLogReset(){ATT_F={date:"",member:"",status:"",act:""};go()}
-function attLogSection(){
- var dates=attDates(),opt=function(v,l,cur){return'<option value="'+v+'"'+(cur==v?' selected':'')+'>'+l+'</option>'};
- return'<div class="card" id="att-log" style="border:2px solid rgba(34,197,94,.3)">'
-  +'<div class="row" style="flex-wrap:wrap;margin-bottom:10px"><h3 style="margin:0">👥 سجل الحضور والغياب — '+fm(D.attendance.length)+' سجل</h3><a class="btn g" href="#attendance" style="text-decoration:none">➕ تسجيل حضور / غياب</a></div>'
-  +'<div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:12px;justify-content:flex-start">'
-  +'<input type="search" placeholder="🔍 العضو" value="'+esc(ATT_F.member||"")+'" oninput="ATT_F.member=this.value;attLogSync()" style="flex:1;min-width:140px">'
-  +'<select onchange="ATT_F.date=this.value;attLogSync()" aria-label="التاريخ"><option value="">كل التواريخ</option>'+dates.map(function(d){return opt(d,d,ATT_F.date)}).join("")+'</select>'
-  +'<select onchange="ATT_F.status=this.value;attLogSync()" aria-label="الحالة"><option value="">كل حالات الحضور</option>'+opt("present","✅ حاضر",ATT_F.status)+opt("absent","❌ غائب",ATT_F.status)+opt("late","🕐 متأخر",ATT_F.status)+opt("excused","📋 بعذر",ATT_F.status)+'</select>'
-  +'<select onchange="ATT_F.act=this.value;attLogSync()" aria-label="نوع الحركة"><option value="">كل أنواع الحركة</option>'+opt("reg","تسجيل",ATT_F.act)+opt("edit","تعديل",ATT_F.act)+opt("del","حذف",ATT_F.act)+'</select>'
-  +'<button class="btn g" onclick="attLogReset()">إعادة تعيين</button></div>'
-  +'<h4 style="margin:0 0 6px;font-size:14px">سجلات الحضور</h4>'
-  +'<div class="wrap"><table class="tbl"><thead><tr><th>تاريخ المقابلة</th><th>العضو</th><th>الحالة</th><th>ملاحظات</th><th>سجّله</th><th>وقت التسجيل</th><th></th></tr></thead><tbody id="att-list">'+attListHtml()+'</tbody></table></div>'
-  +'<h4 style="margin:16px 0 6px;font-size:14px">حركات الحضور (تسجيل / تعديل / حذف)</h4>'
-  +'<div class="wrap"><table class="tbl"><thead><tr><th>الوقت</th><th>نوع الحركة</th><th>التفاصيل (العضو والتاريخ)</th><th>بواسطة</th></tr></thead><tbody id="att-acts">'+attActsHtml()+'</tbody></table></div>'
-  +'</div>'}
 
 /* عدد السجلات لتاريخ معين */
 function attDateCount(d){return D.attendance.filter(function(r){return r.meeting_date==d}).length}
@@ -3005,7 +3130,7 @@ function buildLoginOld(){$("lg").innerHTML='<div class="box"><h2>🎓 NOVA Clean
 function buildTopBar(h,p){
  var isHome=h=="home";
  var sep=$("bc-sep"),icon=$("page-icon"),name=$("page-name");
- if(sep&&icon&&name){sep.style.display=isHome?"none":"inline";var pi={home:"\uD83C\uDFE0",tasks:"\uD83D\uDCCB",parts:"\uD83D\uDD29",cost:"\uD83D\uDCB0",inst:"\uD83D\uDEE0\uFE0F",robot:"\uD83E\uDD16",tests:"\uD83E\uDDEA",attendance:"\uD83D\uDC65",log:"\uD83D\uDCDC",team:"\uD83D\uDC6B",supervisors:"\uD83D\uDC51"};icon.textContent=pi[h]||"\uD83D\uDCC4";name.textContent=p[1]}
+ if(sep&&icon&&name){sep.style.display=isHome?"none":"inline";var pi={home:"\uD83C\uDFE0",tasks:"\uD83D\uDCCB",parts:"\uD83D\uDD29",cost:"\uD83D\uDCB0",inst:"\uD83D\uDEE0\uFE0F",robot:"\uD83E\uDD16",tests:"\uD83E\uDDEA",attendance:"\uD83D\uDC65",log:"\uD83D\uDCDC",team:"\uD83D\uDC6B",supervisors:"\uD83D\uDC51",teammanage:"\uD83D\uDEE1\uFE0F"};icon.textContent=pi[h]||"\uD83D\uDCC4";name.textContent=p[1]}
  var who=$("who");if(!who)return;
  if(!me){who.innerHTML='<button class="btn" onclick="loginM()">\u062F\u062E\u0648\u0644 \u0627\u0644\u0641\u0631\u064A\u0642</button>';return}
  var isDev=typeof VIP_DEVS!=="undefined"&&VIP_DEVS.indexOf(me)>=0;
@@ -3018,6 +3143,7 @@ function buildTopBar(h,p){
  var dropItems='<a href="#team"><span>\uD83D\uDC64</span> \u0627\u0644\u0645\u0644\u0641 \u0627\u0644\u0634\u062E\u0635\u064A</a>';
  dropItems+='<a href="#team"><span>\u2139\uFE0F</span> \u0645\u0639\u0644\u0648\u0645\u0627\u062A \u0627\u0644\u062D\u0633\u0627\u0628</a>';
  if((typeof isVip==="function"&&isVip())||own)dropItems+='<a href="#supervisors"><span>\u2699\uFE0F</span> \u0644\u0648\u062D\u0629 \u0627\u0644\u0645\u0634\u0631\u0641\u064A\u0646</a>';
+ if((typeof canManageTeam==="function"&&canManageTeam())||own)dropItems+='<a href="#teammanage"><span>\uD83D\uDEE1\uFE0F</span> \u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u0641\u0631\u064A\u0642</a>';
  dropItems+='<div class="td-sep"></div>';
  dropItems+='<button class="td-item td-logout" onclick="logout();closeTopMenu()"><span>\uD83D\uDEAA</span> \u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062E\u0631\u0648\u062C</button>';
  var adminRow=own?'<div class="top-admin-row">\uD83D\uDD11 <select onchange="asM(this.value)"><option value="\u0627\u0644\u0645\u0627\u0644\u0643">\u0627\u0644\u0645\u0633\u0626\u0648\u0644</option>'+(typeof everyone==="function"?everyone().map(function(n){return'<option'+(n==me?' selected':'')+'>'+esc(n)+'</option>'}).join(""):"")+"</select></div>":"";
@@ -3026,11 +3152,11 @@ function buildTopBar(h,p){
 function toggleTopMenu(e){e.stopPropagation();var el=document.getElementById("top-user-btn");if(el)el.classList.toggle("open")}
 function closeTopMenu(){var el=document.getElementById("top-user-btn");if(el)el.classList.remove("open")}
 document.addEventListener("click",function(e){if(!e.target.closest("#top-user-btn"))closeTopMenu()});
-function go(){mergePrices();try{if(SB.sess)localStorage.setItem("sbme",JSON.stringify({me:me}))}catch(e){}$("lg").style.display=me?"none":"flex";if(!ready||!me)return;var h=(location.hash||"#home").slice(1),p=PAGES.filter(function(x){return x[0]==h})[0];if(!p){p=PAGES.filter(function(x){return x[0]=="home"})[0];h="home"}
+function go(){mergePrices();try{if(SB.sess)localStorage.setItem("sbme",JSON.stringify({me:me}))}catch(e){}$("lg").style.display=me?"none":"flex";if(!ready||!me)return;var h=(location.hash||"#home").slice(1),p=PAGES.filter(function(x){return x[0]==h})[0];if(!p){p=PAGES[0];h="home"}
  var act0=document.activeElement;if(act0&&/INPUT|SELECT|TEXTAREA/.test(act0.tagName)&&act0.type!="file"&&document.activeElement.closest&&document.activeElement.closest("form")&&$("v").contains(act0))return;
  $("v").innerHTML=V[h]();
  buildTopBar(h,p);
- $("nav").innerHTML='<div class="logo">'+NOVA_MARK+'<div><b>NOVA Clean</b><small>\u0644\u0648\u062D\u0629 \u0627\u0644\u062A\u062D\u0643\u0645</small></div></div>'+PAGES.filter(function(x){if(x[0]=="log")return own||isAttAdmin();if(x[0]=="supervisors")return(typeof isVip==="function"&&isVip());return true}).map(function(x){return '<a href="#'+x[0]+'" class="'+(x[0]==h?"on":"")+'">'+x[1]+'</a>'}).join("")+'<div class="sp"></div><button class="tg" onclick="tg()">\uD83C\uDF19 \u0627\u0644\u0648\u0636\u0639 \u0627\u0644\u0644\u064A\u0644\u064A</button>'}
+ $("nav").innerHTML='<div class="logo">'+NOVA_MARK+'<div><b>NOVA Clean</b><small>\u0644\u0648\u062D\u0629 \u0627\u0644\u062A\u062D\u0643\u0645</small></div></div>'+PAGES.filter(function(x){if(x[0]=="log")return own;if(x[0]=="supervisors")return(typeof isVip==="function"&&isVip());if(x[0]=="teammanage")return(typeof canManageTeam==="function"&&canManageTeam());return true}).map(function(x){return '<a href="#'+x[0]+'" class="'+(x[0]==h?"on":"")+'">'+x[1]+'</a>'}).join("")+'<div class="sp"></div><button class="tg" onclick="tg()">\uD83C\uDF19 \u0627\u0644\u0648\u0636\u0639 \u0627\u0644\u0644\u064A\u0644\u064A</button>'}
 function tg(){var r=document.documentElement,n=r.getAttribute("data-theme")=="dark"?"light":"dark";r.setAttribute("data-theme",n);try{localStorage.setItem("thm",JSON.stringify({seg:themeSeg(),t:n}))}catch(e){}}
 /* ===== VIP SUPERVISORS SYSTEM ===== */
 /* المشرفون المعتمدون */
@@ -3042,7 +3168,7 @@ var VIP_ALL=VIP_SUPS.concat(VIP_DEVS);
 var VIP_PROFILES={
  "م. دعاء":{avatar:"👩‍💼",title:"م. دعاء",role:"مهندسة ومشرفة المشروع",badge:"VIP • Project Supervisor",color:"#2563eb",type:"sup"},
  "د. محمود محروس":{avatar:"👨‍🏫",title:"د. محمود محروس",role:"الدكتور المشرف على المشروع",badge:"VIP • Academic Supervisor",color:"#06b6d4",type:"sup"},
- "محمد علي عنتر جلال":{avatar:"👨‍💻",title:"محمد علي",role:"Developer & Super Admin",badge:"DEV • Full Access",color:"#8b5cf6",type:"dev"}
+ "محمد علي عنتر جلال":{avatar:"👨‍💻",title:"محمد علي",role:"Developer & System Administrator",badge:"DEV • Full Access",color:"#8b5cf6",type:"dev"}
 };
 
 /* التحقق من صلاحيات VIP */
@@ -3306,7 +3432,522 @@ function vipSupervisorsView(){
  return h
 }
 /* ===== END VIP SUPERVISORS SYSTEM ===== */
-buildLogin();setTimeout(function(){document.documentElement.classList.remove("bt")},8000);addEventListener("hashchange",go);boot();setInterval(rbTick,1000);
+
+/* ===== TEAM MANAGEMENT CSS ===== */
+/* ============================== */
+/* ===== TEAM MANAGEMENT SYSTEM ===== */
+
+/* ---- تعريف الصلاحيات ---- */
+var TM_SUPER_ADMIN="محمد علي عنتر جلال";
+var TM_SUPERVISORS=["م. دعاء","د. محمود محروس"];
+
+/* أقسام الصلاحيات */
+var TM_SECTIONS=[
+ {id:"team_data",name:"بيانات الفريق",icon:"👥",perms:[
+  {id:"team_view",label:"مشاهدة بيانات الفريق"},
+  {id:"team_create",label:"إضافة أعضاء"},
+  {id:"team_edit",label:"تعديل بيانات الأعضاء"},
+  {id:"team_delete",label:"حذف الأعضاء"}
+ ]},
+ {id:"budget",name:"إدارة الميزانية",icon:"💰",perms:[
+  {id:"budget_view",label:"مشاهدة الميزانية"},
+  {id:"budget_create",label:"إضافة مصروف"},
+  {id:"budget_edit",label:"تعديل المصروفات"},
+  {id:"budget_delete",label:"حذف المصروفات"},
+  {id:"budget_reports",label:"مشاهدة التقارير المالية"}
+ ]},
+ {id:"contributions",name:"مساهمات الفريق",icon:"🤝",perms:[
+  {id:"contrib_view",label:"مشاهدة المساهمات"},
+  {id:"contrib_create",label:"إضافة مساهمة"},
+  {id:"contrib_edit",label:"تعديل المساهمات"},
+  {id:"contrib_delete",label:"حذف المساهمات"},
+  {id:"contrib_total",label:"مشاهدة إجمالي المساهمات"}
+ ]},
+ {id:"attendance",name:"الحضور والغياب",icon:"📅",perms:[
+  {id:"att_view",label:"مشاهدة الحضور والغياب"},
+  {id:"att_create",label:"تسجيل الحضور والغياب"},
+  {id:"att_edit",label:"تعديل السجلات"},
+  {id:"att_logs",label:"مشاهدة سجل الحركات"}
+ ]},
+ {id:"tasks",name:"المهام",icon:"📋",perms:[
+  {id:"tasks_view",label:"مشاهدة المهام"},
+  {id:"tasks_create",label:"إضافة مهام"},
+  {id:"tasks_edit",label:"تعديل المهام"},
+  {id:"tasks_delete",label:"حذف المهام"},
+  {id:"tasks_status",label:"تغيير حالة المهمة"}
+ ]},
+ {id:"site_admin",name:"إدارة الموقع",icon:"⚙️",perms:[
+  {id:"admin_settings",label:"مشاهدة الإعدادات"},
+  {id:"admin_team",label:"إدارة أعضاء الفريق"},
+  {id:"admin_perms",label:"إدارة الصلاحيات"},
+  {id:"admin_announce",label:"إدارة الإعلانات والتنبيهات"}
+ ]}
+];
+
+/* حالة الصفحة */
+var TM={
+ search:"",filterRole:"",filterStatus:"",
+ members:[],permsCache:{},loading:false,
+ currentEditId:null,currentEditName:null
+};
+
+/* الحصول على دور العضو */
+function tmRole(name){
+ if(name===TM_SUPER_ADMIN)return{key:"dev",label:"Super Admin & Developer",badge:"dev"};
+ if(TM_SUPERVISORS.indexOf(name)>=0)return{key:"sup",label:"Supervisor",badge:"sup"};
+ return{key:"mem",label:"Team Member",badge:"mem"};
+}
+
+/* الحصول على emoji العضو */
+function tmAvatar(name){
+ if(name===TM_SUPER_ADMIN)return"👨‍💻";
+ if(TM_SUPERVISORS.indexOf(name)>=0)return"👑";
+ return"👤";
+}
+
+/* صلاحيات Super Admin الكاملة (لا تُحفظ، دائماً كاملة) */
+function tmSuperPerms(){
+ var p={};
+ TM_SECTIONS.forEach(function(s){s.perms.forEach(function(pr){p[pr.id]=true})});
+ return p;
+}
+
+/* قراءة صلاحيات عضو من Supabase أو من cache */
+async function tmLoadPerms(name){
+ if(name===TM_SUPER_ADMIN)return tmSuperPerms();
+ if(TM.permsCache[name])return TM.permsCache[name];
+ // محاولة قراءة من Supabase
+ if(SBR()&&SB.c){
+  try{
+   var r=await SB.c.from("team_permissions").select("permissions").eq("member_name",name).single();
+   if(r.data&&r.data.permissions){
+    TM.permsCache[name]=r.data.permissions;
+    return TM.permsCache[name];
+   }
+  }catch(e){}
+ }
+ // افتراضي: صلاحيات مشرف كاملة، عضو عادي - قراءة فقط
+ var def={};
+ TM_SECTIONS.forEach(function(s){s.perms.forEach(function(pr){
+  var role=tmRole(name);
+  if(role.key==="sup"){def[pr.id]=true}
+  else{def[pr.id]=pr.id.endsWith("_view")||pr.id.endsWith("_reports")||pr.id.endsWith("_total")||pr.id.endsWith("_logs")||pr.id==="att_view"||pr.id==="tasks_view"||pr.id==="tasks_status"}
+ })});
+ TM.permsCache[name]=def;
+ return def;
+}
+
+/* حفظ الصلاحيات */
+async function tmSavePerms(name,perms){
+ if(name===TM_SUPER_ADMIN){toast("لا يمكن تعديل صلاحيات Super Admin");return false}
+ TM.permsCache[name]=perms;
+ if(SBR()&&SB.c){
+  try{
+   var r=await SB.c.from("team_permissions").upsert({
+    member_name:name,
+    permissions:perms,
+    updated_by:me||"",
+    updated_at:new Date().toISOString()
+   },{onConflict:"member_name"});
+   if(r.error)throw r.error;
+   // تسجيل في السجل
+   var total=Object.values(perms).filter(Boolean).length;
+   act("🔑 حدّث صلاحيات «"+name+"» ("+total+" صلاحية)");
+   return true;
+  }catch(e){
+   toast("تحذير: تعذّر حفظ الصلاحيات في Supabase — "+e.message);
+   act("🔑 حدّث صلاحيات «"+name+"» (محلياً)");
+   return true; // محفوظ محلياً
+  }
+ }
+ act("🔑 حدّث صلاحيات «"+name+"» (محلياً)");
+ return true;
+}
+
+/* عدد الصلاحيات الممنوحة */
+function tmPermCount(perms){
+ if(!perms)return 0;
+ return Object.values(perms).filter(Boolean).length;
+}
+function tmTotalPerms(){
+ var n=0;TM_SECTIONS.forEach(function(s){n+=s.perms.length});return n;
+}
+
+/* فلترة الأعضاء */
+function tmFiltered(){
+ var members=everyone().map(function(n){return{name:n}});
+ return members.filter(function(m){
+  if(TM.search&&m.name.toLowerCase().indexOf(TM.search.toLowerCase())<0)return false;
+  if(TM.filterRole){var r=tmRole(m.name);if(r.key!==TM.filterRole)return false}
+  return true;
+ });
+}
+
+/* هل المستخدم يملك صلاحية إدارة الفريق؟ */
+function canManageTeam(){
+ return me===TM_SUPER_ADMIN||own;
+}
+
+/* ---- نافذة تفاصيل العضو ---- */
+async function tmViewMember(name){
+ var role=tmRole(name);
+ var perms=await tmLoadPerms(name);
+ var pcount=tmPermCount(perms);
+ var tasks=D.tasks.filter(function(t){return t.o===name});
+ var done=tasks.filter(function(t){return t.s==="d"}).length;
+ var attRecs=D.attendance.filter(function(r){return r.member_name===name});
+ var present=attRecs.filter(function(r){return r.status==="present"||r.status==="late"}).length;
+ var attRate=attRecs.length?Math.round(present*100/attRecs.length):null;
+ var logs=D.logs.filter(function(l){return l.t&&(l.t.indexOf("«"+name+"»")>=0||l.t.indexOf(name)>=0)}).sort(function(a,b){return b.ts-a.ts}).slice(0,8);
+ var isSuper=name===TM_SUPER_ADMIN;
+
+ var permsHtml='';
+ TM_SECTIONS.forEach(function(s){
+  var granted=s.perms.filter(function(p){return perms[p.id]});
+  if(granted.length){
+   permsHtml+='<div style="margin-bottom:10px"><div style="font-size:12px;color:#64748b;margin-bottom:5px">'+s.icon+' '+s.name+'</div><div class="tm-perm-chips">';
+   granted.forEach(function(p){permsHtml+='<span class="tm-perm-chip">'+p.label+'</span>'});
+   permsHtml+='</div></div>';
+  }
+ });
+
+ var actionsHtml='';
+ if(canManageTeam()&&!isSuper){
+  actionsHtml='<div class="tm-modal-foot">'
+   +'<button class="btn" onclick="closeM();tmPermModal(\''+esc(name)+'\')">🔑 إدارة الصلاحيات</button>'
+   +'<button class="btn" onclick="closeM();tmAccountModal(\''+esc(name)+'\')">⚙️ إدارة الحساب</button>'
+   +'<button class="tm-cancel" onclick="closeM()">إغلاق</button>'
+   +'</div>';
+ }else{
+  actionsHtml='<div class="tm-modal-foot"><button class="tm-cancel" onclick="closeM()">إغلاق</button></div>';
+ }
+
+ modal('<div class="tm-modal">'
+  +'<div class="tm-modal-head">'
+  +'<div class="tm-avatar '+role.key+'" style="font-size:20px;width:42px;height:42px">'+tmAvatar(name)+'</div>'
+  +'<h3>'+esc(name)+'</h3>'
+  +(isSuper?'<span class="tm-role-badge dev">🔒 Super Admin</span>':'')
+  +'</div>'
+  +'<div class="tm-modal-body">'
+  +(isSuper?'<div class="tm-locked-notice">🛡️ هذا الحساب محمي — Super Admin الأساسي للنظام. لا يمكن تعديل صلاحياته أو إيقاف حسابه.</div>':'')
+  +'<div class="tm-detail-grid">'
+  +'<div class="tm-detail-item"><span>الاسم الكامل</span><b>'+esc(name)+'</b></div>'
+  +'<div class="tm-detail-item"><span>الدور الوظيفي</span><b>'+role.label+'</b></div>'
+  +'<div class="tm-detail-item"><span>الصلاحيات الممنوحة</span><b>'+pcount+' من '+tmTotalPerms()+'</b></div>'
+  +'<div class="tm-detail-item"><span>المهام المسندة</span><b>'+tasks.length+' مهمة ('+done+' مكتملة)</b></div>'
+  +(attRate!==null?'<div class="tm-detail-item"><span>نسبة الحضور</span><b>'+attRate+'٪ ('+attRecs.length+' جلسة)</b></div>':'')
+  +(db?'<div class="tm-detail-item"><span>حالة الحساب</span><b><span class="tm-status-dot active">نشط</span></b></div>':'')
+  +'</div>'
+  +'<div><div style="font-size:13px;font-weight:600;color:var(--tx);margin-bottom:8px">🔑 الصلاحيات الممنوحة</div>'
+  +(permsHtml||'<div class="tm-empty" style="padding:12px"><span class="tm-empty-icon">⚠️</span><p>لا توجد صلاحيات ممنوحة حالياً</p></div>')
+  +'</div>'
+  +(logs.length?'<div><div style="font-size:13px;font-weight:600;color:var(--tx);margin-bottom:8px">📜 آخر الأنشطة</div>'
+  +logs.slice(0,5).map(function(l){return'<div class="tm-audit-item"><div class="tm-audit-dot"></div><div>'+esc(l.t||"نشاط")+'<small style="display:block;color:var(--mut);font-size:11px">'+dt(l.ts)+'</small></div></div>'}).join("")+'</div>':'')
+  +'</div>'
+  +actionsHtml
+  +'</div>')
+}
+
+/* ---- نافذة إدارة الصلاحيات ---- */
+var TM_EDIT_PERMS={};
+async function tmPermModal(name){
+ if(!canManageTeam()){toast("ليس لديك صلاحية لإدارة الصلاحيات");return}
+ if(name===TM_SUPER_ADMIN){toast("لا يمكن تعديل صلاحيات Super Admin");return}
+ if(name===me&&!own){toast("لا يمكنك تعديل صلاحياتك بنفسك");return}
+ TM.currentEditName=name;
+ TM_EDIT_PERMS=Object.assign({},await tmLoadPerms(name));
+ tmRenderPermModal();
+}
+
+function tmRenderPermModal(){
+ var name=TM.currentEditName;
+ if(!name)return;
+ var total=tmTotalPerms(),granted=tmPermCount(TM_EDIT_PERMS);
+ var members=everyone().filter(function(n){return n!==name&&n!==TM_SUPER_ADMIN});
+
+ var sectionsHtml='';
+ TM_SECTIONS.forEach(function(s){
+  sectionsHtml+='<div class="tm-perm-section">'
+   +'<div class="tm-perm-section-title">'+s.icon+' '+s.name+'</div>'
+   +'<table class="tm-perm-table"><thead><tr><th>الصلاحية</th><th>تفعيل</th></tr></thead><tbody>';
+  s.perms.forEach(function(p){
+   var checked=TM_EDIT_PERMS[p.id]?true:false;
+   sectionsHtml+='<tr><td>'+esc(p.label)+'</td>'
+    +'<td><label class="tm-toggle"><input type="checkbox" id="tp_'+p.id+'" '+(checked?"checked":"")+' onchange="TM_EDIT_PERMS[\''+p.id+'\']=this.checked;tmUpdatePermCount()"><span class="tm-toggle-slider"></span></label></td>'
+    +'</tr>';
+  });
+  sectionsHtml+='</tbody></table></div>';
+ });
+
+ modal('<div class="tm-modal">'
+  +'<div class="tm-modal-head">'
+  +'<span style="font-size:22px">🔑</span>'
+  +'<h3>إدارة صلاحيات — '+esc(name)+'</h3>'
+  +'</div>'
+  +'<div class="tm-modal-body">'
+  +'<div class="tm-alert info">تعديل الصلاحيات يؤثر فوراً على ما يستطيع العضو مشاهدته أو تعديله داخل الموقع.</div>'
+  +'<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px">'
+  +'<div class="tm-perm-bar"><span class="tm-perm-count">المفعّل: <b id="tm-perm-count">'+granted+'</b> من '+total+'</span></div>'
+  +'<div style="display:flex;gap:8px">'
+  +'<button class="tm-btn success" onclick="tmSelectAll()">✅ تحديد الكل</button>'
+  +'<button class="tm-btn danger" onclick="tmDeselectAll()">❌ إلغاء الكل</button>'
+  +'</div></div>'
+  +sectionsHtml
+  +'<div class="tm-copy-box">'
+  +'<label>📋 نسخ صلاحيات من عضو آخر إلى «'+esc(name)+'»</label>'
+  +'<select id="tm-copy-from"><option value="">— اختر عضواً لنسخ صلاحياته —</option>'
+  +members.map(function(n){return'<option value="'+esc(n)+'">'+esc(n)+' ('+tmRole(n).label+')</option>'}).join("")
+  +'</select>'
+  +'<button class="tm-btn info" style="margin-top:8px" onclick="tmCopyPerms()">📋 نسخ الصلاحيات</button>'
+  +'</div>'
+  +'</div>'
+  +'<div class="tm-modal-foot">'
+  +'<button class="tm-save" id="tm-save-btn" onclick="tmConfirmSave()">💾 حفظ التغييرات</button>'
+  +'<button class="tm-cancel" onclick="closeM()">إلغاء</button>'
+  +'</div>'
+  +'</div>')
+}
+
+function tmUpdatePermCount(){
+ var n=0;TM_SECTIONS.forEach(function(s){s.perms.forEach(function(p){if(TM_EDIT_PERMS[p.id])n++})});
+ var el=document.getElementById("tm-perm-count");if(el)el.textContent=n;
+}
+function tmSelectAll(){
+ TM_SECTIONS.forEach(function(s){s.perms.forEach(function(p){TM_EDIT_PERMS[p.id]=true;var el=document.getElementById("tp_"+p.id);if(el)el.checked=true})});
+ tmUpdatePermCount();
+}
+function tmDeselectAll(){
+ TM_SECTIONS.forEach(function(s){s.perms.forEach(function(p){TM_EDIT_PERMS[p.id]=false;var el=document.getElementById("tp_"+p.id);if(el)el.checked=false})});
+ tmUpdatePermCount();
+}
+async function tmCopyPerms(){
+ var sel=document.getElementById("tm-copy-from");
+ if(!sel||!sel.value){toast("اختر عضواً أولاً");return}
+ var src=sel.value;
+ if(!confirm("هل تريد نسخ صلاحيات «"+src+"» إلى «"+TM.currentEditName+"»؟ ستُستبدل الصلاحيات الحالية."))return;
+ var srcPerms=await tmLoadPerms(src);
+ TM_EDIT_PERMS=Object.assign({},srcPerms);
+ tmRenderPermModal();
+ toast("تم نسخ الصلاحيات من «"+src+"» ✓");
+}
+async function tmConfirmSave(){
+ var name=TM.currentEditName;if(!name)return;
+ var count=tmPermCount(TM_EDIT_PERMS);
+ if(!confirm("حفظ "+count+" صلاحية للعضو «"+name+"»؟"))return;
+ var btn=document.getElementById("tm-save-btn");if(btn){btn.disabled=true;btn.textContent="جاري الحفظ…"}
+ var ok=await tmSavePerms(name,TM_EDIT_PERMS);
+ if(ok){closeM();toast("تم حفظ الصلاحيات بنجاح ✓");go()}
+ else{if(btn){btn.disabled=false;btn.textContent="💾 حفظ التغييرات"}}
+}
+
+/* ---- نافذة إدارة الحساب ---- */
+async function tmAccountModal(name){
+ if(!canManageTeam()){toast("ليس لديك صلاحية لإدارة الحسابات");return}
+ if(name===TM_SUPER_ADMIN){toast("لا يمكن تعديل حساب Super Admin");return}
+ if(name===me&&!own){toast("لا يمكنك تعديل حسابك بنفسك من هنا");return}
+ TM.currentEditName=name;
+ var logs=D.logs.filter(function(l){return l.t&&(l.t.indexOf("صلاحيات «"+name+"»")>=0||l.t.indexOf("«"+name+"»")>=0)}).sort(function(a,b){return b.ts-a.ts}).slice(0,3);
+ var lastPerm=logs[0];
+
+ modal('<div class="tm-modal">'
+  +'<div class="tm-modal-head">'
+  +'<span style="font-size:22px">⚙️</span>'
+  +'<h3>إدارة حساب — '+esc(name)+'</h3>'
+  +'</div>'
+  +'<div class="tm-modal-body">'
+  +'<div class="tm-alert info">🔒 كلمات المرور لا تُعرض أبداً. العمليات تتم عبر Supabase Auth بشكل آمن.</div>'
+  +'<div class="tm-detail-grid">'
+  +'<div class="tm-detail-item"><span>اسم العضو</span><b>'+esc(name)+'</b></div>'
+  +'<div class="tm-detail-item"><span>الدور الوظيفي</span><b>'+tmRole(name).label+'</b></div>'
+  +(lastPerm?'<div class="tm-detail-item"><span>آخر تحديث للصلاحيات</span><b style="font-size:12px">'+dt(lastPerm.ts)+'</b></div>':'')
+  +(db?'<div class="tm-detail-item"><span>حالة الحساب</span><b><span class="tm-status-dot active">نشط</span></b></div>':'')
+  +'</div>'
+  +'<div style="font-size:13px;font-weight:600;color:var(--tx);margin:4px 0 10px">⚡ إجراءات الحساب</div>'
+  +'<div class="tm-acct-row"><span>📧 إرسال رابط إعادة تعيين كلمة المرور</span><button class="tm-btn info" onclick="tmResetPassword(\''+esc(name)+'\')">إرسال رابط</button></div>'
+  +'<div class="tm-acct-row"><span>🔄 إجبار العضو على تغيير كلمة المرور عند تسجيل الدخول التالي</span><button class="tm-btn warn" style="background:linear-gradient(135deg,#78350f,#d97706);color:#fef3c7" onclick="tmForceReset(\''+esc(name)+'\')">تفعيل الإجبار</button></div>'
+  +'<div class="tm-acct-row"><span>⛔ إيقاف الحساب مؤقتاً</span><button class="tm-btn danger" onclick="tmToggleAccount(\''+esc(name)+'\',false)">إيقاف الحساب</button></div>'
+  +'<div class="tm-acct-row"><span>✅ تفعيل الحساب</span><button class="tm-btn success" onclick="tmToggleAccount(\''+esc(name)+'\',true)">تفعيل الحساب</button></div>'
+  +'<div class="tm-alert warn" style="margin-top:4px">⚠️ إيقاف الحساب يمنع العضو من تسجيل الدخول. العمليات الكاملة تتطلب Supabase Service Role على الخادم.</div>'
+  +'</div>'
+  +'<div class="tm-modal-foot"><button class="tm-cancel" onclick="closeM()">إغلاق</button></div>'
+  +'</div>')
+}
+
+async function tmResetPassword(name){
+ if(!confirm("إرسال رابط إعادة تعيين كلمة المرور إلى «"+name+"»؟"))return;
+ if(SBR()&&SB.c){
+  try{
+   // في الحالة الحقيقية يحتاج email — نسجّل الطلب فقط هنا
+   act("📧 طلب إعادة تعيين كلمة مرور «"+name+"»");
+   toast("تم تسجيل الطلب — يتطلب بريد العضو الإلكتروني للإرسال الفعلي ✓");
+  }catch(e){toast("تعذّر الإرسال: "+e.message)}
+ }else{
+  act("📧 طلب إعادة تعيين كلمة مرور «"+name+"» (محلياً)");
+  toast("تم تسجيل الطلب (يتطلب Supabase Auth للإرسال الفعلي)");
+ }
+}
+async function tmForceReset(name){
+ if(!confirm("تفعيل إجبار «"+name+"» على تغيير كلمة المرور في الدخول التالي؟"))return;
+ act("🔄 طلب إجبار تغيير كلمة مرور «"+name+"»");
+ toast("تم تسجيل الطلب — يتطلب Supabase Admin API للتطبيق الفعلي ✓");
+}
+async function tmToggleAccount(name,activate){
+ if(!confirm((activate?"تفعيل":"إيقاف")+" حساب «"+name+"»؟"))return;
+ act((activate?"✅ تفعيل":"⛔ إيقاف")+" حساب «"+name+"»");
+ toast((activate?"تم تفعيل الحساب":"تم إيقاف الحساب")+" — يتطلب Supabase Service Role للتطبيق الفعلي ✓");
+ closeM();go();
+}
+
+/* ---- SQL Migration للصلاحيات ---- */
+function tmShowMigration(){
+ var sql=`-- Team Permissions Table Migration
+-- Run this in Supabase SQL Editor
+
+CREATE TABLE IF NOT EXISTS public.team_permissions (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  member_name text NOT NULL UNIQUE,
+  permissions jsonb NOT NULL DEFAULT '{}',
+  updated_by text,
+  updated_at timestamptz DEFAULT now(),
+  created_at timestamptz DEFAULT now()
+);
+
+-- Enable RLS
+ALTER TABLE public.team_permissions ENABLE ROW LEVEL SECURITY;
+
+-- Policy: Authenticated users can read permissions
+CREATE POLICY "auth_read_permissions"
+  ON public.team_permissions FOR SELECT
+  TO authenticated USING (true);
+
+-- Policy: Only admins can insert/update (via service role)
+-- For anon key: allow insert/update from authenticated
+CREATE POLICY "auth_write_permissions"
+  ON public.team_permissions FOR ALL
+  TO authenticated USING (true) WITH CHECK (true);
+
+-- Index for fast lookup
+CREATE INDEX IF NOT EXISTS idx_team_perms_member
+  ON public.team_permissions (member_name);`;
+
+ modal('<div class="tm-modal">'
+  +'<div class="tm-modal-head"><span style="font-size:22px">🗄️</span><h3>SQL Migration — جدول الصلاحيات</h3></div>'
+  +'<div class="tm-modal-body">'
+  +'<div class="tm-alert info">انسخ هذا الكود وشغّله في Supabase SQL Editor لإنشاء جدول الصلاحيات.</div>'
+  +'<pre dir="ltr" style="background:#0a1433;border:1px solid #1e3a8a;border-radius:10px;padding:14px;font-size:12px;line-height:1.6;overflow-x:auto;white-space:pre-wrap;color:#e2e8f0">'+esc(sql)+'</pre>'
+  +'</div>'
+  +'<div class="tm-modal-foot"><button class="btn" onclick="tmCopySql()">📋 نسخ الكود</button><button class="tm-cancel" onclick="closeM()">إغلاق</button></div>'
+  +'</div>');
+ // store sql for copy
+ window._tmSql=sql;
+}
+function tmCopySql(){if(navigator.clipboard&&window._tmSql){navigator.clipboard.writeText(window._tmSql).then(function(){toast("تم نسخ الكود ✓")})}}
+
+/* ---- الصفحة الرئيسية لإدارة الفريق ---- */
+function teamManageView(){
+ if(!me)return'<div class="card"><h3>🔒 يتطلب تسجيل الدخول</h3><p class="note">سجّل دخولك لعرض إدارة الفريق.</p><button class="btn" onclick="loginM()">دخول الفريق</button></div>';
+ if(!canManageTeam())return'<div class="vip-locked"><div class="vip-locked-icon">🔐</div><h3>وصول مقيّد</h3><p>هذه الصفحة مخصصة لمدير النظام فقط.</p></div>';
+
+ var members=everyone();
+ var filtered=tmFiltered();
+ var total=members.length;
+ var supers=1; // Super Admin واحد دائماً
+ var sups=TM_SUPERVISORS.length;
+ var regular=total-supers-sups;
+
+ var h='<div class="tm-wrap">';
+
+ // Hero
+ h+='<div class="tm-hero"><div class="tm-hero-inner">'
+  +'<div class="tm-hero-icon">🛡️</div>'
+  +'<div class="tm-hero-text">'
+  +'<h2>إدارة أعضاء الفريق والصلاحيات</h2>'
+  +'<p>Team Management & Permissions — إدارة الحسابات والصلاحيات والتحكم في الوصول</p>'
+  +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">'
+  +(db?'<span class="vip-badge">🟢 Supabase متصل</span>':'<span class="vip-badge">🟡 وضع محلي</span>')
+  +'<span class="vip-badge">🛡️ Super Admin: '+TM_SUPER_ADMIN+'</span>'
+  +'</div></div></div></div>';
+
+ // Stats
+ h+='<div class="tm-stats-row">'
+  +'<div class="tm-stat"><b>'+total+'</b><span>إجمالي الأعضاء</span></div>'
+  +'<div class="tm-stat ok"><b>'+total+'</b><span>حسابات نشطة</span></div>'
+  +'<div class="tm-stat info"><b>'+sups+'</b><span>المشرفون</span></div>'
+  +'<div class="tm-stat purple"><b>'+regular+'</b><span>أعضاء الفريق</span></div>'
+  +'</div>';
+
+ // Toolbar
+ h+='<div class="tm-toolbar">'
+  +'<input type="search" placeholder="🔍 بحث عن عضو..." value="'+esc(TM.search)+'" oninput="TM.search=this.value;tmRefreshTable()">'
+  +'<select onchange="TM.filterRole=this.value;tmRefreshTable()">'
+  +'<option value="">كل الأدوار</option>'
+  +'<option value="dev"'+(TM.filterRole==="dev"?" selected":"")+'>Super Admin</option>'
+  +'<option value="sup"'+(TM.filterRole==="sup"?" selected":"")+'>Supervisor</option>'
+  +'<option value="mem"'+(TM.filterRole==="mem"?" selected":"")+'>Team Member</option>'
+  +'</select>'
+  +'<button class="tm-btn info" onclick="tmShowMigration()">🗄️ SQL Migration</button>'
+  +'</div>';
+
+ // Table
+ h+='<div class="tm-table-wrap">'
+  +'<div id="tm-table-body">'+tmBuildTable(filtered)+'</div>'
+  +'</div>';
+
+ h+='</div>';
+ return h;
+}
+
+function tmBuildTable(filtered){
+ if(!filtered.length)return'<div class="tm-empty"><div class="tm-empty-icon">🔍</div><p>لا توجد نتائج مطابقة للبحث.</p></div>';
+
+ var rows=filtered.map(function(m){
+  var name=m.name;
+  var role=tmRole(name);
+  var avatar=tmAvatar(name);
+  var isSuper=name===TM_SUPER_ADMIN;
+  var tasks=D.tasks.filter(function(t){return t.o===name});
+  var cachedPerms=TM.permsCache[name]||(isSuper?tmSuperPerms():null);
+  var pcount=cachedPerms?tmPermCount(cachedPerms):"—";
+
+  return '<tr>'
+   +'<td><div class="tm-name-cell"><div class="tm-avatar '+role.key+'">'+avatar+'</div><div><b>'+esc(name)+'</b><small>'+esc(role.label)+'</small></div></div></td>'
+   +'<td><span class="tm-role-badge '+role.key+'">'+(role.key==="dev"?"⚡ Super Admin":role.key==="sup"?"👑 Supervisor":"👤 Team Member")+'</span></td>'
+   +'<td><span class="tm-status-dot active">نشط</span></td>'
+   +'<td>'+fm(tasks.length)+' مهمة</td>'
+   +'<td>'+(pcount==="—"?'<span class="note">جارٍ التحميل...</span>':pcount+' / '+tmTotalPerms())+'</td>'
+   +'<td><div class="tm-action-btns">'
+   +'<button class="tm-btn info" onclick="tmViewMember(\''+esc(name)+'\')">👁 تفاصيل</button>'
+   +(canManageTeam()&&!isSuper?'<button class="tm-btn perm" onclick="tmPermModal(\''+esc(name)+'\')">🔑 صلاحيات</button>'
+    +(isSuper?'':'<button class="tm-btn acct" onclick="tmAccountModal(\''+esc(name)+'\')">⚙️ حساب</button>'):'')
+   +'</div></td>'
+   +'</tr>';
+ }).join("");
+
+ return '<div class="wrap"><table class="tm-tbl">'
+  +'<thead><tr><th>العضو</th><th>الدور الوظيفي</th><th>حالة الحساب</th><th>المهام</th><th>الصلاحيات</th><th>الإجراءات</th></tr></thead>'
+  +'<tbody>'+rows+'</tbody>'
+  +'</table></div>';
+}
+
+function tmRefreshTable(){
+ var el=document.getElementById("tm-table-body");
+ if(el)el.innerHTML=tmBuildTable(tmFiltered());
+}
+
+// تحميل الصلاحيات في الخلفية عند فتح الصفحة
+async function tmPreloadPerms(){
+ var members=everyone();
+ for(var i=0;i<members.length;i++){
+  if(!TM.permsCache[members[i]]){
+   await tmLoadPerms(members[i]);
+   tmRefreshTable();
+  }
+ }
+}
+
+/* ===== END TEAM MANAGEMENT SYSTEM ===== */
+
+buildLogin();setTimeout(function(){document.documentElement.classList.remove("bt")},8000);addEventListener("hashchange",go);boot();setInterval(rbTick,1000);setTimeout(function(){document.documentElement.classList.remove("bt")},8000);addEventListener("hashchange",go);boot();setInterval(rbTick,1000);
 </script>
 </body>
 </html>
