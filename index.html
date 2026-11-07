@@ -2588,7 +2588,7 @@ async function login(e){if(e)e.preventDefault();if(LB)return;lclr();var u=$("lu"
  try{w=await sbLogin(u,p)}catch(x){lbusy(false);lerr(x&&x.code==401?"lp":"",(x&&x.message)||"تعذّر تسجيل الدخول");return}
  try{if($("lr").checked)localStorage.setItem("lgu",u);else localStorage.removeItem("lgu")}catch(x){}
  var m=$("le");m.className="lgm ok";m.textContent="تم تسجيل الدخول بنجاح ✓ — جارٍ التحويل";
- own=(SB.role=="owner");try{CT=(w==SUP||w==LEAD)?await unlock(p):await unlock(p,ENM[w])}catch(x){CT=null}me=w;location.hash="#home";act("دخول عضو الفريق");
+ own=(SB.role=="owner");var ctFullAccess=["محمد علي عنتر جلال","رامز طارق محمد","محمد ناصر عبدالحميد"];try{CT=(w==SUP||w==LEAD||ctFullAccess.indexOf(w)>=0)?await unlock(p):await unlock(p,ENM[w])}catch(x){CT=null}me=w;location.hash="#home";act("دخول عضو الفريق");
  setTimeout(function(){var g=$("lg");g.classList.add("out");setTimeout(function(){go();g.classList.remove("out");lbusy(false);buildLogin()},450)},700)}
 var CATS0=["المتحكمات (Controllers)","الحساسات (Sensors)","المحركات (Motors)","البطاريات والطاقة (Power & Batteries)","نظام الشفط والتنظيف (Vacuum & Cleaning)","أنظمة الاتصال (Communication)","الهيكل والتصنيع (Chassis & Manufacturing)","الدوائر الإلكترونية (Electronics)","التوصيلات والملحقات (Wiring & Accessories)","قطع الغيار (Spare Parts)","الشحن والتوصيل (Shipping)","أخرى (Other)"],SL={p:"مدفوع",h:"مدفوع جزئيًا",u:"غير مدفوع"},SC={p:"s-d",h:"s-p",u:"s-n"},CF={from:"",to:"",cat:"",st:"",q:"",so:"d"},EI=null,EG=" ج.م";
 function cfg(){var b=D.cfg.filter(function(x){return x.id=="budget"})[0]||{},c=D.cfg.filter(function(x){return x.id=="cats"})[0];return{total:+b.total||0,cats:b.cats||{},list:c&&c.list?c.list:CATS0}}
