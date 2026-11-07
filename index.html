@@ -225,6 +225,94 @@ button.tk-mem{cursor:pointer}
 .inst-rm{display:flex;flex-direction:column;gap:4px;font-size:12px;width:110px}
 .inst-rm img{width:110px;height:80px;object-fit:cover;border-radius:8px}
 .inst-rm span{display:flex;gap:4px;align-items:center;color:var(--mut)}
+
+/* ===== SUPERVISORS PREMIUM REDESIGN ===== */
+.sup-section-wrap{margin-bottom:24px}
+.sup-section-title{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:0 4px}
+.sup-section-title h2{margin:0;font-size:22px;color:var(--tx);font-weight:700}
+.sup-section-title .sup-line{flex:1;height:2px;background:linear-gradient(90deg,var(--pri),transparent)}
+.sup-premium-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-bottom:0}
+/* Premium Supervisor Card */
+.sup-pcard{background:var(--card);border:1px solid var(--bd);border-radius:20px;overflow:hidden;cursor:pointer;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;position:relative}
+.sup-pcard:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 20px 60px rgba(37,99,235,.18)}
+.sup-pcard-top-bar{height:4px;background:linear-gradient(90deg,#2563eb,#06b6d4)}
+.sup-pcard.dev-pcard .sup-pcard-top-bar{background:linear-gradient(90deg,#8b5cf6,#ec4899,#f59e0b)}
+.sup-pcard.lead-pcard .sup-pcard-top-bar{background:linear-gradient(90deg,#0ea5e9,#22d3ee)}
+/* Glass overlay */
+.sup-pcard::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(255,255,255,.03) 0%,transparent 50%);pointer-events:none;border-radius:20px}
+.sup-pcard-body{padding:24px}
+.sup-pcard-header{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.sup-pcard-avatar{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;position:relative;background:linear-gradient(135deg,#1e3a8a,#2563eb);border:3px solid rgba(37,99,235,.4);box-shadow:0 0 20px rgba(37,99,235,.3)}
+.dev-pcard .sup-pcard-avatar{background:linear-gradient(135deg,#4c1d95,#7c3aed);border-color:rgba(139,92,246,.4);box-shadow:0 0 20px rgba(139,92,246,.3)}
+.lead-pcard .sup-pcard-avatar{background:linear-gradient(135deg,#0c4a6e,#0369a1);border-color:rgba(14,165,233,.4);box-shadow:0 0 20px rgba(14,165,233,.3)}
+.sup-pcard-avatar .online-dot{position:absolute;bottom:2px;right:2px;width:14px;height:14px;border-radius:50%;background:#22c55e;border:2px solid var(--card)}
+.sup-pcard-info{flex:1;min-width:0}
+.sup-pcard-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.sup-badge-role{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:.3px}
+.sup-badge-sup{background:rgba(37,99,235,.15);color:#60a5fa;border:1px solid rgba(37,99,235,.3)}
+.sup-badge-dev{background:rgba(139,92,246,.15);color:#a78bfa;border:1px solid rgba(139,92,246,.3)}
+.sup-badge-admin{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.3)}
+.sup-pcard-name{font-size:18px;font-weight:700;color:var(--tx);margin:0 0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sup-pcard-subrole{font-size:12px;color:var(--mut);margin:0}
+.sup-pcard-tasks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.sup-task-stat{background:var(--soft);border:1px solid var(--bd);border-radius:12px;padding:10px;text-align:center}
+.sup-task-stat b{display:block;font-size:20px;font-weight:700;color:var(--tx);line-height:1.2}
+.sup-task-stat span{font-size:11px;color:var(--mut)}
+.sup-pcard-duties{display:flex;flex-wrap:wrap;gap:6px}
+.sup-duty-tag{background:var(--soft);border:1px solid var(--bd);border-radius:8px;padding:4px 10px;font-size:12px;color:var(--mut)}
+.sup-pcard-footer{padding:12px 24px;border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;background:var(--soft)}
+.sup-pcard-footer-hint{font-size:12px;color:var(--mut)}
+.sup-pcard-open-btn{font-size:12px;color:var(--pri);font-weight:600;cursor:pointer;background:none;border:none;padding:0}
+
+/* Supervisor Modal */
+.sup-modal-wrap{background:var(--card);border-radius:20px;max-width:580px;width:100%;overflow:hidden}
+.sup-modal-top{height:5px;background:linear-gradient(90deg,#2563eb,#06b6d4)}
+.sup-modal-top.dev{background:linear-gradient(90deg,#8b5cf6,#ec4899,#f59e0b)}
+.sup-modal-top.lead{background:linear-gradient(90deg,#0ea5e9,#22d3ee)}
+.sup-modal-header{padding:24px;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--bd)}
+.sup-modal-avatar{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0;background:linear-gradient(135deg,#1e3a8a,#2563eb);border:3px solid rgba(37,99,235,.4);box-shadow:0 0 24px rgba(37,99,235,.25)}
+.sup-modal-avatar.dev{background:linear-gradient(135deg,#4c1d95,#7c3aed);border-color:rgba(139,92,246,.4);box-shadow:0 0 24px rgba(139,92,246,.25)}
+.sup-modal-avatar.lead{background:linear-gradient(135deg,#0c4a6e,#0369a1);border-color:rgba(14,165,233,.4)}
+.sup-modal-header-info h2{margin:0 0 4px;font-size:20px}
+.sup-modal-header-info p{margin:0;color:var(--mut);font-size:13px}
+.sup-modal-body{padding:24px;display:grid;gap:16px}
+.sup-modal-section h4{margin:0 0 10px;font-size:14px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.sup-modal-roles{display:flex;flex-wrap:wrap;gap:8px}
+.sup-modal-role-item{background:var(--soft);border:1px solid var(--bd);border-radius:10px;padding:8px 14px;font-size:13px;display:flex;align-items:center;gap:6px}
+.sup-modal-stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.sup-modal-stat{background:var(--soft);border:1px solid var(--bd);border-radius:12px;padding:12px;text-align:center}
+.sup-modal-stat b{display:block;font-size:22px;font-weight:700;color:var(--tx)}
+.sup-modal-stat span{font-size:12px;color:var(--mut)}
+.sup-modal-activities{display:flex;flex-direction:column;gap:8px}
+.sup-modal-act-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--soft);border-radius:10px;font-size:13px}
+.sup-modal-act-time{font-size:11px;color:var(--mut);white-space:nowrap}
+.sup-modal-footer{padding:16px 24px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end}
+
+/* ===== ATTENDANCE PRIVACY SYSTEM ===== */
+.att-priv-wrap{margin-bottom:16px}
+.att-members-shuffle{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:12px}
+.att-member-row{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;transition:box-shadow .2s}
+.att-member-row:hover{box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.att-member-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--pri),#06b6d4);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;color:#fff;font-weight:700}
+.att-member-info{flex:1;min-width:0}
+.att-member-name{font-size:14px;font-weight:600;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.att-member-summary{font-size:12px;color:var(--mut);margin-top:2px}
+.att-member-more-btn{font-size:12px;padding:5px 12px;border-radius:8px;background:var(--soft);border:1px solid var(--bd);color:var(--pri);cursor:pointer;font-weight:600;white-space:nowrap;transition:background .2s}
+.att-member-more-btn:hover{background:var(--pri);color:#fff}
+/* Member Detail Modal */
+.att-detail-modal{max-width:520px;width:100%;background:var(--card);border-radius:18px;overflow:hidden}
+.att-detail-modal-head{padding:20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:14px}
+.att-detail-avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--pri),#06b6d4);display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;font-weight:700}
+.att-detail-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:16px 20px;background:var(--soft)}
+.att-detail-stat{text-align:center}
+.att-detail-stat b{display:block;font-size:20px;font-weight:700;color:var(--tx)}
+.att-detail-stat span{font-size:11px;color:var(--mut)}
+.att-detail-history{padding:16px 20px;max-height:50vh;overflow-y:auto}
+.att-detail-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;margin-bottom:6px;background:var(--soft)}
+.att-detail-date{font-size:13px;font-weight:600;color:var(--tx)}
+.att-detail-status-pill{font-size:12px;border-radius:20px;padding:3px 10px}
+.att-detail-notes{font-size:12px;color:var(--mut);flex:1;text-align:start}
+
 </style>
 <style>html.bt #lg{visibility:hidden}.tbl td a{color:var(--pri);text-decoration:none;font-weight:500}.tbl td a:hover{text-decoration:underline}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tbl td a{color:#67e8f9}}:root[data-theme="dark"] .tbl td a{color:#67e8f9}</style>
 <style>
@@ -557,9 +645,183 @@ function sbAI(){var f=async function(q,o){var s=await sbSess(),im=((o&&o.images)
 </script>
 <script>
 var OH="9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b",ENC="+fwrIZoqcirEtpY1b9IUOjjLEYwi7KzCqDCsbSa4Dpe/ygx0u38ypNBnJW4wpFmQiY4RsXsb6XCnZKrqfOfxFn0XisC8QAv0XzF/d3FiqkVNPQFhSAdFQ+Eiy4Lm/9RmGfL9dLCJoPFsu6HKdxbjtlbqUQhJu7GQPEpihoWXhOcnEC+EOHMSXWtGa57K6H4sQiX9J2DPyk4GgUwddWtnWYCnX611T1amU8sTUU6aVNqkJuql/mFa6jxWxWy61iYZryyMPWk0sdqmikwgVjMpC2aGVAyZdUfKmee96ui1/4NXUMpeT4NF0RagHGJCzDZAZHeP14gGfeK7eZkwq8BBVTWJtFyWv/txZL37MowYgrMGSDsp+G48XM3rhKyxpgOqupVycTNgYR0NG/8mIJZoEEuG9t+SpWKZiZS+pVUTvpKhI13E+uI3AkDZ6VbJ4vPkhXAAkwxqaL/nTmo54mTnI5prmzuEWVLNElcELrBqjbBivp82qm0uvuPj4r01HOki4g8sQRve2F/VPufJiQQIHbcRjjKWel/X/wr950F8kbjlA8WObVviOccu4YjTnT7enRg3ler3bqYuLlGG0EkyiaTkvTy1lcL71Oo4SdjPlPaLt+EF49kRejHaP1EQ66oZ/4ML23txWS3Qu9bpseHC8vbbLyaH0v97wbLU9g0ANM4iiVvSQgVw2vxona3HhNBmlsmTavRwxqSVO9MDcGKPL9KIpmCFnLFMgs9v5ibvuSiEuyvP8IC6hzWW5gktcYLXMAAhARaytN2+3lKsmGu8NQcG1eLVxJzyCA6cXbkAq3tZkoXu3iU/455qeM8Z5cLLKUcLgbs2gFjuiqii2USiTTY+rtzUDJuU9KscrtqoA9JjTzEi1E9IObt47Y5BgoKgUjfz31ugD8mR9yz4ozJR3uO8KuECzBZONRip39piD996spvkdZiH9fULm9VFWSXyhAN890LaSL2M9VGkXeT3jv2ULP+C/P8m/UvOyC9mduEV56ZOyI7k0Rzuh/T5PY+BL4O4wDTzpt0G+PG9W6KBMImELzHQfy/mWDulb4MdM40P6hg+HMsFH//nS0flrgAKyP2oJPsTJKyQ2rfUpGa0W6BhnDKu4SP3YTAfGLBdJhOnNrsckOeQ1uapCF3u3Yt9XoV30TrrtsWCq5QNupZiyv09jAYQyVBQ1KV1eorvnEKNaBk812Vw9OG/Guw4QlVhSCwEjFMau0tSHy2TOlDSFVJX4Kn7KeU6l3AXanCkoWVQE8byMYLcSw7bRTYryOCd5n9qs9LOph6kn/ALxNUdYlF8znWB9pzwBr/To2We4/Epk1EzEjNNIfSY0/uRRYYnLBeSlz3OPAS1a/X2EfJMNyROErrYeDtBKUI13ngcNlldtuphKkWClcC62gmH1dR/uxaxaV3hz45S+qjDyoIdJYdSf6VwRwWr1ibnUZgfhJVmoxXSOyK7ufLF9mYRvwe9TCVLTO2vNxKE5/MEgFsU/gqQ6PiBSECVtzqwNBF7Xod1hZwAp9s7Zx0OxuowsjSkB698GO437vCd5300VAjk+0mG2HGJt9SYaQNs+zmXFEhWwUC9TL8JFes7+DKhQkhMuxnJ/JXcmMiwBsH1Q8mgtwva0TNkawYKFieCd6BmFZd9VmYx9RLUKnv1r6N4fWpA4WqrRoyABflyEDbXst9EVfkBXPQPL+EvDZPB/loxkprFr0I=";var ENM={"محمود نادر محمود عوض":"qPcgL58I/glPe2bb3H0VAMA/QiwSfEpI1cdDPtSFOo83fO5lOKSNvmnczY7NvVKnX2c+KZzFCMFyWR35Q8p+qnhV6PAlwZCCGpRKhX1JwcKiCG/neQDw4AJjkPZ3B9qn4Yf3QpdhPKGjL9WqSsNLuEV2Sso/oeqcL6rxbKM3qw==","محمد علي عنتر جلال":"g1j1N+etsMz1/FIjBUwNAiyPi5DobPXlQdT+bQjrt2gicVGFCmHJSf4JulUnrRwYKbz3MdTKh2bh49DLjXOLLdbYsPSuQ8OuLJA1VrbvqbqDZ4CjhLVED8T06rXQJiVZWrGrUTnijzioi1mVowpM33QgWFbkyJE=","محمد سامي سيد":"MRgxomx8B58p/U346p7Cvbm6Ng4PnqcIQadYTJvoy4Ep12TXQpODMRwMicndXlG1gSc67EjoszMwT29O1m8bu6+C1Z+iaP9jayAP0zq13SMJEfn5/Grqnh5hrCKPIGGcT8udw5d6KfcUe052+UBMwXZtsOU=","محمد حسين عبد المبدي":"VcQouU0axn7V30m4pChhtezxuI9XVz9cyNxUifpqZJc7F7Tg0meLPCdSVB7D3KAOgFqaDPkw+KSvRPy040YqaXkrg+2nisGouGbhpdXOxm3YMi2bAPJR9sqli5OcH8eghofJVMI64KwYnx+mn2XRpHalWMwRk2n7nRzkxI0=","محمود صالح عبدالرازق صالح":"+KpftVTSAUQ7LRowo/sOOrkU2RSWzBAHF5cTcRXKprzmvpVj6AdANvNRyA2KSjlSVRRrv4yu1DzchEu8tvcVrcB/9T9f7icRw6cBhfbuiK5E8TFql6XNenFIjOMgNGUFuC7Qk8S6idxA1EVVWPFAPC4UwiSRQ3sAMqm/QtId3fhNF3e5fHiKzp5ncyyHMQ==","محمد ناصر عبدالحميد":"HQl4OhryESalD4GwJDvtdJdbertEThPInAGas94G5XLxFX1xfXyNPtGgxF3+C6c60SEAjcjkC+CHW447VN49NG8LH9wZlNswxR7pI6JuwbF3Lu0qx31fT09pwAFTKg46NtDm3700CusrMtXtgVgLTIScGBKuKbT6DZA=","ريمون نادي زخاري":"yNwnM8qRT1zp6BIkYEKS2ThU8WK8YBUtTrIlYDGw+iM5zcRjy/68UOWnNwN5fSLfzjEWKNVpbnB3wIAP5smGPf5NGHLYySccIUhDFCo/eelebbbXNDmh7hh/VBYzwmvehX7/u30V+xh0vu+r7u0RUmm7QwBCyijTmQ==","أمير وائل شحاته":"TBXgXlKIWBxORQUn1NqlPwQSbyTqCN2tgbflOan6SXYV+lJI/Wgz4WdhHXgPLe+37r/R5XUxlq5FkOwBwzpBue25f9neoHBTkBv3ZE0D+MKMvwFw8Xg21s3X2hbj575PJgyZkDTkaW3xRAMOUEneF3hx","خالد جاد عبيد الله خالد":"SS02+KhkcX0JbkHNoyYXP14mBZWP89ldQ8xYK86cq68hdXpR2NXcrz/6P8Q4p+O7dTL9hWgD023gn8H0sNw0Cr+HcZG8iQBsy9n/WbsMPWd9rFQTGovMLwwCtadkP/ofdHQ9znnywQ92h/sEmXt8QClquMe8L4q3JGy7CJ61xw==","أحمد حلمى فاروق":"uTFGLz3YYKsMm5pk75kvRp0dBHru3sYe/ijjrOWl0Qw+tD7iMjhEyaHSVNIAE8IbWsDK+xOesBwUKkCe3Mvf71bcmn29+A4ytUymIjqoOFDPE19PB/mWhYv5bCohwpD7osSmuPxefV/aEo8rnIY/xQhwhYvA3w==","الحسن علي محمد محمود":"5myEC+owLar9mVmCKXJ05XzW25GzNUEbN9eMv5ryeSICPzUAfyc1UP9e1x8AycZ75kZNWSghVlJ65p6AZsEDSbcmSrGXx8+yn5fkw3xRPNaDZCdOJYIkPQ+4/YzaXH2yDaC5CW2aqBRSBaM2mqbT0w92+grbL+6QvLG1tkE=","رامز طارق محمد":"6ki62LQWrWc6y2AuYUpvcF5nC5fVKKHad4xv2Zjoz3dEMsuNR3weFNmLOWQTskdpxpy17HhANzWVMUVQhpiZf+uFs5ou3rRFMMhqkfULqCaycjn3hDHCK7elb+bB1KrnqZucJQAA2PYxezicjXXJStmc","السيد عبداللاه السيد":"i4cDGTfxAjpEiJuIWjeIGDeLQ7zygP4AUkzfTE6gTwOWn2rhqnNrSoTQWsyzqGdhPsHt8gJ6crZKi2EAn9RqjUt7SJTy2tjOc8YYi38tNgTbPkT918Q6jPeEZVkYXgSbMVJOcS6vQfSkOlQZrxHI21USMEaneL1YUOrGsmQxCx4=","أيمن منصور محمد":"CR9CBze4i1SzwTPZpo0pTgbvxjoIOgbm522ZS2HKl3ce4hb+6cq6fuMx72rMP6bZiYwAcOMg6sJD5IXa3SG8oaESI8jOjQCo4TATsRSEr83iQaZWhofzDWX16nJJqGp+OUA1gwsR7+oqZ5dXIucALUUW1+CuN6UI","محمد ضياء علي":"gntGnuJe+yVwddxQa6ntC4DtbLNtEUleJF5pF9pYIQd48m3aoFajsNRCXZqC+fMpFYlhtYfqENF24dx3ckYPwm0oFI9iVP8+DA9i6C+/JV0ikvT+DntdqpsIiqxC/WhsZPHUJgC7D8lTCIEQEDc=","أحمد هاشم محمد عبدالمنعم":"8SfsenEf0CEUxHqJXqCfHS0LXDvNTQHZToJqQYbyVLGagfpfRHkQYdp23PYrv82Nly7Y27+XYN3+Y/QiJShXtHutTDuwTvoGm2DRnjGZ8Lk8hzOiKREyParLEi3IElDt9Kc3+BSUlZfsju4H+G+hlTO4dY6qjjOICCh9/EPo1Sh/aQ=="};var HP={"د. محمود محروس":"9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b","م. دعاء":"9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b","رامز طارق محمد":"9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b","محمد ناصر عبدالحميد":"9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b","محمود نادر محمود عوض":"636b3392e7d8057963a44e9712871eeb73627adb9f3dd67f21dc03247a9096fd","محمد علي عنتر جلال":"9c04639d1ac59961f36c0b78196c398b98632a0014468cf46d0ee192fe06243b","محمد سامي سيد":"66c77f943981d53c04e7cf35a6af047092262347425eb1ffbc357bc117169a24","محمد حسين عبد المبدي":"4b29030130a6bb41c6e2dc43951b04692367d2db80d919911815d82aca91dabe","محمود صالح عبدالرازق صالح":"17066212fbec374089c71fc8d2105455cc50a06714e2326c48e5eb5fd77c8f7b","محمد ضياء علي":"d66a051c9318c5aee083065e5fb8713354a5ee42a241be31ff3eb9cb6eff0f5a","أمير وائل شحاته":"97e387f295485615768efff982d5cc870b7ee81a41b42aa2b288fca7708ec697","خالد جاد عبيد الله خالد":"a81f3e3b22f20826f8262daf6b0053cdd9676d9970fc3539652ed2b278b62561","أحمد حلمى فاروق":"5a2aaa59902b2c3e268c6397443b06419bb26027ce8a168f6a02a0f9ddfbc5d5","الحسن علي محمد محمود":"6b69e857fb9f1020303b038ff3534550cde92fac00184ef58e24ac3e8374d4f0","السيد عبداللاه السيد":"415fbe67f4b3cc309a8bf8aa9abd89ab16588624d0ae4ca3f10978f70395962e","أيمن منصور محمد":"6bbfb0d6a6407a06ca0bc325f76bfc377c4cfacb2be6dbd7ce7828dbb39ae6bc","أحمد هاشم محمد عبدالمنعم":"38d12676c08f3812ff10a5296495894194321656e7a71837a015ea82dd1b6486","ريمون نادي زخاري":"a7743c16883faadcd9ab7e39413f3c0109b615743b9e85da9df83b56130f1d26"},LEAD="م. دعاء",SUP="د. محمود محروس",CH=null,MEM=["رامز طارق محمد","محمد ناصر عبدالحميد","محمود نادر محمود عوض","محمد علي عنتر جلال","محمد سامي سيد","محمد حسين عبد المبدي","محمود صالح عبدالرازق صالح","محمد ضياء علي","أمير وائل شحاته","خالد جاد عبيد الله خالد","أحمد حلمى فاروق","الحسن علي محمد محمود","السيد عبداللاه السيد","أيمن منصور محمد","أحمد هاشم محمد عبدالمنعم","ريمون نادي زخاري"],CT=null,own=false;
+
+/* ===== SUPERVISORS HOME SECTION ===== */
+function supHomeSectionHtml(){
+  var tasks=D.tasks;
+  // Stats for each supervisor
+  function supStats(name){
+    var supervised=tasks.filter(function(t){return t.o&&(MEM.indexOf(t.o)>=0)});
+    var done=supervised.filter(function(t){return t.s=='d'}).length;
+    var total=supervised.length;
+    var logs=D.logs.filter(function(l){return l.w==name}).length;
+    return {done:done,total:total,logs:logs};
+  }
+  var sups=[
+    {name:'م. دعاء',emoji:'👩‍💼',type:'lead',title:'مشرفة الفريق',duties:['متابعة أعضاء الفريق','متابعة الحضور والغياب','متابعة المهام والأنشطة']},
+    {name:'د. محمود محروس',emoji:'👨‍🔬',type:'lead',title:'مشرف الفريق',duties:['متابعة أعضاء الفريق','متابعة الحضور والغياب','متابعة المهام والأنشطة']},
+    {name:'محمد علي عنتر جلال',emoji:'💻',type:'dev',title:'Developer & Super Admin',duties:['Super Admin','إدارة إعدادات النظام','إدارة الصلاحيات','الإشراف التقني الكامل']}
+  ];
+  // Shuffle supervisors display order randomly each render
+  var supsCopy=sups.slice();
+  for(var i=supsCopy.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=supsCopy[i];supsCopy[i]=supsCopy[j];supsCopy[j]=tmp;}
+  var h='<div class="sup-section-wrap">';
+  h+='<div class="sup-section-title"><h2>👑 المشرفون</h2><div class="sup-line"></div></div>';
+  h+='<div class="sup-premium-grid">';
+  supsCopy.forEach(function(s){
+    var st=supStats(s.name);
+    var isDev=s.type==='dev';
+    var cardClass='sup-pcard'+(isDev?' dev-pcard':' lead-pcard');
+    var badgeHtml='';
+    if(isDev){badgeHtml='<span class="sup-badge-role sup-badge-dev">⚡ Developer</span><span class="sup-badge-role sup-badge-admin">🔑 Super Admin</span>';}
+    else{badgeHtml='<span class="sup-badge-role sup-badge-sup">👁️ Supervisor</span>';}
+    var dutiesHtml=s.duties.slice(0,3).map(function(d){return'<span class="sup-duty-tag">'+esc(d)+'</span>'}).join('');
+    h+='<div class="'+cardClass+'" onclick="supOpenModal(\''+esc(s.name)+'\')">';
+    h+='<div class="sup-pcard-top-bar"></div>';
+    h+='<div class="sup-pcard-body">';
+    h+='<div class="sup-pcard-header">';
+    h+='<div class="sup-pcard-avatar">'+s.emoji+'<span class="online-dot"></span></div>';
+    h+='<div class="sup-pcard-info">';
+    h+='<div class="sup-pcard-badges">'+badgeHtml+'</div>';
+    h+='<div class="sup-pcard-name">'+esc(s.name)+'</div>';
+    h+='<div class="sup-pcard-subrole">'+esc(s.title)+'</div>';
+    h+='</div></div>';
+    h+='<div class="sup-pcard-tasks">';
+    h+='<div class="sup-task-stat"><b>'+fm(st.done)+'</b><span>مهام منجزة</span></div>';
+    h+='<div class="sup-task-stat"><b>'+fm(st.total)+'</b><span>مهام مشرف عليها</span></div>';
+    h+='<div class="sup-task-stat"><b>'+fm(st.logs)+'</b><span>نشاط</span></div>';
+    h+='</div>';
+    h+='<div class="sup-pcard-duties">'+dutiesHtml+'</div>';
+    h+='</div>';
+    h+='<div class="sup-pcard-footer"><span class="sup-pcard-footer-hint">اضغط لعرض التفاصيل</span><button class="sup-pcard-open-btn">عرض ←</button></div>';
+    h+='</div>';
+  });
+  h+='</div></div>';
+  return h;
+}
+
+function supOpenModal(name){
+  var sups={
+    'م. دعاء':{emoji:'👩‍💼',type:'lead',title:'مشرفة الفريق',roles:['Supervisor','متابعة أعضاء الفريق','متابعة الحضور والغياب','متابعة المهام والأنشطة'],icons:['👁️','👥','📊','✅']},
+    'د. محمود محروس':{emoji:'👨‍🔬',type:'lead',title:'مشرف الفريق',roles:['Supervisor','متابعة أعضاء الفريق','متابعة الحضور والغياب','متابعة المهام والأنشطة'],icons:['👁️','👥','📊','✅']},
+    'محمد علي عنتر جلال':{emoji:'💻',type:'dev',title:'Developer & Super Admin',roles:['Super Admin','Developer','إدارة إعدادات النظام','إدارة الصلاحيات','الإشراف التقني الكامل'],icons:['🔑','⚡','⚙️','🛡️','💻']}
+  };
+  var s=sups[name];if(!s)return;
+  var tasks=D.tasks;
+  var supervised=tasks.filter(function(t){return t.o&&MEM.indexOf(t.o)>=0});
+  var done=supervised.filter(function(t){return t.s=='d'}).length;
+  var inProg=supervised.filter(function(t){return t.s=='p'}).length;
+  var logs=D.logs.filter(function(l){return l.w==name||l.w.indexOf(name)>=0}).slice().sort(function(a,b){return b.ts-a.ts}).slice(0,5);
+  var isDev=s.type==='dev';
+  var topClass=isDev?'dev':(name=='م. دعاء'?'lead':'lead');
+  var avatarClass=isDev?'dev':(name=='م. دعاء'?'lead':'lead');
+  var attPresent=D.attendance.filter(function(r){return r.status=='present'}).length;
+  var attAbsent=D.attendance.filter(function(r){return r.status=='absent'||r.status=='excused'}).length;
+  var rolesHtml=s.roles.map(function(r,i){return'<div class="sup-modal-role-item">'+(s.icons[i]||'•')+' '+esc(r)+'</div>'}).join('');
+  var actHtml=logs.length?logs.map(function(l){return'<div class="sup-modal-act-item"><span style="flex:1">'+esc(l.t)+'</span><span class="sup-modal-act-time">'+dt(l.ts)+'</span></div>'}).join(''):'<div class="note" style="text-align:center;padding:12px">لا توجد أنشطة مسجّلة بعد.</div>';
+  var h='<div class="sup-modal-wrap">';
+  h+='<div class="sup-modal-top '+topClass+'"></div>';
+  h+='<div class="sup-modal-header">';
+  h+='<div class="sup-modal-avatar '+avatarClass+'">'+s.emoji+'</div>';
+  h+='<div class="sup-modal-header-info"><h2>'+esc(name)+'</h2><p>'+esc(s.title)+'</p></div>';
+  h+='</div>';
+  h+='<div class="sup-modal-body">';
+  h+='<div class="sup-modal-section"><h4>المهام والمسؤوليات</h4><div class="sup-modal-roles">'+rolesHtml+'</div></div>';
+  h+='<div class="sup-modal-section"><h4>الإحصائيات</h4>';
+  h+='<div class="sup-modal-stats-grid">';
+  h+='<div class="sup-modal-stat"><b>'+fm(done)+'</b><span>مهام منجزة</span></div>';
+  h+='<div class="sup-modal-stat"><b>'+fm(inProg)+'</b><span>قيد التنفيذ</span></div>';
+  h+='<div class="sup-modal-stat"><b>'+fm(attPresent)+'</b><span>سجلات حضور</span></div>';
+  h+='<div class="sup-modal-stat"><b>'+fm(attAbsent)+'</b><span>سجلات غياب</span></div>';
+  h+='</div></div>';
+  h+='<div class="sup-modal-section"><h4>آخر الأنشطة الإشرافية والتطويرية</h4><div class="sup-modal-activities">'+actHtml+'</div></div>';
+  h+='</div>';
+  h+='<div class="sup-modal-footer"><button class="btn g" onclick="closeM()">إغلاق</button></div>';
+  h+='</div>';
+  modal(h);
+}
+
+/* ===== ATTENDANCE HOME SUMMARY ===== */
+function attHomeSectionHtml(){
+  if(!D.attendance||!D.attendance.length)return'';
+  var members=attMembers();
+  // Shuffle members order randomly
+  var shuffled=members.slice();
+  for(var i=shuffled.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=shuffled[i];shuffled[i]=shuffled[j];shuffled[j]=tmp;}
+  var canSeeAll=isAttAdmin()||own;
+  var dates=attDates();
+  var latestDate=dates[0]||'';
+  var h='<div class="card" style="margin-bottom:20px"><div class="row" style="margin-bottom:12px"><h3 style="margin:0">👥 الحضور والغياب</h3><a href="#attendance" class="hm-lnk">عرض كامل ←</a></div>';
+  if(latestDate){
+    h+='<div class="note" style="margin-bottom:12px;background:var(--soft);padding:8px 12px;border-radius:8px">📅 آخر مقابلة مسجّلة: <b>'+esc(latestDate)+'</b></div>';
+  }
+  h+='<div class="att-members-shuffle">';
+  shuffled.forEach(function(n){
+    var myRecs=D.attendance.filter(function(r){return r.member_name==n});
+    var present=myRecs.filter(function(r){return r.status=='present'}).length;
+    var absent=myRecs.filter(function(r){return r.status=='absent'||r.status=='excused'}).length;
+    var total=myRecs.length;
+    var initials=n.split(' ').filter(function(w){return w.length>0}).slice(0,2).map(function(w){return w[0]}).join('');
+    // Only admins see full stats, members see only their own
+    var canViewThis=canSeeAll||(me==n);
+    var summaryHtml=canViewThis?
+      '<span class="att-member-summary">✅ '+present+' حضور · ❌ '+absent+' غياب · إجمالي '+total+'</span>':
+      '<span class="att-member-summary">اضغط «المزيد» لعرض سجلك</span>';
+    h+='<div class="att-member-row">';
+    h+='<div class="att-member-avatar">'+esc(initials)+'</div>';
+    h+='<div class="att-member-info"><div class="att-member-name">'+esc(n)+'</div>'+summaryHtml+'</div>';
+    if(me){
+      var showBtn=canSeeAll||(me==n);
+      if(showBtn){h+='<button class="att-member-more-btn" onclick="attShowMemberDetail(\''+esc(n)+'\')">المزيد</button>';}
+    }
+    h+='</div>';
+  });
+  h+='</div></div>';
+  return h;
+}
+
+function attShowMemberDetail(memberName){
+  if(!me){loginM();return;}
+  var canSeeAll=isAttAdmin()||own;
+  if(!canSeeAll&&me!==memberName){toast('لا يمكنك الاطلاع على سجل هذا العضو');return;}
+  var recs=D.attendance.filter(function(r){return r.member_name==memberName})
+    .slice().sort(function(a,b){return (b.meeting_date>a.meeting_date?1:b.meeting_date<a.meeting_date?-1:0)});
+  var present=recs.filter(function(r){return r.status=='present'}).length;
+  var absent=recs.filter(function(r){return r.status=='absent'}).length;
+  var late=recs.filter(function(r){return r.status=='late'}).length;
+  var excused=recs.filter(function(r){return r.status=='excused'}).length;
+  var initials=memberName.split(' ').filter(function(w){return w.length>0}).slice(0,2).map(function(w){return w[0]}).join('');
+  var rowsHtml=recs.length?recs.map(function(r){
+    var css=ATT_STATUS_CSS[r.status]||'';
+    var icon=ATT_STATUS_ICON[r.status]||'';
+    var label=ATT_STATUS[r.status]||r.status;
+    return '<div class="att-detail-row">'
+      +'<span class="att-detail-date">'+esc(r.meeting_date||'—')+'</span>'
+      +'<span class="pill att-detail-status-pill '+css+'">'+icon+' '+label+'</span>'
+      +(r.notes?'<span class="att-detail-notes">'+esc(r.notes)+'</span>':'')
+      +'</div>';
+  }).join(''):'<p class="note" style="text-align:center;padding:16px">لا توجد سجلات حضور بعد.</p>';
+  var h='<div class="att-detail-modal">';
+  h+='<div class="att-detail-modal-head">';
+  h+='<div class="att-detail-avatar">'+esc(initials)+'</div>';
+  h+='<div><h3 style="margin:0">'+esc(memberName)+'</h3><p class="note" style="margin:4px 0 0">سجل الحضور والغياب الشخصي</p></div>';
+  h+='</div>';
+  h+='<div class="att-detail-stats">';
+  h+='<div class="att-detail-stat"><b>'+present+'</b><span>حضور</span></div>';
+  h+='<div class="att-detail-stat"><b>'+absent+'</b><span>غياب</span></div>';
+  h+='<div class="att-detail-stat"><b>'+late+'</b><span>تأخر</span></div>';
+  h+='<div class="att-detail-stat"><b>'+excused+'</b><span>بعذر</span></div>';
+  h+='</div>';
+  h+='<div class="att-detail-history">'+rowsHtml+'</div>';
+  h+='<div style="padding:12px 20px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end"><button class="btn g" onclick="closeM()">إغلاق</button></div>';
+  h+='</div>';
+  modal(h);
+}
+/* ===== END SUPERVISORS & ATTENDANCE EXTENSIONS ===== */
+
 var OLDN=["محمد","أحمد محمود","محمود علي","إبراهيم خالد","عبد الرحمن أحمد"],NA="غير مُسند";
 var START="2026-09-01",END="2027-05-31";
-var PAGES=[["home","الرئيسية"],["tasks","المهام"],["parts","المكونات"],["cost","التكاليف"],["inst","التركيب"],["robot","حالة الروبوت"],["backup","التصدير والنسخ"],["tests","الاختبارات"],["attendance","الغياب والحضور"],["log","سجل الحركات"],["team","الفريق"],["supervisors","👑 المشرفون"]];
+var PAGES=[["home","الرئيسية"],["tasks","المهام"],["parts","المكونات"],["cost","التكاليف"],["inst","التركيب"],["robot","حالة الروبوت"],["tests","الاختبارات"],["attendance","الغياب والحضور"],["log","سجل الحركات"],["team","الفريق"],["supervisors","👑 المشرفون"]];
 var PH=[["التصميم والنمذجة","#22a06b"],["التنفيذ الميكانيكي","#3b82f6"],["البرمجة والأتمتة","#8b6cf0"],["الاختبار والتوثيق","#f5b83d"]];
 var T0=[["دراسة المتطلبات واختيار المكونات","محمد",0,"d","2026-09-15"],["تصميم الدوائر الكهربائية والمنظمات","أحمد محمود",0,"d","2026-10-10"],["تصميم الهيكل بالنمذجة ثلاثية الأبعاد","إبراهيم خالد",0,"d","2026-10-25"],["شراء المكونات الأساسية","محمد",0,"d","2026-11-05"],["بناء الهيكل وتثبيت المحركات والعجلات","عبد الرحمن أحمد",1,"p","2026-11-30"],["تركيب حساسات العوائق والحواف","إبراهيم خالد",1,"p","2026-12-10"],["محطة الشحن والتفريغ الذاتي","عبد الرحمن أحمد",1,"n","2027-03-15"],["برمجة الحركة وتجنب العوائق","محمود علي",2,"p","2027-01-10"],["برمجة العودة التلقائية للشحن","محمود علي",2,"n","2027-02-01"],["تطبيق الهاتف (IoT)","أحمد محمود",2,"p","2027-02-20"],["الاختبار الشامل في بيئة حقيقية","محمد",3,"n","2027-04-30"],["التوثيق الفني وملف الميزانية","محمد",3,"n","2027-05-20"]];
 var B0=[["لوحة ESP32 (واي فاي وبلوتوث)",2,550],["درايفر موتور L298N",2,175],["محركات N20 مع العجلات",4,250],["حساسات HC-SR04",4,100],["مستشعرات IR للحواف",3,120],["بطارية ليثيوم أيون",2,600],["لوحة حماية BMS",2,150],["منظم جهد LM2596",3,100],["وحدة شحن ليثيوم",1,450],["موتور شفط مصغر",2,1500],["عجلة توجيه حرة",2,75],["ألواح MDF وهيكل الروبوت",3,500],["محطة الشحن وميكانيكا التفريغ",1,8500],["موديول ريلاي مزدوج",3,150],["شاشة OLED / LCD",2,400],["أسلاك وموصلات معزولة",5,300],["شيرنك وأفيز ومواد تثبيت",4,200],["صندوق تحكم ومشتتات حرارية",2,750],["طابعة لاصقات ومستلزمات أسلاك",1,1240],["شنيور لاسلكي مع ملحقات",1,3500],["أدوات لحام وقياس",1,3500],["طباعة ثلاثية الأبعاد للنماذج",1,15000],["تطوير تطبيق الهاتف",1,15000],["التشغيل التجريبي والاختبارات والتغليف",1,37290]];
@@ -956,7 +1218,7 @@ home:function(){
  var last=D.logs.reduce(function(a,l){return Math.max(a,l.ts||0)},0);
  var kp=function(href,ic,col,v,lab,sub){return'<a class="hm-k" href="#'+href+'"><div class="ic" style="background:'+col+'">'+ic+'</div><div><b>'+v+'</b><span>'+lab+(sub?' · '+sub:'')+'</span></div></a>'};
  var tv=function(v){return n?fm(v):"—"},pv=function(v){return np?fm(v):"—"};
- var h='<div class="hm-hero"><div><h2>'+hmGreet()+'، '+esc(me)+' 👋</h2><p class="sub">روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة<br><span dir="ltr">Smart Autonomous Cleaning Robot – Self Operation Vacuum Cleaner</span></p>'
+ var h=homeExtra+'<div class="hm-hero"><div><h2>'+hmGreet()+'، '+esc(me)+' 👋</h2><p class="sub">روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة<br><span dir="ltr">Smart Autonomous Cleaning Robot – Self Operation Vacuum Cleaner</span></p>'
   +'<div class="hm-meta"><span>حالة المشروع: <span class="pill '+st[1]+'">'+esc(st[0])+'</span></span>'
   +'<span>آخر تحديث: <b>'+(last?dt(last):"لا توجد حركات مسجّلة")+'</b></span></div></div>'
   +'<div><div class="hm-meta">نسبة الإنجاز الكلية (من المهام)</div>'+(n?'<div class="hm-big">'+fm(pr)+'٪</div><div class="hm-bar"><i style="width:'+pr+'%"></i></div><div class="hm-meta">'+fm(c.d)+' مكتملة من '+fm(n)+' مهمة</div>':'<div class="hm-big">—</div><div class="hm-bar"><i style="width:0"></i></div><div class="hm-meta">لا توجد مهام مسجّلة بعد</div>')+'</div></div>';
@@ -1051,7 +1313,7 @@ reports:function(){var m=["سبت","أكت","نوف","ديس","يناير","فب
  s+='<polyline fill="none" stroke="#9aa6c8" stroke-width="2" stroke-dasharray="5 4" points="'+pl.map(function(v,i){return x(i)+","+y(v)}).join(" ")+'"/><polyline fill="none" stroke="#22a06b" stroke-width="3" points="'+ac.map(function(v,i){return x(i)+","+y(v)}).join(" ")+'"/>'+ac.map(function(v,i){return '<circle cx="'+x(i)+'" cy="'+y(v)+'" r="4" fill="#22a06b"/>'}).join("")+'</svg>';
  return '<div class="card"><h3>التقدم الفعلي مقابل الخطة الزمنية (٪)</h3><div class="wrap">'+s+'</div><div class="leg" style="flex-direction:row;gap:18px;margin-top:8px"><span><i style="background:#22a06b"></i>الفعلي (من المهام المكتملة)</span><span><i style="background:#9aa6c8"></i>المخطط</span></div></div>'},
 team:function(){return roster()},
-backup:function(){return bkView()},
+backup:function(){return '<div class="card"><h3>التصدير والنسخ الاحتياطي</h3><p class="note">تم دمج هذا القسم مع إعدادات النظام. يمكن للمسئول الوصول إليه عبر لوحة التحكم.</p></div>'},
 robot:function(){setTimeout(rbPaint,0);return rbShell()},
 tests:function(){var l=D.tests.slice().sort(function(a,b){return b.d<a.d?-1:1}),p=l.filter(function(t){return t.s=="p"}).length,f=l.filter(function(t){return t.s=="f"}).length,r=l.filter(function(t){return t.s=="r"}).length,h='<div class="grid g4"><div class="card kpi"><div><span>إجمالي الاختبارات</span><b>'+fm(l.length)+'</b></div></div><div class="card kpi"><div><span>نسبة النجاح</span><b>'+fm(pc(p,l.length-r))+'٪</b></div></div><div class="card kpi"><div><span>ناجحة / فاشلة</span><b>'+fm(p)+' / '+fm(f)+'</b></div></div><div class="card kpi"><div><span>قيد الاختبار</span><b>'+fm(r)+'</b></div></div></div>';
  h+=me?'<div class="card"><h3>تسجيل اختبار</h3><form class="f" onsubmit="addQ(event)" style="flex-direction:column;align-items:stretch"><input name="n" placeholder="اسم الاختبار" required><input name="g" placeholder="الهدف"><input name="x" placeholder="النتيجة المتوقعة"><input name="a" placeholder="النتيجة الفعلية"><select name="s"><option value="r">قيد الاختبار</option><option value="p">ناجح</option><option value="f">فاشل</option></select><input type="date" name="d"><select name="o">'+everyone().map(function(n){return '<option'+(n==me?' selected':'')+'>'+esc(n)+'</option>'}).join("")+'</select><input name="nt" placeholder="ملاحظات"><div><button class="btn">حفظ</button></div></form></div>':'';
@@ -1902,32 +2164,81 @@ function attView(){
      +'</table></div></div>';
   }
 
-  /* سجل الحضور والغياب */
-  var dates=[],members2=[];
-  D.attendance.forEach(function(r){
-    if(r.meeting_date&&dates.indexOf(r.meeting_date)<0)dates.push(r.meeting_date);
-    if(r.member_name&&members2.indexOf(r.member_name)<0)members2.push(r.member_name);
-  });
-  dates.sort(function(a,b){return b>a?1:-1});
-  members2.sort();
-  var adm=isAttAdmin();
+  /* عرض أعضاء الفريق بترتيب عشوائي مع زر المزيد */
+  var allMembers=attMembers();
+  // Shuffle randomly
+  var shuffledMembers=allMembers.slice();
+  for(var si=shuffledMembers.length-1;si>0;si--){var sj=Math.floor(Math.random()*(si+1));var stmp=shuffledMembers[si];shuffledMembers[si]=shuffledMembers[sj];shuffledMembers[sj]=stmp;}
+  var canSeeAllAdm=isAttAdmin()||own;
 
-  h+='<div class="card"><div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:10px">'
-   +'<h3 style="margin:0">سجل الحضور والغياب ('+fm(D.attendance.length)+')</h3></div>'
-   +'<div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:10px">'
-   +'<select onchange="ATT_F.date=this.value;go()"><option value="">كل التواريخ</option>'
-   +dates.map(function(d){return'<option'+(ATT_F.date==d?' selected':'')+' value="'+d+'">'+d+'</option>'}).join("")+'</select>'
-   +'<input type="search" placeholder="🔍 ابحث باسم العضو" value="'+esc(ATT_F.member)+'" oninput="ATT_F.member=this.value;attList()" style="flex:1;min-width:140px">'
-   +'<select onchange="ATT_F.status=this.value;go()"><option value="">كل الحالات</option>'
-   +'<option value="present"'+(ATT_F.status=="present"?" selected":"")+'>✅ حاضر</option>'
-   +'<option value="absent"'+(ATT_F.status=="absent"?" selected":"")+'>❌ غائب</option>'
-   +'<option value="late"'+(ATT_F.status=="late"?" selected":"")+'>🕐 متأخر</option>'
-   +'<option value="excused"'+(ATT_F.status=="excused"?" selected":"")+'>📋 بعذر</option>'
-   +'</select></div>'
-   +'<div class="wrap"><table class="tbl"><thead><tr>'
-   +'<th>تاريخ المقابلة</th><th>العضو</th><th>الحالة</th><th>ملاحظات</th><th>سجّله</th><th>وقت التسجيل</th>'
-   +(adm?'<th></th>':'')+'</tr></thead><tbody id="att-list">'+attListHtml()+'</tbody></table></div>'
-   +'</div>';
+  h+='<div class="card"><div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:14px">'
+   +'<h3 style="margin:0">👥 سجل الحضور والغياب</h3>';
+
+  if(canSeeAllAdm){
+    // Admin sees full log table with filter
+    var dates2=[],members2=[];
+    D.attendance.forEach(function(r){
+      if(r.meeting_date&&dates2.indexOf(r.meeting_date)<0)dates2.push(r.meeting_date);
+      if(r.member_name&&members2.indexOf(r.member_name)<0)members2.push(r.member_name);
+    });
+    dates2.sort(function(a,b){return b>a?1:-1});
+    h+='</div>';
+    h+='<div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:10px">'
+     +'<select onchange="ATT_F.date=this.value;go()"><option value="">كل التواريخ</option>'
+     +dates2.map(function(d){return'<option'+(ATT_F.date==d?' selected':'')+' value="'+d+'">'+d+'</option>'}).join("")+'</select>'
+     +'<input type="search" placeholder="🔍 ابحث باسم العضو" value="'+esc(ATT_F.member)+'" oninput="ATT_F.member=this.value;attList()" style="flex:1;min-width:140px">'
+     +'<select onchange="ATT_F.status=this.value;go()"><option value="">كل الحالات</option>'
+     +'<option value="present"'+(ATT_F.status=="present"?" selected":"")+'>✅ حاضر</option>'
+     +'<option value="absent"'+(ATT_F.status=="absent"?" selected":"")+'>❌ غائب</option>'
+     +'<option value="late"'+(ATT_F.status=="late"?" selected":"")+'>🕐 متأخر</option>'
+     +'<option value="excused"'+(ATT_F.status=="excused"?" selected":"")+'>📋 بعذر</option>'
+     +'</select></div>';
+    // Also show member cards with "more" button for quick access
+    h+='<div class="att-members-shuffle" style="margin-bottom:16px">';
+    shuffledMembers.forEach(function(n){
+      var myRecs=D.attendance.filter(function(r){return r.member_name==n});
+      var present=myRecs.filter(function(r){return r.status=='present'}).length;
+      var absent=myRecs.filter(function(r){return r.status=='absent'}).length;
+      var excused=myRecs.filter(function(r){return r.status=='excused'}).length;
+      var late=myRecs.filter(function(r){return r.status=='late'}).length;
+      var initials=n.split(' ').filter(function(w){return w.length>0}).slice(0,2).map(function(w){return w[0]}).join('');
+      h+='<div class="att-member-row">';
+      h+='<div class="att-member-avatar">'+esc(initials)+'</div>';
+      h+='<div class="att-member-info"><div class="att-member-name">'+esc(n)+'</div>';
+      h+='<span class="att-member-summary">✅'+present+' · ❌'+absent+' · 🕐'+late+' · 📋'+excused+'</span>';
+      h+='</div>';
+      h+='<button class="att-member-more-btn" onclick="attShowMemberDetail(''+esc(n)+'')">المزيد</button>';
+      h+='</div>';
+    });
+    h+='</div>';
+    h+='<div class="wrap"><table class="tbl"><thead><tr>'
+     +'<th>تاريخ المقابلة</th><th>العضو</th><th>الحالة</th><th>ملاحظات</th><th>سجّله</th><th>وقت التسجيل</th>'
+     +'<th></th></tr></thead><tbody id="att-list">'+attListHtml()+'</tbody></table></div>';
+  } else {
+    // Non-admin: show only their own record via "more" button, random order list
+    h+='</div>';
+    h+='<p class="note" style="margin-bottom:12px">يمكنك الاطلاع على سجلك الشخصي فقط. اضغط «المزيد» بجوار اسمك.</p>';
+    h+='<div class="att-members-shuffle">';
+    shuffledMembers.forEach(function(n){
+      var isMe=me==n;
+      var initials=n.split(' ').filter(function(w){return w.length>0}).slice(0,2).map(function(w){return w[0]}).join('');
+      var myRecs=isMe?D.attendance.filter(function(r){return r.member_name==n}):[];
+      var present=myRecs.filter(function(r){return r.status=='present'}).length;
+      var absent=myRecs.filter(function(r){return r.status=='absent'||r.status=='excused'}).length;
+      h+='<div class="att-member-row" style="'+(isMe?'border-color:var(--pri);':'')+'">';
+      h+='<div class="att-member-avatar" style="'+(isMe?'background:linear-gradient(135deg,var(--pri),#06b6d4)':'')+'">';
+      h+=esc(initials)+'</div>';
+      h+='<div class="att-member-info">';
+      h+='<div class="att-member-name">'+esc(n)+(isMe?' <span style="font-size:11px;color:var(--pri)">(أنت)</span>':'')+'</div>';
+      h+=isMe?'<span class="att-member-summary">✅'+present+' حضور · ❌'+absent+' غياب</span>'
+             :'<span class="att-member-summary" style="color:var(--bd)">●●● خاص</span>';
+      h+='</div>';
+      if(isMe){h+='<button class="att-member-more-btn" onclick="attShowMemberDetail(''+esc(n)+'')">المزيد</button>';}
+      h+='</div>';
+    });
+    h+='</div>';
+  }
+  h+='</div>';
   return h
 }
 
@@ -2979,7 +3290,8 @@ function vipSupervisorsView(){
  if(!isVip())return'<div class="vip-locked"><div class="vip-locked-icon">🔐</div><h3>وصول مقيّد</h3><p>هذا القسم مخصص للمشرفين المعتمدين فقط<br>وليس لديك صلاحية الوصول إليه.</p></div>';
 
  var S=vipStats(),prof=VIP_PROFILES[me]||{avatar:"👑",title:me,role:"مشرف",color:"#2563eb",type:"sup"};
- var h='<div class="vip-wrap">';
+ var premiumSups=supHomeSectionHtml();
+ var h=premiumSups+'<div class="vip-wrap">';
 
  /* Hero */
  h+='<div class="vip-hero"><div class="vip-hero-inner">'
