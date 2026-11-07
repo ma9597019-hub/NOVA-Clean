@@ -489,6 +489,24 @@ autoTheme();setInterval(autoTheme,60000);document.addEventListener("visibilitych
  #md #mb .bgm-foot .btn{flex:1 1 0;min-width:0}
 }
 </style>
+<style id="login-fix-css">
+#lg{align-items:flex-start;justify-content:center;min-height:100vh;min-height:100dvh;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
+#lg .lgc{margin:auto;width:min(400px,100%);max-width:100%;padding:24px;gap:12px;border-radius:18px}
+.lgi{width:56px;height:56px;border-radius:16px}.lgi svg{width:32px;height:32px}
+.lgc h2{font-size:21px}.lgc h3.lgt{font-size:14px}
+.lgf label{margin-bottom:4px}
+.lgf input[type=text],.lgf input[type=password]{padding:11px 14px;min-height:46px;font-size:15px}
+.lgb{min-height:48px;padding:12px;font-size:16px;border-radius:12px}
+.lgm{min-height:0}.lgm:empty{display:none}
+.lgm.er,.lgm.ok{padding:9px 12px;border-radius:10px;font-size:13px;line-height:1.5}
+.lgm.er{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4)}
+.lgm.ok{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.4)}
+.lgb.ld{pointer-events:none}
+.lgfoot{margin-top:-2px}.lgfoot+p{margin-top:-4px;line-height:1.5}
+#md .box{max-height:calc(100dvh - 32px);overflow-y:auto}
+@media(max-height:680px){#lg .lgc{padding:16px;gap:9px}.lgi{width:44px;height:44px}.lgi svg{width:26px;height:26px}.lgc h2{font-size:18px}.lgf input[type=text],.lgf input[type=password]{min-height:42px;padding:9px 12px}.lgb{min-height:44px}}
+@media(max-width:480px){#lg{padding:12px}#lg .lgc{padding:18px;border-radius:16px}.lgf input[type=text],.lgf input[type=password]{font-size:16px}}
+</style>
 </head>
 <body>
 <aside id="nav"></aside>
@@ -1008,7 +1026,7 @@ home:function(){
  var tv=function(v){return n?fm(v):"—"},pv=function(v){return np?fm(v):"—"};
 
  /* === SUPERVISORS FIRST SECTION === */
- var supHtml='<div style="margin-bottom:14px">'
+ var supHtml='<div id="home-sup" style="margin-bottom:16px;padding:16px;border-radius:18px;background:linear-gradient(135deg,rgba(37,99,235,.14),rgba(139,92,246,.12));border:1px solid rgba(99,102,241,.35);box-shadow:0 8px 32px rgba(37,99,235,.15)">'
   +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">'
   +'<div style="display:flex;align-items:center;gap:10px">'
   +'<div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#8b5cf6);display:grid;place-items:center;font-size:20px;box-shadow:0 0 20px rgba(37,99,235,.4)">👑</div>'
@@ -1020,12 +1038,12 @@ home:function(){
   +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">'
   +[["م. دعاء","👩‍💼","مهندسة ومشرفة المشروع","VIP • Project Supervisor","linear-gradient(135deg,#2563eb,#06b6d4)","linear-gradient(135deg,rgba(15,31,77,.8),rgba(10,20,51,.95))","rgba(37,99,235,.4)","#bfdbfe"],
     ["د. محمود محروس","👨‍🏫","الدكتور المشرف على المشروع","VIP • Academic Supervisor","linear-gradient(135deg,#06b6d4,#0891b2)","linear-gradient(135deg,rgba(8,36,55,.8),rgba(10,20,51,.95))","rgba(6,182,212,.4)","#a5f3fc"],
-    ["محمد علي عنتر جلال","👨‍💻","Developer & System Administrator","DEV • Full Access","linear-gradient(135deg,#8b5cf6,#ec4899)","linear-gradient(135deg,rgba(30,10,70,.8),rgba(10,20,51,.95))","rgba(139,92,246,.4)","#ddd6fe"]
+    ["محمد علي عنتر جلال","👨‍💻","Developer & Super Admin","DEV • Full Access","linear-gradient(135deg,#8b5cf6,#ec4899)","linear-gradient(135deg,rgba(30,10,70,.8),rgba(10,20,51,.95))","rgba(139,92,246,.4)","#ddd6fe"]
    ].map(function(s){
-    return '<div style="background:'+s[5]+';border:1px solid;border-color:rgba(255,255,255,.08);border-radius:16px;padding:20px;position:relative;overflow:hidden;cursor:pointer;transition:transform .22s,box-shadow .22s" onclick="location.hash=\'#supervisors\'" onmouseover="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 16px 48px '+s[6]+'\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'\'"><div style="position:absolute;top:0;right:0;left:0;height:3px;background:'+s[4]+'"></div><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="width:52px;height:52px;border-radius:50%;background:'+s[4]+';display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 0 20px '+s[6]+';position:relative"><span class="top-online-dot" style="bottom:1px;right:1px"></span></div><div><div style="font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;background:rgba(255,255,255,.1);color:'+s[7]+';letter-spacing:.4px;display:inline-block;margin-bottom:4px">'+esc(s[3])+'</div><div style="font-size:16px;font-weight:700;color:#f0f9ff">'+esc(s[0])+'</div></div></div><div style="font-size:13px;color:#94a3b8;line-height:1.5">'+esc(s[2])+'</div></div>';
+    return '<div style="background:'+s[5]+';border:1px solid;border-color:rgba(255,255,255,.08);border-radius:16px;padding:20px;position:relative;overflow:hidden;cursor:pointer;transition:transform .22s,box-shadow .22s" onclick="location.hash=\'#supervisors\'" onmouseover="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 16px 48px '+s[6]+'\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'\'"><div style="position:absolute;top:0;right:0;left:0;height:3px;background:'+s[4]+'"></div><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="width:52px;height:52px;border-radius:50%;background:'+s[4]+';display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 0 20px '+s[6]+';position:relative">'+s[1]+'<span class="top-online-dot" style="bottom:1px;right:1px"></span></div><div><div style="font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;background:rgba(255,255,255,.1);color:'+s[7]+';letter-spacing:.4px;display:inline-block;margin-bottom:4px">'+esc(s[3])+'</div><div style="font-size:16px;font-weight:700;color:#f0f9ff">'+esc(s[0])+'</div></div></div><div style="font-size:13px;color:#94a3b8;line-height:1.5">'+esc(s[2])+'</div></div>';
    }).join("")
   +'</div></div>';
- var h=supHtml+'<div class="hm-hero"><div><h2>'+hmGreet()+'، '+esc(me)+' 👋</h2><p class="sub">روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة<br><span dir="ltr">Smart Autonomous Cleaning Robot – Self Operation Vacuum Cleaner</span></p>'
+ var h=supHtml+'<!--ATT-->'+'<div class="hm-hero"><div><h2>'+hmGreet()+'، '+esc(me)+' 👋</h2><p class="sub">روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة<br><span dir="ltr">Smart Autonomous Cleaning Robot – Self Operation Vacuum Cleaner</span></p>'
   +'<div class="hm-meta"><span>حالة المشروع: <span class="pill '+st[1]+'">'+esc(st[0])+'</span></span>'
   +'<span>آخر تحديث: <b>'+(last?dt(last):"لا توجد حركات مسجّلة")+'</b></span></div></div>'
   +'<div><div class="hm-meta">نسبة الإنجاز الكلية (من المهام)</div>'+(n?'<div class="hm-big">'+fm(pr)+'٪</div><div class="hm-bar"><i style="width:'+pr+'%"></i></div><div class="hm-meta">'+fm(c.d)+' مكتملة من '+fm(n)+' مهمة</div>':'<div class="hm-big">—</div><div class="hm-bar"><i style="width:0"></i></div><div class="hm-meta">لا توجد مهام مسجّلة بعد</div>')+'</div></div>';
@@ -1086,29 +1104,26 @@ home:function(){
    :'<div class="demo">لم يتم تحديد الميزانية'+(own?' — حدّدها من صفحة التكاليف.':' — يحددها المسئول.')+'</div><div class="hm-fin" style="margin-top:10px">'+fb("المصروف الفعلي",fm(ac)+EG)+fb("غير المدفوعة",fm(due)+EG)+'</div>')+'</div></div>';
  /* robot + activity */
  var fd=hmFeed();
- h+='<div class="hm-g2"><div class="card"><div class="hm-h"><h3>حالة الروبوت</h3><a class="hm-lnk" href="#robot">صفحة حالة الروبوت ←</a></div><div id="hm-rb">'+hmRobotHtml()+'</div></div>'
-  +'<div class="card"><div class="hm-h"><h3>آخر النشاطات</h3>'+(own?'<a class="hm-lnk" href="#log">سجل الحركات ←</a>':'')+'</div>'
-  +(fd.length?fd.slice(0,3).map(function(x){return'<div class="upd">'+esc(x.t)+'<small>'+esc(x.w||"—")+' · '+dt(x.ts)+'</small></div>'}).join(""):'<div class="hm-empty">لا توجد نشاطات بعد.</div>')+'</div></div>';
+ h+='<div class="card"><div class="hm-h"><h3>حالة الروبوت</h3><a class="hm-lnk" href="#robot">صفحة حالة الروبوت ←</a></div><div id="hm-rb">'+hmRobotHtml()+'</div></div>';
  /* quick links */
  h+='<div class="card"><h3>اختصارات سريعة</h3><div class="hm-quick">'+[["tasks","📋","المهام"],["parts","🔩","المكونات"],["inst","🛠️","التركيب والتنفيذ"],["tests","🧪","الاختبارات"],["cost","💰","التكاليف"],["attendance","👥","الغياب والحضور"],["supervisors","👑","المشرفون"],["robot","🤖","حالة الروبوت"]].map(function(q){return'<a href="#'+q[0]+'"><i>'+q[1]+'</i>'+q[2]+'</a>'}).join("")+'</div></div>';
  /* attendance mini section */
  var attTot={present:0,absent:0,late:0,excused:0};D.attendance.forEach(function(r){if(attTot[r.status]!==undefined)attTot[r.status]++});
  var attTotal=attTot.present+attTot.absent+attTot.late+attTot.excused,attRate=attTotal?Math.round((attTot.present+attTot.late)*100/attTotal):0;
  var myAttRecs=me?D.attendance.filter(function(r){return r.member_name==me}).sort(function(a,b){return b.meeting_date>a.meeting_date?1:-1}).slice(0,3):[];
- h+='<div class="card" style="border:2px solid rgba(34,197,94,.2);background:linear-gradient(135deg,rgba(5,46,22,.4),rgba(10,20,51,.6))">'
-  +'<div class="hm-h"><h3 style="color:#86efac">👥 الحضور والغياب</h3><a class="hm-lnk" href="#attendance" style="color:#4ade80">عرض السجل الكامل ←</a></div>'
-  +'<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">'
-  +'<div style="text-align:center;background:rgba(34,197,94,.1);border-radius:8px;padding:8px"><div style="font-size:22px;font-weight:700;color:#22c55e">'+fm(attTot.present)+'</div><div style="font-size:11px;color:#64748b">حاضر</div></div>'
-  +'<div style="text-align:center;background:rgba(239,68,68,.1);border-radius:8px;padding:8px"><div style="font-size:22px;font-weight:700;color:#ef4444">'+fm(attTot.absent)+'</div><div style="font-size:11px;color:#64748b">غائب</div></div>'
-  +'<div style="text-align:center;background:rgba(245,158,11,.1);border-radius:8px;padding:8px"><div style="font-size:22px;font-weight:700;color:#f59e0b">'+fm(attTot.late)+'</div><div style="font-size:11px;color:#64748b">متأخر</div></div>'
-  +'<div style="text-align:center;background:rgba(139,92,246,.1);border-radius:8px;padding:8px"><div style="font-size:22px;font-weight:700;color:#a78bfa">'+fm(attTot.excused)+'</div><div style="font-size:11px;color:#64748b">بعذر</div></div>'
+ var aTile=function(ic,n,l,c){return'<div style="text-align:center;background:'+c+'22;border:1px solid '+c+'66;border-radius:12px;padding:12px 6px"><div style="font-size:18px">'+ic+'</div><div style="font-size:26px;font-weight:700;color:'+c+';line-height:1.2">'+fm(n)+'</div><div style="font-size:12px;color:#94a3b8">'+l+'</div></div>'};
+ var attBtns='<a class="btn" href="#attendance" style="text-decoration:none;font-weight:700;padding:11px 18px;background:linear-gradient(135deg,#16a34a,#15803d)">'+(isAttAdmin()?'➕ تسجيل الحضور والغياب':'👤 سجلي الشخصي')+'</a>'+(isAttAdmin()?'<a class="btn g" href="#log" style="text-decoration:none;padding:11px 18px">📋 سجل الحضور (في سجل الحركات)</a>':'');
+ var attHtml='<div class="card" id="home-att" style="margin-bottom:16px;border:2px solid rgba(34,197,94,.35);background:linear-gradient(135deg,rgba(5,46,22,.45),rgba(10,20,51,.6))">'
+  +'<div class="hm-h" style="flex-wrap:wrap"><h3 style="color:#86efac;font-size:18px">👥 الحضور والغياب</h3><div style="display:flex;gap:8px;flex-wrap:wrap">'+attBtns+'</div></div>'
+  +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:12px">'
+  +aTile("✅",attTot.present,"حاضر","#22c55e")+aTile("❌",attTot.absent,"غائب","#ef4444")+aTile("🕐",attTot.late,"متأخر","#f59e0b")+aTile("📋",attTot.excused,"بعذر","#a78bfa")
   +'</div>'
-  +(me&&myAttRecs.length?'<div style="font-size:13px;color:#86efac;margin-bottom:6px">آخر سجلاتك أنت (<b>'+esc(me)+'</b>):</div>'
-   +myAttRecs.map(function(r){return'<div class="hm-t" style="margin-bottom:4px"><div>'+esc(r.meeting_date||"")+'</div><span class="pill '+ATT_STATUS_CSS[r.status]+'">'+esc(ATT_STATUS[r.status]||"")+'</span></div>'}).join("")
-   :'<div style="font-size:12px;color:#475569;text-align:center">'+(me?'لا توجد سجلات حضور بعد.':'سجّل دخولك لرؤية سجلك الشخصي.')+'</div>')
-  +(attTotal?'<div style="font-size:12px;color:#475569;margin-top:8px">نسبة الحضور الإجمالية: <b style="color:#22c55e">'+attRate+'٪</b> · إجمالي السجلات: '+fm(attTotal)+'</div>':'')
+  +(attTotal?'<div style="margin-bottom:10px"><div class="row" style="font-size:13px"><span style="color:#94a3b8">نسبة الحضور الإجمالية</span><b style="color:#22c55e">'+attRate+'٪</b></div><div class="hm-bar s" style="margin:6px 0 0"><i style="width:'+attRate+'%;background:#22c55e"></i></div><div style="font-size:12px;color:#64748b;margin-top:4px">إجمالي السجلات: '+fm(attTotal)+'</div></div>':'')
+  +(me&&myAttRecs.length?'<div style="font-size:13px;color:#86efac;margin-bottom:6px">آخر سجلاتك (<b>'+esc(me)+'</b>):</div>'
+   +myAttRecs.map(function(r){return'<div class="hm-t" style="margin-bottom:4px"><div>'+esc(r.meeting_date||"")+'</div><span class="pill '+ATT_STATUS_CSS[r.status]+'">'+esc((ATT_STATUS_ICON[r.status]||"")+" "+(ATT_STATUS[r.status]||""))+'</span></div>'}).join("")
+   :'<div style="font-size:12px;color:#64748b;text-align:center">'+(me?'لا توجد سجلات حضور بعد.':'سجّل دخولك لرؤية سجلك الشخصي.')+'</div>')
   +'</div>';
- return h},
+ return h.replace('<!--ATT-->',function(){return attHtml})},
 tasks:function(){var h='';
  h+=tkStatsHtml()&&'<div class="card"><h3>لوحة المهام</h3>'+tkStatsHtml()+'</div>';
  h+=tkBar();
@@ -1129,7 +1144,14 @@ inst:function(){var h='<div class="card"><h3>التركيب والتنفيذ —
  h+='<div class="card"><h3>سجل التحديثات (<span id="ins-count">'+fm(D.inst.length)+'</span>)</h3><div id="ins-list">'+instBody()+'</div></div>';
  return h},
 attendance:function(){return attView()},
-log:function(){if(!own)return lock("سجل الحركات متاح للمسئول فقط.","ownM()","دخول المسئول");var l=D.logs.slice().sort(function(a,b){return b.ts-a.ts});return '<div class="card"><h3>سجل الحركات — كل إجراء في الموقع مسجّل ('+fm(l.length)+')</h3><div class="wrap"><table class="tbl"><tr><th>الوقت</th><th>بواسطة</th><th>الإجراء</th></tr>'+l.map(function(x){return '<tr><td>'+dt(x.ts)+'</td><td>'+esc(x.w)+'</td><td>'+esc(x.t)+'</td></tr>'}).join("")+'</table></div></div>'},
+log:function(){
+ var adm=isAttAdmin();
+ if(!own&&!adm)return lock("سجل الحركات متاح للمسئول فقط.","ownM()","دخول المسئول");
+ var h='';
+ if(own){var l=D.logs.filter(function(x){return (x.t||"").indexOf("👥")!==0}).sort(function(a,b){return b.ts-a.ts});
+  h+='<div class="card"><h3>سجل الحركات — كل إجراء في الموقع مسجّل ('+fm(l.length)+')</h3><p class="note" style="margin:0 0 8px">حركات الحضور والغياب تظهر في قسمها أسفل هذه الصفحة حتى لا تتكرر.</p><div class="wrap"><table class="tbl"><tr><th>الوقت</th><th>بواسطة</th><th>الإجراء</th></tr>'+l.map(function(x){return '<tr><td>'+dt(x.ts)+'</td><td>'+esc(x.w)+'</td><td>'+esc(x.t)+'</td></tr>'}).join("")+'</table></div></div>'}
+ if(adm)h+=attLogSection();
+ return h},
 cost:function(){return costNew()},
 reports:function(){var m=["سبت","أكت","نوف","ديس","يناير","فبر","مارس","أبريل","مايو"],pl=[0,12,25,38,52,66,80,92,100],ac=[0,pc(cnt().d,D.tasks.length)],W=620,H=240,x=function(i){return 40+i*(W-60)/8},y=function(v){return H-30-v*(H-60)/100};
  var s='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;max-width:700px">';[0,25,50,75,100].forEach(function(v){s+='<line x1="40" x2="'+(W-20)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="var(--bd)"/><text x="30" y="'+(y(v)+4)+'" font-size="10" text-anchor="end" fill="var(--mut)">'+v+'</text>'});
@@ -2036,31 +2058,40 @@ function attView(){
   }
   h+='</div>';
 
-  /* ===== جدول كامل للمشرفين فقط مع فلاتر ===== */
-  if(adm){
-   var dates=[];
-   D.attendance.forEach(function(r){if(r.meeting_date&&dates.indexOf(r.meeting_date)<0)dates.push(r.meeting_date)});
-   dates.sort(function(a,b){return b>a?1:-1});
-   h+='<div class="card"><div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:10px">'
-    +'<h3 style="margin:0">📋 السجل الكامل (للمشرفين) — '+fm(D.attendance.length)+' سجل</h3></div>'
-    +'<div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:10px">'
-    +'<select onchange="ATT_F.date=this.value;go()"><option value="">كل التواريخ</option>'
-    +dates.map(function(d){return'<option'+(ATT_F.date==d?' selected':'')+' value="'+d+'">'+d+'</option>'}).join("")+'</select>'
-    +'<input type="search" placeholder="🔍 ابحث باسم العضو" value="'+esc(ATT_F.member)+'" oninput="ATT_F.member=this.value;attList()" style="flex:1;min-width:140px">'
-    +'<select onchange="ATT_F.status=this.value;go()"><option value="">كل الحالات</option>'
-    +'<option value="present"'+(ATT_F.status=="present"?" selected":"")+'>✅ حاضر</option>'
-    +'<option value="absent"'+(ATT_F.status=="absent"?" selected":"")+'>❌ غائب</option>'
-    +'<option value="late"'+(ATT_F.status=="late"?" selected":"")+'>🕐 متأخر</option>'
-    +'<option value="excused"'+(ATT_F.status=="excused"?" selected":"")+'>📋 بعذر</option>'
-    +'</select></div>'
-    +'<div class="wrap"><table class="tbl"><thead><tr>'
-    +'<th>تاريخ المقابلة</th><th>العضو</th><th>الحالة</th><th>ملاحظات</th><th>سجّله</th><th>وقت التسجيل</th><th></th>'
-    +'</tr></thead><tbody id="att-list">'+attListHtml()+'</tbody></table></div>'
-    +'</div>';
-  }
+  /* السجل الكامل انتقل إلى قسم سجل الحركات */
+  if(adm){h+='<div class="card"><div class="row" style="flex-wrap:wrap"><span class="note">📋 السجل الكامل للحضور والغياب (مع فلاتر العضو والتاريخ ونوع الحركة) أصبح داخل قسم «سجل الحركات».</span><a class="btn" href="#log" style="text-decoration:none">فتح سجل الحركات ←</a></div></div>'}
 
   return h
 }
+
+/* ===== سجل الحضور والغياب داخل سجل الحركات ===== */
+function attActType(t){return /حذف/.test(t)?"del":/عد\u0651?ل/.test(t)?"edit":"reg"}
+var ATT_ACT_L={reg:"تسجيل",edit:"تعديل",del:"حذف"};
+function attActsHtml(){
+ var q=(ATT_F.member||"").trim(),d=ATT_F.date||"",a=ATT_F.act||"";
+ var L=D.logs.filter(function(l){var x=l.t||"";if(x.indexOf("👥")!==0)return false;
+  if(q&&x.indexOf(q)<0)return false;
+  if(d&&x.indexOf(d)<0&&dt(l.ts).slice(0,10)!=d)return false;
+  if(a&&attActType(x)!=a)return false;return true}).sort(function(x,y){return y.ts-x.ts}).slice(0,200);
+ if(!L.length)return'<tr><td colspan="4" class="note" style="text-align:center;padding:16px">لا توجد حركات مطابقة.</td></tr>';
+ return L.map(function(l){var ty=attActType(l.t||"");return'<tr><td>'+dt(l.ts)+'</td><td><span class="pill '+(ty=="del"?"s-n":ty=="edit"?"s-b":"s-d")+'">'+ATT_ACT_L[ty]+'</span></td><td>'+esc((l.t||"").replace("👥 ",""))+'</td><td>'+esc(l.w||"—")+'</td></tr>'}).join("")}
+function attLogSync(){attList();var b=$("att-acts");if(b)b.innerHTML=attActsHtml()}
+function attLogReset(){ATT_F={date:"",member:"",status:"",act:""};go()}
+function attLogSection(){
+ var dates=attDates(),opt=function(v,l,cur){return'<option value="'+v+'"'+(cur==v?' selected':'')+'>'+l+'</option>'};
+ return'<div class="card" id="att-log" style="border:2px solid rgba(34,197,94,.3)">'
+  +'<div class="row" style="flex-wrap:wrap;margin-bottom:10px"><h3 style="margin:0">👥 سجل الحضور والغياب — '+fm(D.attendance.length)+' سجل</h3><a class="btn g" href="#attendance" style="text-decoration:none">➕ تسجيل حضور / غياب</a></div>'
+  +'<div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:12px;justify-content:flex-start">'
+  +'<input type="search" placeholder="🔍 العضو" value="'+esc(ATT_F.member||"")+'" oninput="ATT_F.member=this.value;attLogSync()" style="flex:1;min-width:140px">'
+  +'<select onchange="ATT_F.date=this.value;attLogSync()" aria-label="التاريخ"><option value="">كل التواريخ</option>'+dates.map(function(d){return opt(d,d,ATT_F.date)}).join("")+'</select>'
+  +'<select onchange="ATT_F.status=this.value;attLogSync()" aria-label="الحالة"><option value="">كل حالات الحضور</option>'+opt("present","✅ حاضر",ATT_F.status)+opt("absent","❌ غائب",ATT_F.status)+opt("late","🕐 متأخر",ATT_F.status)+opt("excused","📋 بعذر",ATT_F.status)+'</select>'
+  +'<select onchange="ATT_F.act=this.value;attLogSync()" aria-label="نوع الحركة"><option value="">كل أنواع الحركة</option>'+opt("reg","تسجيل",ATT_F.act)+opt("edit","تعديل",ATT_F.act)+opt("del","حذف",ATT_F.act)+'</select>'
+  +'<button class="btn g" onclick="attLogReset()">إعادة تعيين</button></div>'
+  +'<h4 style="margin:0 0 6px;font-size:14px">سجلات الحضور</h4>'
+  +'<div class="wrap"><table class="tbl"><thead><tr><th>تاريخ المقابلة</th><th>العضو</th><th>الحالة</th><th>ملاحظات</th><th>سجّله</th><th>وقت التسجيل</th><th></th></tr></thead><tbody id="att-list">'+attListHtml()+'</tbody></table></div>'
+  +'<h4 style="margin:16px 0 6px;font-size:14px">حركات الحضور (تسجيل / تعديل / حذف)</h4>'
+  +'<div class="wrap"><table class="tbl"><thead><tr><th>الوقت</th><th>نوع الحركة</th><th>التفاصيل (العضو والتاريخ)</th><th>بواسطة</th></tr></thead><tbody id="att-acts">'+attActsHtml()+'</tbody></table></div>'
+  +'</div>'}
 
 /* عدد السجلات لتاريخ معين */
 function attDateCount(d){return D.attendance.filter(function(r){return r.meeting_date==d}).length}
@@ -3017,7 +3048,7 @@ function go(){mergePrices();try{if(SB.sess)localStorage.setItem("sbme",JSON.stri
  var act0=document.activeElement;if(act0&&/INPUT|SELECT|TEXTAREA/.test(act0.tagName)&&act0.type!="file"&&document.activeElement.closest&&document.activeElement.closest("form")&&$("v").contains(act0))return;
  $("v").innerHTML=V[h]();
  buildTopBar(h,p);
- $("nav").innerHTML='<div class="logo">'+NOVA_MARK+'<div><b>NOVA Clean</b><small>\u0644\u0648\u062D\u0629 \u0627\u0644\u062A\u062D\u0643\u0645</small></div></div>'+PAGES.filter(function(x){if(x[0]=="log")return own;if(x[0]=="supervisors")return(typeof isVip==="function"&&isVip());return true}).map(function(x){return '<a href="#'+x[0]+'" class="'+(x[0]==h?"on":"")+'">'+x[1]+'</a>'}).join("")+'<div class="sp"></div><button class="tg" onclick="tg()">\uD83C\uDF19 \u0627\u0644\u0648\u0636\u0639 \u0627\u0644\u0644\u064A\u0644\u064A</button>'}
+ $("nav").innerHTML='<div class="logo">'+NOVA_MARK+'<div><b>NOVA Clean</b><small>\u0644\u0648\u062D\u0629 \u0627\u0644\u062A\u062D\u0643\u0645</small></div></div>'+PAGES.filter(function(x){if(x[0]=="log")return own||isAttAdmin();if(x[0]=="supervisors")return(typeof isVip==="function"&&isVip());return true}).map(function(x){return '<a href="#'+x[0]+'" class="'+(x[0]==h?"on":"")+'">'+x[1]+'</a>'}).join("")+'<div class="sp"></div><button class="tg" onclick="tg()">\uD83C\uDF19 \u0627\u0644\u0648\u0636\u0639 \u0627\u0644\u0644\u064A\u0644\u064A</button>'}
 function tg(){var r=document.documentElement,n=r.getAttribute("data-theme")=="dark"?"light":"dark";r.setAttribute("data-theme",n);try{localStorage.setItem("thm",JSON.stringify({seg:themeSeg(),t:n}))}catch(e){}}
 /* ===== VIP SUPERVISORS SYSTEM ===== */
 /* المشرفون المعتمدون */
@@ -3029,7 +3060,7 @@ var VIP_ALL=VIP_SUPS.concat(VIP_DEVS);
 var VIP_PROFILES={
  "م. دعاء":{avatar:"👩‍💼",title:"م. دعاء",role:"مهندسة ومشرفة المشروع",badge:"VIP • Project Supervisor",color:"#2563eb",type:"sup"},
  "د. محمود محروس":{avatar:"👨‍🏫",title:"د. محمود محروس",role:"الدكتور المشرف على المشروع",badge:"VIP • Academic Supervisor",color:"#06b6d4",type:"sup"},
- "محمد علي عنتر جلال":{avatar:"👨‍💻",title:"محمد علي",role:"Developer & System Administrator",badge:"DEV • Full Access",color:"#8b5cf6",type:"dev"}
+ "محمد علي عنتر جلال":{avatar:"👨‍💻",title:"محمد علي",role:"Developer & Super Admin",badge:"DEV • Full Access",color:"#8b5cf6",type:"dev"}
 };
 
 /* التحقق من صلاحيات VIP */
