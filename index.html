@@ -663,7 +663,7 @@ async function sbRestore(){try{var g=await SB.c.auth.getSession(),x=g.data&&g.da
  try{sv=JSON.parse(localStorage.getItem("sbme")||"{}")||{}}catch(e){}
  if(!am.member||!un)return;SB.sess=x;SB.slug=am.slug;SB.role=am.role;
  own=am.role=="owner";
- me=(own&&sv.me&&(everyone().indexOf(sv.me)>=0||sv.me=="المالك"))?sv.me:un}catch(e){console.warn(e)}}
+ me=(own&&sv.me&&(everyone().indexOf(sv.me)>=0||sv.me=="المالك"))?sv.me:un;if(!(await sbDevice())){try{await SB.c.auth.signOut({scope:"local"})}catch(e){}SB.sess=null;me=null;own=false;setTimeout(function(){toast(DEVMSG)},500)}}catch(e){console.warn(e)}}
 function SBR(){return !!(SB.c&&SB.sess)}
 async function sbInit(){
  if(!window.supabase)throw new Error("تعذّر تحميل مكتبة Supabase");
@@ -677,8 +677,15 @@ async function sbLogin(u,p){var r;
  if(!r.ok||!j.session){var er=new Error(j.error||"تعذّر إنشاء جلسة Supabase ("+r.status+")");er.code=r.status;throw er}
  var s=await SB.c.auth.setSession({access_token:j.session.access_token,refresh_token:j.session.refresh_token});
  if(s.error||!s.data.session)throw new Error("رفض Supabase الجلسة: "+(s.error&&s.error.message||""));
- SB.sess=s.data.session;SB.slug=j.slug;SB.role=j.role;SB.name=j.name;SU={};if(SB.refresh)SB.refresh();return j.name}
-async function sbOut(){try{localStorage.removeItem("sbme")}catch(e){}try{if(SB.c)await SB.c.auth.signOut()}catch(e){}SB.sess=null;SU={}}
+ SB.sess=s.data.session;if(!(await sbDevice())){try{await SB.c.auth.signOut({scope:"local"})}catch(e){}SB.sess=null;var ed=new Error(DEVMSG);ed.code=429;throw ed}
+ SB.slug=j.slug;SB.role=j.role;SB.name=j.name;SU={};if(SB.refresh)SB.refresh();return j.name}
+function devId(){var k="devid",v="";try{v=localStorage.getItem(k)||""}catch(e){}if(!v||v.length<8){v=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2));try{localStorage.setItem(k,v)}catch(e){}}return v}
+function devLabel(){var u=navigator.userAgent||"",b=/Edg\//.test(u)?"Edge":/OPR\//.test(u)?"Opera":/Chrome\//.test(u)?"Chrome":/Firefox\//.test(u)?"Firefox":/Safari\//.test(u)?"Safari":"Browser",o=/Android/.test(u)?"Android":/iPhone|iPad|iPod/.test(u)?"iOS":/Windows/.test(u)?"Windows":/Mac OS/.test(u)?"macOS":/Linux/.test(u)?"Linux":"";return(b+" - "+o).slice(0,60)}
+var DEVMSG="وصلت للحد الأقصى: جهازان فقط لكل حساب. سجّل الخروج من أحد جهازيك الآخرين ثم أعد المحاولة (أو انتظر 30 دقيقة).";
+/* true = مسموح. يرفض فقط عند تجاوز الحد صراحةً؛ أي خطأ آخر (شبكة/الدالة غير منشورة) لا يقفل أحدًا */
+async function sbDevice(){try{var r=await SB.c.rpc("register_device",{p_device_id:devId(),p_label:devLabel()});if(r.error){console.warn("register_device:",r.error.message);return true}var d=r.data;return !(d&&d.ok===false&&d.error==="limit")}catch(e){console.warn(e);return true}}
+async function sbDevCheck(){if(!SB.c||!SB.sess||typeof me==="undefined"||!me)return;if(await sbDevice())return;try{await SB.c.auth.signOut({scope:"local"})}catch(e){}SB.sess=null;SU={};try{localStorage.removeItem("sbme")}catch(e){}me=null;own=false;CT=null;CH=null;closeM();go();toast(DEVMSG)}
+async function sbOut(){try{localStorage.removeItem("sbme")}catch(e){}try{if(SB.c&&SB.sess)await SB.c.rpc("unregister_device",{p_device_id:devId()})}catch(e){}try{if(SB.c)await SB.c.auth.signOut({scope:"local"})}catch(e){}SB.sess=null;SU={}}
 async function sbSess(){var g=await SB.c.auth.getSession(),s=g.data&&g.data.session;if(!s)throw new Error(SBM.exp);return s}
 function upMsg(e){var m=((e&&e.message)||"")+"",c=+(e&&(e.statusCode||e.status))||0;
  if(/jwt|expired|invalid token/i.test(m)||c==401)return SBM.exp;
@@ -4095,7 +4102,7 @@ async function tmPreloadPerms(){
 
 /* ===== END TEAM MANAGEMENT SYSTEM ===== */
 
-buildLogin();setTimeout(function(){document.documentElement.classList.remove("bt")},8000);addEventListener("hashchange",function(){go();window.scrollTo(0,0)});boot();setInterval(rbTick,1000);
+buildLogin();setTimeout(function(){document.documentElement.classList.remove("bt")},8000);addEventListener("hashchange",function(){go();window.scrollTo(0,0)});boot();setInterval(rbTick,1000);setInterval(sbDevCheck,120000);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")sbDevCheck()});
 </script>
 </body>
 </html>
