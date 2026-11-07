@@ -626,6 +626,11 @@ autoTheme();setInterval(autoTheme,60000);document.addEventListener("visibilitych
  #md #mb .bgm-foot .btn{flex:1 1 0;min-width:0}
 }
 </style>
+<style id="jitter-fix">
+html{scrollbar-gutter:stable;overflow-y:scroll}
+:root[data-theme="dark"] .card,:root:not([data-theme="light"]) .card{backdrop-filter:none;-webkit-backdrop-filter:none}
+#v{overflow-anchor:none}
+</style>
 </head>
 <body>
 <aside id="nav"></aside>
@@ -4090,7 +4095,7 @@ async function tmPreloadPerms(){
 
 /* ===== END TEAM MANAGEMENT SYSTEM ===== */
 
-buildLogin();setTimeout(function(){document.documentElement.classList.remove("bt")},8000);addEventListener("hashchange",go);boot();setInterval(rbTick,1000);setTimeout(function(){document.documentElement.classList.remove("bt")},8000);addEventListener("hashchange",go);boot();setInterval(rbTick,1000);
+buildLogin();setTimeout(function(){document.documentElement.classList.remove("bt")},8000);addEventListener("hashchange",function(){go();window.scrollTo(0,0)});boot();setInterval(rbTick,1000);
 </script>
 </body>
 </html>
