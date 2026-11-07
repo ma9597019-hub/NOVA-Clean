@@ -823,7 +823,9 @@ function sent(){return D.msgs.filter(function(m){return m.w==me}).sort(function(
 function lock(t,f,b){return '<div class="card row"><span>'+t+'</span><button class="btn" onclick="'+f+'">'+b+'</button></div>'}
 function recent(){if(own)return '<div class="card"><h3>آخر الحركات</h3>'+(D.logs.slice().sort(function(a,b){return b.ts-a.ts}).slice(0,4).map(function(l){return '<div class="upd">'+esc(l.t)+'<small>'+dt(l.ts)+' · '+esc(l.w)+'</small></div>'}).join("")||'<p class="note">لا توجد حركات بعد.</p>')+'<a href="#log" style="color:var(--pri);font-size:14px">عرض كل الحركات</a></div>';
  return '<div class="card"><h3>آخر الحركات</h3>'+(D.logs.slice().sort(function(a,b){return b.ts-a.ts}).slice(0,4).map(function(l){return '<div class="upd">'+esc(l.t)+'<small>'+dt(l.ts)+' · '+esc(l.w)+'</small></div>'}).join("")||'<p class="note">لا توجد حركات بعد.</p>')+'</div>'}
-var ROSTER_FULL_ACCESS=["د. محمود محروس","م. دعاء","محمد علي عنتر جلال","رامز طارق محمد","محمد ناصر عبدالحميد"];function canSeeAllContacts(){return own||ROSTER_FULL_ACCESS.indexOf(me)>=0}
+var ROSTER_FULL_ACCESS=["د. محمود محروس","م. دعاء","محمد علي عنتر جلال","رامز طارق محمد","محمد ناصر عبدالحميد"];
+function canSeeAllContacts(){return own||ROSTER_FULL_ACCESS.indexOf(me)>=0}
+function canSeeFullTeam(){return own||ROSTER_FULL_ACCESS.indexOf(me)>=0}
 function roster(){var showAllCT=CT&&canSeeAllContacts();var rows=everyone().map(function(n,i){var c=CT&&CT[n],isMe=(n==me),showC=showAllCT||isMe,tk=D.tasks.filter(function(t){return t.o==n}),dn=tk.filter(function(t){return t.s=="d"}).length;return '<tr><td>'+esc(n)+'</td><td>'+(n==LEAD?"القائدة":n==SUP?"المشرف":"عضو")+'</td><td>'+fm(dn)+' من '+fm(tk.length)+'</td>'+(CT?'<td dir="ltr" style="text-align:right">'+(showC&&c?'<a href="tel:'+esc(c[0])+'">'+esc(c[0])+'</a>':"—")+'</td><td dir="ltr" style="text-align:right">'+(showC&&c?'<a href="mailto:'+esc(c[1])+'">'+esc(c[1])+'</a>':"—")+'</td>':'')+(me?'<td>'+(n==me?'<span class="note">أنت</span>':'<button class="pill s-p" onclick="chatI('+i+')">💬 محادثة</button>')+'</td>':'')+'</tr>'}).join("");
  return '<div class="card"><h3>أعضاء الفريق ('+fm(everyone().length)+')</h3><div class="row" style="margin-bottom:10px"><span class="note">'+(me?'اضغط 💬 بجوار أي شخص لمراسلته برسالة خاصة.':'سجّل دخولك لمراسلة الأعضاء.')+(canSeeAllContacts()?'':' تظهر لك بيانات اتصالك أنت فقط.')+'</span>'+(me?'':'<button class="btn" onclick="loginM()">دخول الفريق</button>')+'</div><div class="wrap"><table class="tbl"><tr><th>الاسم</th><th>الدور</th><th>المهام المكتملة</th>'+(CT?'<th>الهاتف</th><th>البريد</th>':'')+(me?'<th>مراسلة</th>':'')+'</tr>'+rows+'</table></div></div>'}
 /* actions */
@@ -3161,7 +3163,7 @@ function go(){mergePrices();try{if(SB.sess)localStorage.setItem("sbme",JSON.stri
 function tg(){var r=document.documentElement,n=r.getAttribute("data-theme")=="dark"?"light":"dark";r.setAttribute("data-theme",n);try{localStorage.setItem("thm",JSON.stringify({seg:themeSeg(),t:n}))}catch(e){}}
 /* ===== VIP SUPERVISORS SYSTEM ===== */
 /* المشرفون المعتمدون */
-var VIP_DEVS=["محمد علي عنتر جلال"];
+var VIP_DEVS=[];
 var VIP_SUPS=["م. دعاء","د. محمود محروس"];
 var VIP_ALL=VIP_SUPS.concat(VIP_DEVS);
 
@@ -3439,7 +3441,7 @@ function vipSupervisorsView(){
 /* ===== TEAM MANAGEMENT SYSTEM ===== */
 
 /* ---- تعريف الصلاحيات ---- */
-var TM_SUPER_ADMIN="محمد علي عنتر جلال";
+var TM_SUPER_ADMIN=null;
 var TM_SUPERVISORS=["م. دعاء","د. محمود محروس"];
 
 /* أقسام الصلاحيات */
@@ -3664,7 +3666,7 @@ function tmRenderPermModal(){
  var name=TM.currentEditName;
  if(!name)return;
  var total=tmTotalPerms(),granted=tmPermCount(TM_EDIT_PERMS);
- var members=everyone().filter(function(n){return n!==name&&n!==TM_SUPER_ADMIN});
+ var members=everyone().filter(function(n){return n!==name&&(TM_SUPER_ADMIN===null||n!==TM_SUPER_ADMIN)});
 
  var sectionsHtml='';
  TM_SECTIONS.forEach(function(s){
@@ -4004,7 +4006,7 @@ function teamManageView(){
   +'<p>Team Management & Permissions — إدارة الحسابات والصلاحيات والتحكم في الوصول</p>'
   +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">'
   +(db?'<span class="vip-badge">🟢 Supabase متصل</span>':'<span class="vip-badge">🟡 وضع محلي</span>')
-  +'<span class="vip-badge">🛡️ Super Admin: '+TM_SUPER_ADMIN+'</span>'
+  +(TM_SUPER_ADMIN?'<span class="vip-badge">🛡️ Super Admin: '+TM_SUPER_ADMIN+'</span>':'')
   +'</div></div></div></div>';
 
  // Stats
