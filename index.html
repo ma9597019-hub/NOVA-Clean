@@ -22,8 +22,43 @@ aside a{padding:11px 14px;border-radius:10px;color:#cfd8f3;text-decoration:none;
 aside a.on{background:var(--pri);color:#fff}aside a:hover:not(.on){background:#16224a}
 .sp{flex:1}button.tg{background:none;border:1px solid #26356a;color:#cfd8f3;border-radius:10px;padding:10px;font:inherit;cursor:pointer}
 main{flex:1;padding:18px;min-width:0}
-.top{background:var(--card);border-radius:14px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px;border:1px solid var(--bd)}
-.top h1{margin:0;font-size:20px}.top p{margin:2px 0 0;color:var(--mut);font-size:13px}
+/* ===== SMART TOP BAR ===== */
+.top{background:rgba(var(--card-rgb,255,255,255),0.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:16px;padding:0 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;border:1px solid var(--bd);min-height:62px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 6px);z-index:30;box-shadow:0 4px 24px rgba(0,0,0,.08);transition:box-shadow .2s}
+:root[data-theme="dark"] .top,:root:not([data-theme="light"]) .top{background:rgba(18,28,58,.78)}
+.top-left{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
+.top-breadcrumb{display:flex;align-items:center;gap:6px;min-width:0}
+.top-page-icon{font-size:20px;flex-shrink:0}
+.top-page-name{font-weight:700;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-sep{color:var(--mut);opacity:.5;margin:0 2px}
+.top-home-link{font-size:13px;color:var(--mut);text-decoration:none;white-space:nowrap}
+.top-home-link:hover{color:var(--pri)}
+.top-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+/* User identity chip */
+.top-user{display:flex;align-items:center;gap:8px;padding:5px 10px 5px 5px;border-radius:40px;background:var(--soft);border:1px solid var(--bd);cursor:pointer;transition:border-color .2s,box-shadow .2s;position:relative}
+.top-user:hover{border-color:var(--pri);box-shadow:0 2px 12px rgba(37,99,235,.15)}
+.top-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#06b6d4);display:grid;place-items:center;font-size:16px;flex-shrink:0;position:relative}
+.top-avatar-dev{background:linear-gradient(135deg,#8b5cf6,#ec4899)}
+.top-avatar-sup{background:linear-gradient(135deg,#2563eb,#06b6d4)}
+.top-online-dot{position:absolute;bottom:0;right:0;width:9px;height:9px;border-radius:50%;background:#22c55e;border:2px solid var(--card)}
+.top-user-name{font-size:14px;font-weight:600;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis}
+.top-user-role{font-size:11px;color:var(--mut);white-space:nowrap}
+.top-user-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.3px;white-space:nowrap}
+.top-badge-dev{background:linear-gradient(135deg,#4c1d95,#7c3aed);color:#ddd6fe}
+.top-badge-sup{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#bfdbfe}
+.top-badge-mem{background:var(--soft);border:1px solid var(--bd);color:var(--mut)}
+/* Dropdown menu */
+.top-dropdown{position:absolute;top:calc(100% + 10px);left:0;min-width:200px;background:var(--card);border:1px solid var(--bd);border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.18);z-index:100;padding:8px;display:none;animation:dropIn .15s ease}
+.top-user.open .top-dropdown{display:block}
+@keyframes dropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.top-dropdown a,.top-dropdown button.td-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:14px;color:var(--tx);text-decoration:none;cursor:pointer;width:100%;border:0;background:none;font-family:inherit;text-align:right;transition:background .15s}
+.top-dropdown a:hover,.top-dropdown button.td-item:hover{background:var(--soft)}
+.td-sep{height:1px;background:var(--bd);margin:4px 0}
+.td-logout{color:#ef4444!important}
+.td-logout:hover{background:rgba(239,68,68,.08)!important}
+/* owner admin select */
+.top-admin-row{display:flex;align-items:center;gap:6px;padding:4px 8px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:10px;font-size:12px}
+.top-admin-row select{font:inherit;font-size:12px;padding:3px 6px;border-radius:7px;border:1px solid var(--bd);background:var(--card);color:var(--tx)}
+.top h1{display:none}.top p{display:none}
 .grid{display:grid;gap:14px;margin-bottom:14px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:1.2fr 1.2fr 1fr}.g2{grid-template-columns:1.5fr 1fr}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;min-width:0;margin-bottom:14px}.grid .card{margin-bottom:0}
 .card h3{margin:0 0 12px;font-size:16px}
@@ -113,8 +148,10 @@ main{min-width:0;max-width:100%}
 .tbl{max-width:100%}
 @media(max-width:900px){
  main{padding:12px}
- .top{flex-wrap:wrap}
- .top h1{font-size:18px}
+ .top{flex-wrap:nowrap;padding:0 10px}
+ .top-page-name{font-size:15px;max-width:120px}
+ .top-user-role,.top-user-badge{display:none}
+ .top-home-link{display:none}
  .g4{grid-template-columns:1fr 1fr}
  .hm-kg{grid-template-columns:1fr 1fr}
  .hm-g2{grid-template-columns:1fr}
@@ -125,8 +162,9 @@ main{min-width:0;max-width:100%}
  .g4,.hm-kg{grid-template-columns:1fr 1fr;gap:10px}
  .card{padding:12px;border-radius:12px}
  .card h3{font-size:15px}
- .top{padding:10px 12px}
- .top p{font-size:12px}
+ .top{padding:0 8px;min-height:54px}
+ .top-user-name{max-width:90px;font-size:13px}
+ .top-user{padding:4px 8px 4px 4px}
  .dn{flex-direction:column}
  .gal{grid-template-columns:1fr 1fr}
  .row{flex-wrap:wrap}
@@ -455,7 +493,19 @@ autoTheme();setInterval(autoTheme,60000);document.addEventListener("visibilitych
 <body>
 <aside id="nav"></aside>
 <main>
-  <div class="top"><div><h1 id="ttl"></h1><p>روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة</p></div><div id="who" class="row" style="font-size:14px"></div></div>
+  <div class="top" id="topbar">
+    <div class="top-left">
+      <div class="top-breadcrumb">
+        <a class="top-home-link" href="#home">الرئيسية</a>
+        <span class="top-sep" id="bc-sep" style="display:none">←</span>
+        <span class="top-page-icon" id="page-icon">🏠</span>
+        <span class="top-page-name" id="page-name">الرئيسية</span>
+      </div>
+    </div>
+    <div class="top-right" id="who">
+      <!-- filled by go() -->
+    </div>
+  </div>
   <div id="v"></div>
 </main>
 <div id="lg"></div><div id="md"><div class="box" id="mb"></div></div>
@@ -956,7 +1006,26 @@ home:function(){
  var last=D.logs.reduce(function(a,l){return Math.max(a,l.ts||0)},0);
  var kp=function(href,ic,col,v,lab,sub){return'<a class="hm-k" href="#'+href+'"><div class="ic" style="background:'+col+'">'+ic+'</div><div><b>'+v+'</b><span>'+lab+(sub?' · '+sub:'')+'</span></div></a>'};
  var tv=function(v){return n?fm(v):"—"},pv=function(v){return np?fm(v):"—"};
- var h='<div class="hm-hero"><div><h2>'+hmGreet()+'، '+esc(me)+' 👋</h2><p class="sub">روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة<br><span dir="ltr">Smart Autonomous Cleaning Robot – Self Operation Vacuum Cleaner</span></p>'
+
+ /* === SUPERVISORS FIRST SECTION === */
+ var supHtml='<div style="margin-bottom:14px">'
+  +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">'
+  +'<div style="display:flex;align-items:center;gap:10px">'
+  +'<div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#8b5cf6);display:grid;place-items:center;font-size:20px;box-shadow:0 0 20px rgba(37,99,235,.4)">👑</div>'
+  +'<div><div style="font-size:17px;font-weight:700;color:#a5b4fc">المشرفون والمطور</div>'
+  +'<div style="font-size:12px;color:#64748b">الفريق القيادي للمشروع</div></div>'
+  +'</div>'
+  +'<a class="hm-lnk" href="#supervisors" style="color:#818cf8;font-size:13px">لوحة المشرفين الكاملة ←</a>'
+  +'</div>'
+  +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">'
+  +[["م. دعاء","👩‍💼","مهندسة ومشرفة المشروع","VIP • Project Supervisor","linear-gradient(135deg,#2563eb,#06b6d4)","linear-gradient(135deg,rgba(15,31,77,.8),rgba(10,20,51,.95))","rgba(37,99,235,.4)","#bfdbfe"],
+    ["د. محمود محروس","👨‍🏫","الدكتور المشرف على المشروع","VIP • Academic Supervisor","linear-gradient(135deg,#06b6d4,#0891b2)","linear-gradient(135deg,rgba(8,36,55,.8),rgba(10,20,51,.95))","rgba(6,182,212,.4)","#a5f3fc"],
+    ["محمد علي عنتر جلال","👨‍💻","Developer & System Administrator","DEV • Full Access","linear-gradient(135deg,#8b5cf6,#ec4899)","linear-gradient(135deg,rgba(30,10,70,.8),rgba(10,20,51,.95))","rgba(139,92,246,.4)","#ddd6fe"]
+   ].map(function(s){
+    return '<div style="background:'+s[5]+';border:1px solid;border-color:rgba(255,255,255,.08);border-radius:16px;padding:20px;position:relative;overflow:hidden;cursor:pointer;transition:transform .22s,box-shadow .22s" onclick="location.hash=\'#supervisors\'" onmouseover="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 16px 48px '+s[6]+'\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'\'"><div style="position:absolute;top:0;right:0;left:0;height:3px;background:'+s[4]+'"></div><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="width:52px;height:52px;border-radius:50%;background:'+s[4]+';display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 0 20px '+s[6]+';position:relative"><span class="top-online-dot" style="bottom:1px;right:1px"></span></div><div><div style="font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;background:rgba(255,255,255,.1);color:'+s[7]+';letter-spacing:.4px;display:inline-block;margin-bottom:4px">'+esc(s[3])+'</div><div style="font-size:16px;font-weight:700;color:#f0f9ff">'+esc(s[0])+'</div></div></div><div style="font-size:13px;color:#94a3b8;line-height:1.5">'+esc(s[2])+'</div></div>';
+   }).join("")
+  +'</div></div>';
+ var h=supHtml+'<div class="hm-hero"><div><h2>'+hmGreet()+'، '+esc(me)+' 👋</h2><p class="sub">روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة<br><span dir="ltr">Smart Autonomous Cleaning Robot – Self Operation Vacuum Cleaner</span></p>'
   +'<div class="hm-meta"><span>حالة المشروع: <span class="pill '+st[1]+'">'+esc(st[0])+'</span></span>'
   +'<span>آخر تحديث: <b>'+(last?dt(last):"لا توجد حركات مسجّلة")+'</b></span></div></div>'
   +'<div><div class="hm-meta">نسبة الإنجاز الكلية (من المهام)</div>'+(n?'<div class="hm-big">'+fm(pr)+'٪</div><div class="hm-bar"><i style="width:'+pr+'%"></i></div><div class="hm-meta">'+fm(c.d)+' مكتملة من '+fm(n)+' مهمة</div>':'<div class="hm-big">—</div><div class="hm-bar"><i style="width:0"></i></div><div class="hm-meta">لا توجد مهام مسجّلة بعد</div>')+'</div></div>';
@@ -1022,17 +1091,6 @@ home:function(){
   +(fd.length?fd.slice(0,3).map(function(x){return'<div class="upd">'+esc(x.t)+'<small>'+esc(x.w||"—")+' · '+dt(x.ts)+'</small></div>'}).join(""):'<div class="hm-empty">لا توجد نشاطات بعد.</div>')+'</div></div>';
  /* quick links */
  h+='<div class="card"><h3>اختصارات سريعة</h3><div class="hm-quick">'+[["tasks","📋","المهام"],["parts","🔩","المكونات"],["inst","🛠️","التركيب والتنفيذ"],["tests","🧪","الاختبارات"],["cost","💰","التكاليف"],["attendance","👥","الغياب والحضور"],["supervisors","👑","المشرفون"],["robot","🤖","حالة الروبوت"]].map(function(q){return'<a href="#'+q[0]+'"><i>'+q[1]+'</i>'+q[2]+'</a>'}).join("")+'</div></div>';
- /* supervisors mini section */
- h+='<div class="card" style="border:2px solid rgba(99,102,241,.3);background:linear-gradient(135deg,rgba(15,31,77,.7),rgba(10,20,51,.9))">'
-  +'<div class="hm-h"><h3 style="color:#a5b4fc">👑 المشرفون</h3><a class="hm-lnk" href="#supervisors" style="color:#818cf8">لوحة المشرفين ←</a></div>'
-  +'<div style="display:flex;flex-wrap:wrap;gap:10px">'
-  +VIP_ALL.map(function(n){var p=VIP_PROFILES[n];if(!p)return"";
-   return'<div onclick="location.hash=\'#supervisors\'" style="cursor:pointer;flex:1;min-width:140px;background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.3);border-radius:12px;padding:12px;text-align:center;transition:transform .15s" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'\'">'
-   +'<div style="font-size:28px;margin-bottom:4px">'+p.avatar+'</div>'
-   +'<div style="font-weight:700;font-size:13px;color:#e2e8f0">'+esc(p.title)+'</div>'
-   +'<div style="font-size:11px;color:#818cf8;margin-top:2px">'+esc(p.badge)+'</div>'
-   +'</div>'}).join("")
-  +'</div></div>';
  /* attendance mini section */
  var attTot={present:0,absent:0,late:0,excused:0};D.attendance.forEach(function(r){if(attTot[r.status]!==undefined)attTot[r.status]++});
  var attTotal=attTot.present+attTot.absent+attTot.late+attTot.excused,attRate=attTotal?Math.round((attTot.present+attTot.late)*100/attTotal):0;
@@ -2931,11 +2989,35 @@ function buildLogin(){var ru="";try{ru=localStorage.getItem("lgu")||""}catch(x){
 <div class="lgfoot"><a onclick="ownM()">دخول المسئول</a></div>
 <p>التحقق يتم داخل الصفحة وليس على خادم مستقل، فهو ليس مصادقة آمنة بالكامل.</p></form>`}
 function buildLoginOld(){$("lg").innerHTML='<div class="box"><h2>🎓 NOVA Clean</h2><p>روبوت التنظيف المنزلي الذكي</p><select id="lw">'+everyone().map(function(n){return '<option>'+esc(n)+'</option>'}).join("")+'</select><input id="lp" type="password" placeholder="كلمة السر" onkeydown="if(event.key==\'Enter\')login()"><button class="btn" onclick="login()">تسجيل الدخول</button><div class="row"><a href="#" onclick="ownM();return false" class="note">دخول المسئول</a><a href="#" onclick="visM();return false" class="note">رسالة للفريق (زائر)</a></div></div>'}
+function buildTopBar(h,p){
+ var isHome=h=="home";
+ var sep=$("bc-sep"),icon=$("page-icon"),name=$("page-name");
+ if(sep&&icon&&name){sep.style.display=isHome?"none":"inline";var pi={home:"\uD83C\uDFE0",tasks:"\uD83D\uDCCB",parts:"\uD83D\uDD29",cost:"\uD83D\uDCB0",inst:"\uD83D\uDEE0\uFE0F",robot:"\uD83E\uDD16",tests:"\uD83E\uDDEA",attendance:"\uD83D\uDC65",log:"\uD83D\uDCDC",team:"\uD83D\uDC6B",supervisors:"\uD83D\uDC51"};icon.textContent=pi[h]||"\uD83D\uDCC4";name.textContent=p[1]}
+ var who=$("who");if(!who)return;
+ if(!me){who.innerHTML='<button class="btn" onclick="loginM()">\u062F\u062E\u0648\u0644 \u0627\u0644\u0641\u0631\u064A\u0642</button>';return}
+ var isDev=typeof VIP_DEVS!=="undefined"&&VIP_DEVS.indexOf(me)>=0;
+ var isSup=typeof VIP_SUPS!=="undefined"&&VIP_SUPS.indexOf(me)>=0;
+ var badgeHtml="",avatarCls="top-avatar";
+ if(isDev){avatarCls+=" top-avatar-dev";badgeHtml='<span class="top-user-badge top-badge-dev">\u26A1 Dev &amp; Admin</span>'}
+ else if(isSup){avatarCls+=" top-avatar-sup";badgeHtml='<span class="top-user-badge top-badge-sup">\uD83D\uDC51 Supervisor</span>'}
+ else{var roleLabel=(typeof LEAD!=="undefined"&&me==LEAD)?"\u0645\u0634\u0631\u0641\u0629":(typeof SUP!=="undefined"&&me==SUP)?"\u0645\u0634\u0631\u0641":"\u0639\u0636\u0648 \u0627\u0644\u0641\u0631\u064A\u0642";badgeHtml='<span class="top-user-badge top-badge-mem">'+roleLabel+'</span>'}
+ var avEmoji=isDev?"\uD83D\uDC68\u200D\uD83D\uDCBB":isSup?"\uD83D\uDC51":"\uD83D\uDC64";
+ var dropItems='<a href="#team"><span>\uD83D\uDC64</span> \u0627\u0644\u0645\u0644\u0641 \u0627\u0644\u0634\u062E\u0635\u064A</a>';
+ dropItems+='<a href="#team"><span>\u2139\uFE0F</span> \u0645\u0639\u0644\u0648\u0645\u0627\u062A \u0627\u0644\u062D\u0633\u0627\u0628</a>';
+ if((typeof isVip==="function"&&isVip())||own)dropItems+='<a href="#supervisors"><span>\u2699\uFE0F</span> \u0644\u0648\u062D\u0629 \u0627\u0644\u0645\u0634\u0631\u0641\u064A\u0646</a>';
+ dropItems+='<div class="td-sep"></div>';
+ dropItems+='<button class="td-item td-logout" onclick="logout();closeTopMenu()"><span>\uD83D\uDEAA</span> \u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062E\u0631\u0648\u062C</button>';
+ var adminRow=own?'<div class="top-admin-row">\uD83D\uDD11 <select onchange="asM(this.value)"><option value="\u0627\u0644\u0645\u0627\u0644\u0643">\u0627\u0644\u0645\u0633\u0626\u0648\u0644</option>'+(typeof everyone==="function"?everyone().map(function(n){return'<option'+(n==me?' selected':'')+'>'+esc(n)+'</option>'}).join(""):"")+"</select></div>":"";
+ who.innerHTML=adminRow+'<div class="top-user" id="top-user-btn" onclick="toggleTopMenu(event)"><div class="'+avatarCls+'">'+avEmoji+'<span class="top-online-dot"></span></div><div><div class="top-user-name">'+esc(me)+'</div>'+badgeHtml+'</div><div class="top-dropdown" id="top-menu">'+dropItems+'</div></div>';
+}
+function toggleTopMenu(e){e.stopPropagation();var el=document.getElementById("top-user-btn");if(el)el.classList.toggle("open")}
+function closeTopMenu(){var el=document.getElementById("top-user-btn");if(el)el.classList.remove("open")}
+document.addEventListener("click",function(e){if(!e.target.closest("#top-user-btn"))closeTopMenu()});
 function go(){mergePrices();try{if(SB.sess)localStorage.setItem("sbme",JSON.stringify({me:me}))}catch(e){}$("lg").style.display=me?"none":"flex";if(!ready||!me)return;var h=(location.hash||"#home").slice(1),p=PAGES.filter(function(x){return x[0]==h})[0];if(!p){p=PAGES[0];h="home"}
  var act0=document.activeElement;if(act0&&/INPUT|SELECT|TEXTAREA/.test(act0.tagName)&&act0.type!="file"&&document.activeElement.closest&&document.activeElement.closest("form")&&$("v").contains(act0))return;
- $("ttl").textContent=p[1];$("v").innerHTML=V[h]();
- $("who").innerHTML=(me?'<span>🟢 '+esc(me)+'</span><button class="btn g" onclick="logout()">خروج</button>':'<span class="note">وضع المشاهدة</span><button class="btn" onclick="loginM()">دخول الفريق</button>')+(own?'<span>🔑 المسئول — دخول كـ</span><select onchange="asM(this.value)"><option value="المالك">المسئول</option>'+everyone().map(function(n){return '<option'+(n==me?' selected':'')+'>'+esc(n)+'</option>'}).join("")+'</select><button class="btn g" onclick="outO()">خروج المسئول</button>':'');
- $("nav").innerHTML='<div class="logo">'+NOVA_MARK+'<div><b>NOVA Clean</b><small>لوحة التحكم</small></div></div>'+PAGES.filter(function(x){if(x[0]=="log")return own;if(x[0]=="supervisors")return isVip();return true}).map(function(x){return '<a href="#'+x[0]+'" class="'+(x[0]==h?"on":"")+'">'+x[1]+'</a>'}).join("")+'<div class="sp"></div><button class="tg" onclick="tg()">🌙 الوضع الليلي</button>'}
+ $("v").innerHTML=V[h]();
+ buildTopBar(h,p);
+ $("nav").innerHTML='<div class="logo">'+NOVA_MARK+'<div><b>NOVA Clean</b><small>\u0644\u0648\u062D\u0629 \u0627\u0644\u062A\u062D\u0643\u0645</small></div></div>'+PAGES.filter(function(x){if(x[0]=="log")return own;if(x[0]=="supervisors")return(typeof isVip==="function"&&isVip());return true}).map(function(x){return '<a href="#'+x[0]+'" class="'+(x[0]==h?"on":"")+'">'+x[1]+'</a>'}).join("")+'<div class="sp"></div><button class="tg" onclick="tg()">\uD83C\uDF19 \u0627\u0644\u0648\u0636\u0639 \u0627\u0644\u0644\u064A\u0644\u064A</button>'}
 function tg(){var r=document.documentElement,n=r.getAttribute("data-theme")=="dark"?"light":"dark";r.setAttribute("data-theme",n);try{localStorage.setItem("thm",JSON.stringify({seg:themeSeg(),t:n}))}catch(e){}}
 /* ===== VIP SUPERVISORS SYSTEM ===== */
 /* المشرفون المعتمدون */
