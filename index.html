@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl" class="bt">
 <head>
 <meta charset="utf-8">
@@ -3746,56 +3746,194 @@ async function tmAccountModal(name){
  if(name===TM_SUPER_ADMIN){toast("لا يمكن تعديل حساب Super Admin");return}
  if(name===me&&!own){toast("لا يمكنك تعديل حسابك بنفسك من هنا");return}
  TM.currentEditName=name;
- var logs=D.logs.filter(function(l){return l.t&&(l.t.indexOf("صلاحيات «"+name+"»")>=0||l.t.indexOf("«"+name+"»")>=0)}).sort(function(a,b){return b.ts-a.ts}).slice(0,3);
+
+ var logs=D.logs.filter(function(l){return l.t&&(l.t.indexOf("صلاحيات «"+name+"»")>=0||l.t.indexOf("«"+name+"»")>=0||l.t.indexOf("مرور «"+name+"»")>=0||l.t.indexOf("حساب «"+name+"»")>=0)}).sort(function(a,b){return b.ts-a.ts});
  var lastPerm=logs[0];
+ var role=tmRole(name);
 
- modal('<div class="tm-modal">'
-  +'<div class="tm-modal-head">'
-  +'<span style="font-size:22px">⚙️</span>'
-  +'<h3>إدارة حساب — '+esc(name)+'</h3>'
-  +'</div>'
-  +'<div class="tm-modal-body">'
-  +'<div class="tm-alert info">🔒 كلمات المرور لا تُعرض أبداً. العمليات تتم عبر Supabase Auth بشكل آمن.</div>'
-  +'<div class="tm-detail-grid">'
-  +'<div class="tm-detail-item"><span>اسم العضو</span><b>'+esc(name)+'</b></div>'
-  +'<div class="tm-detail-item"><span>الدور الوظيفي</span><b>'+tmRole(name).label+'</b></div>'
-  +(lastPerm?'<div class="tm-detail-item"><span>آخر تحديث للصلاحيات</span><b style="font-size:12px">'+dt(lastPerm.ts)+'</b></div>':'')
-  +(db?'<div class="tm-detail-item"><span>حالة الحساب</span><b><span class="tm-status-dot active">نشط</span></b></div>':'')
-  +'</div>'
-  +'<div style="font-size:13px;font-weight:600;color:var(--tx);margin:4px 0 10px">⚡ إجراءات الحساب</div>'
-  +'<div class="tm-acct-row"><span>📧 إرسال رابط إعادة تعيين كلمة المرور</span><button class="tm-btn info" onclick="tmResetPassword(\''+esc(name)+'\')">إرسال رابط</button></div>'
-  +'<div class="tm-acct-row"><span>🔄 إجبار العضو على تغيير كلمة المرور عند تسجيل الدخول التالي</span><button class="tm-btn warn" style="background:linear-gradient(135deg,#78350f,#d97706);color:#fef3c7" onclick="tmForceReset(\''+esc(name)+'\')">تفعيل الإجبار</button></div>'
-  +'<div class="tm-acct-row"><span>⛔ إيقاف الحساب مؤقتاً</span><button class="tm-btn danger" onclick="tmToggleAccount(\''+esc(name)+'\',false)">إيقاف الحساب</button></div>'
-  +'<div class="tm-acct-row"><span>✅ تفعيل الحساب</span><button class="tm-btn success" onclick="tmToggleAccount(\''+esc(name)+'\',true)">تفعيل الحساب</button></div>'
-  +'<div class="tm-alert warn" style="margin-top:4px">⚠️ إيقاف الحساب يمنع العضو من تسجيل الدخول. العمليات الكاملة تتطلب Supabase Service Role على الخادم.</div>'
-  +'</div>'
-  +'<div class="tm-modal-foot"><button class="tm-cancel" onclick="closeM()">إغلاق</button></div>'
-  +'</div>')
-}
+ // عرض نافذة أولاً مع loading لحالة الحساب
+ var renderModal=function(status){
+  var isBanned=status&&status.isBanned;
+  var email=status&&status.email?status.email:"—";
+  var lastLogin=status&&status.lastSignIn?dt(new Date(status.lastSignIn).getTime()):"—";
+  var createdAt=status&&status.createdAt?dt(new Date(status.createdAt).getTime()):"—";
+  var forceChange=status&&status.forcePasswordChange;
 
-async function tmResetPassword(name){
- if(!confirm("إرسال رابط إعادة تعيين كلمة المرور إلى «"+name+"»؟"))return;
- if(SBR()&&SB.c){
-  try{
-   // في الحالة الحقيقية يحتاج email — نسجّل الطلب فقط هنا
-   act("📧 طلب إعادة تعيين كلمة مرور «"+name+"»");
-   toast("تم تسجيل الطلب — يتطلب بريد العضو الإلكتروني للإرسال الفعلي ✓");
-  }catch(e){toast("تعذّر الإرسال: "+e.message)}
- }else{
-  act("📧 طلب إعادة تعيين كلمة مرور «"+name+"» (محلياً)");
-  toast("تم تسجيل الطلب (يتطلب Supabase Auth للإرسال الفعلي)");
+  return '<div class="tm-modal">'
+   +'<div class="tm-modal-head">'
+   +'<div class="tm-avatar '+role.key+'" style="font-size:18px;width:38px;height:38px">'+tmAvatar(name)+'</div>'
+   +'<h3>إدارة حساب — '+esc(name)+'</h3>'
+   +'</div>'
+   +'<div class="tm-modal-body">'
+   +'<div class="tm-alert info">🔒 كلمات المرور لا تُعرض أبداً — العمليات تتم عبر خادم Vercel بشكل آمن.</div>'
+
+   +'<div class="tm-detail-grid">'
+   +'<div class="tm-detail-item"><span>اسم العضو</span><b>'+esc(name)+'</b></div>'
+   +'<div class="tm-detail-item"><span>الدور الوظيفي</span><b>'+role.label+'</b></div>'
+   +'<div class="tm-detail-item"><span>البريد الإلكتروني</span><b dir="ltr" style="font-size:13px">'+esc(email)+'</b></div>'
+   +'<div class="tm-detail-item"><span>حالة الحساب</span><b>'+(status?'<span class="tm-status-dot '+(isBanned?"inactive":"active")+'">'+(isBanned?"موقوف":"نشط")+'</span>':'<span class="tm-status-dot active">نشط</span>')+'</b></div>'
+   +'<div class="tm-detail-item"><span>آخر تسجيل دخول</span><b style="font-size:12px">'+lastLogin+'</b></div>'
+   +'<div class="tm-detail-item"><span>تاريخ إنشاء الحساب</span><b style="font-size:12px">'+createdAt+'</b></div>'
+   +(lastPerm?'<div class="tm-detail-item"><span>آخر تحديث للصلاحيات</span><b style="font-size:12px">'+dt(lastPerm.ts)+'</b></div>':'')
+   +(forceChange?'<div class="tm-detail-item"><span>إجبار تغيير كلمة المرور</span><b style="color:#f59e0b">مفعّل</b></div>':'')
+   +'</div>'
+
+   +'<div style="font-size:13px;font-weight:700;color:var(--tx);margin:8px 0 10px;padding-top:8px;border-top:1px solid var(--bd)">⚡ إجراءات الحساب</div>'
+
+   // تغيير كلمة المرور — الوظيفة الجديدة الرئيسية
+   +'<div class="tm-acct-row" style="background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(139,92,246,.08));border-radius:10px;padding:12px 14px;border:1px solid #2563eb33;margin-bottom:8px">'
+   +'<div><b style="font-size:13px;color:var(--tx)">🔑 تغيير كلمة المرور</b><small style="display:block;color:var(--mut);font-size:12px;margin-top:2px">تعيين كلمة مرور جديدة مباشرةً للعضو</small></div>'
+   +'<button class="tm-btn perm" onclick="closeM();tmSetPasswordModal(\''+esc(name)+'\')">تغيير كلمة المرور</button>'
+   +'</div>'
+
+   +'<div class="tm-acct-row"><span><div>📧 رابط إعادة التعيين<small style="display:block;color:var(--mut);font-size:11px">يُرسل لبريده الإلكتروني المسجّل</small></div></span>'
+   +'<button class="tm-btn info" onclick="tmResetPassword(\''+esc(name)+'\')">إرسال رابط</button></div>'
+
+   +'<div class="tm-acct-row"><span><div>🔄 إجبار تغيير عند الدخول<small style="display:block;color:var(--mut);font-size:11px">سيُطلب منه تغيير كلمة المرور في أول دخول</small></div></span>'
+   +'<button class="tm-btn" style="background:linear-gradient(135deg,#78350f,#d97706);color:#fef3c7" onclick="tmForceReset(\''+esc(name)+'\')">تفعيل الإجبار</button></div>'
+
+   +(isBanned
+    ?'<div class="tm-acct-row" style="border:1px solid #22c55e33;border-radius:10px;padding:10px 14px"><span><div style="color:#22c55e">✅ تفعيل الحساب<small style="display:block;color:var(--mut);font-size:11px">الحساب موقوف حالياً — اضغط لإعادة تفعيله</small></div></span>'
+     +'<button class="tm-btn success" onclick="tmToggleAccount(\''+esc(name)+'\',true)">تفعيل الحساب</button></div>'
+    :'<div class="tm-acct-row" style="border:1px solid #ef444433;border-radius:10px;padding:10px 14px"><span><div style="color:#ef4444">⛔ إيقاف الحساب<small style="display:block;color:var(--mut);font-size:11px">يمنع العضو من تسجيل الدخول</small></div></span>'
+     +'<button class="tm-btn danger" onclick="tmToggleAccount(\''+esc(name)+'\',false)">إيقاف الحساب</button></div>')
+
+   +(logs.length?'<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--bd)"><div style="font-size:12px;font-weight:600;color:var(--mut);margin-bottom:8px">📜 آخر الإجراءات الإدارية</div>'
+    +logs.slice(0,4).map(function(l){return'<div class="tm-audit-item"><div class="tm-audit-dot"></div><div style="flex:1">'+esc(l.t)+'<small style="display:block;color:var(--mut);font-size:11px">'+dt(l.ts)+' · '+esc(l.w||"—")+'</small></div></div>'}).join("")
+    +'</div>':'')
+
+   +'</div>'
+   +'<div class="tm-modal-foot"><button class="tm-cancel" onclick="closeM()">إغلاق</button></div>'
+   +'</div>';
+ };
+
+ // اعرض نافذة أولاً بدون حالة (سريع)
+ modal(renderModal(null));
+
+ // ثم حمّل الحالة الفعلية في الخلفية وحدّث النافذة
+ if(SBR()){
+  var status=await tmLoadAccountStatus(name);
+  if(status){
+   var mb=document.getElementById("mb");
+   if(mb)mb.innerHTML=renderModal(status);
+  }
  }
 }
-async function tmForceReset(name){
- if(!confirm("تفعيل إجبار «"+name+"» على تغيير كلمة المرور في الدخول التالي؟"))return;
- act("🔄 طلب إجبار تغيير كلمة مرور «"+name+"»");
- toast("تم تسجيل الطلب — يتطلب Supabase Admin API للتطبيق الفعلي ✓");
+
+/* ---- استدعاء Admin API على الخادم ---- */
+async function tmAdminCall(action, targetName, extra){
+ if(!SBR()){toast("سجّل الدخول أولاً");return null}
+ var s=await SB.c.auth.getSession();
+ var token=s&&s.data&&s.data.session&&s.data.session.access_token;
+ if(!token){toast("انتهت الجلسة — سجّل الدخول من جديد");return null}
+ var body=Object.assign({action:action,targetName:targetName},extra||{});
+ try{
+  var r=await fetch("/api/admin",{method:"POST",
+   headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},
+   body:JSON.stringify(body)});
+  var j={};try{j=await r.json()}catch(e){}
+  if(!r.ok){toast("⚠️ "+( j.error||"خطأ "+r.status));return null}
+  return j;
+ }catch(e){toast("تعذّر الاتصال بالخادم: "+(e.message||e));return null}
 }
-async function tmToggleAccount(name,activate){
- if(!confirm((activate?"تفعيل":"إيقاف")+" حساب «"+name+"»؟"))return;
- act((activate?"✅ تفعيل":"⛔ إيقاف")+" حساب «"+name+"»");
- toast((activate?"تم تفعيل الحساب":"تم إيقاف الحساب")+" — يتطلب Supabase Service Role للتطبيق الفعلي ✓");
- closeM();go();
+
+/* ---- إيقاف / تفعيل الحساب ---- */
+async function tmToggleAccount(name, activate){
+ if(!confirm((activate?"تفعيل":"إيقاف")+" حساب «"+name+"»؟\n"+(activate?"سيتمكن من تسجيل الدخول مجدداً.":"لن يتمكن من تسجيل الدخول حتى تُعيد تفعيله.")))return;
+ var btn=event&&event.target;if(btn){btn.disabled=true;btn.textContent="جاري..."}
+ var res=await tmAdminCall(activate?"unban":"ban",name);
+ if(res&&res.ok){
+  act((activate?"✅ تفعيل":"⛔ إيقاف")+" حساب «"+name+"»");
+  toast(res.message||"تم ✓");
+  closeM();
+  // تحديث حالة الحساب في الجدول
+  if(TM.accountStatus)TM.accountStatus[name]={banned:!activate,loaded:true};
+  go();
+ }else{if(btn){btn.disabled=false;btn.textContent=activate?"تفعيل الحساب":"إيقاف الحساب"}}
+}
+
+/* ---- إرسال رابط إعادة تعيين كلمة المرور ---- */
+async function tmResetPassword(name){
+ if(!confirm("إرسال رابط إعادة تعيين كلمة المرور للبريد المسجّل لـ «"+name+"»؟"))return;
+ var btn=event&&event.target;if(btn){btn.disabled=true;btn.textContent="جاري الإرسال..."}
+ var res=await tmAdminCall("reset_password_email",name);
+ if(res&&res.ok){act("📧 إرسال رابط إعادة تعيين كلمة مرور «"+name+"»");toast(res.message||"تم الإرسال ✓")}
+ if(btn){btn.disabled=false;btn.textContent="إرسال رابط"}
+}
+
+/* ---- إجبار تغيير كلمة المرور ---- */
+async function tmForceReset(name){
+ if(!confirm("إجبار «"+name+"» على تغيير كلمة المرور في الدخول التالي؟"))return;
+ var btn=event&&event.target;if(btn){btn.disabled=true;btn.textContent="جاري..."}
+ var res=await tmAdminCall("force_password_change",name);
+ if(res&&res.ok){act("🔄 إجبار تغيير كلمة مرور «"+name+"»");toast(res.message||"تم ✓")}
+ if(btn){btn.disabled=false;btn.textContent="تفعيل الإجبار"}
+}
+
+/* ---- تغيير كلمة المرور مباشرة (للمشرف فقط) ---- */
+function tmSetPasswordModal(name){
+ if(!canManageTeam()){toast("ليس لديك صلاحية");return}
+ if(name===TM_SUPER_ADMIN){toast("لا يمكن تغيير كلمة مرور Super Admin");return}
+ modal('<div class="tm-modal">'
+  +'<div class="tm-modal-head"><span style="font-size:22px">🔑</span><h3>تغيير كلمة مرور — '+esc(name)+'</h3></div>'
+  +'<div class="tm-modal-body">'
+  +'<div class="tm-alert warn">⚠️ أنت تُغيّر كلمة مرور عضو آخر. أخبره بكلمة المرور الجديدة بشكل آمن.</div>'
+  +'<div class="tm-alert info">🔒 كلمة المرور تُرسل مشفّرة للخادم — لا تُخزَّن في أي مكان في المتصفح.</div>'
+  +'<div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">'
+  +'<label style="font-size:13px;color:var(--mut)">كلمة المرور الجديدة (6 أحرف على الأقل)'
+  +'<div style="position:relative;margin-top:5px">'
+  +'<input id="tm-pw-new" type="password" autocomplete="new-password" placeholder="أدخل كلمة المرور الجديدة" style="width:100%;padding:10px 44px 10px 12px;background:var(--soft);border:1px solid var(--bd);border-radius:9px;color:var(--tx);font:inherit;box-sizing:border-box">'
+  +'<button type="button" onclick="tmTogglePw(\'tm-pw-new\')" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:none;border:0;cursor:pointer;font-size:18px;color:var(--mut)">👁</button>'
+  +'</div></label>'
+  +'<label style="font-size:13px;color:var(--mut)">تأكيد كلمة المرور'
+  +'<div style="position:relative;margin-top:5px">'
+  +'<input id="tm-pw-confirm" type="password" autocomplete="new-password" placeholder="أعد كتابة كلمة المرور" style="width:100%;padding:10px 44px 10px 12px;background:var(--soft);border:1px solid var(--bd);border-radius:9px;color:var(--tx);font:inherit;box-sizing:border-box">'
+  +'<button type="button" onclick="tmTogglePw(\'tm-pw-confirm\')" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:none;border:0;cursor:pointer;font-size:18px;color:var(--mut)">👁</button>'
+  +'</div></label>'
+  +'<div id="tm-pw-msg" style="font-size:13px;color:#ef4444;min-height:18px"></div>'
+  +'</div></div>'
+  +'<div class="tm-modal-foot">'
+  +'<button class="tm-save" id="tm-pw-btn" onclick="tmConfirmSetPassword(\''+esc(name)+'\')">💾 تغيير كلمة المرور</button>'
+  +'<button class="tm-cancel" onclick="closeM()">إلغاء</button>'
+  +'</div></div>')
+}
+
+function tmTogglePw(id){
+ var el=document.getElementById(id);
+ if(el)el.type=el.type==="password"?"text":"password";
+}
+
+async function tmConfirmSetPassword(name){
+ var pw=document.getElementById("tm-pw-new");
+ var pw2=document.getElementById("tm-pw-confirm");
+ var msg=document.getElementById("tm-pw-msg");
+ var btn=document.getElementById("tm-pw-btn");
+ if(!pw||!pw2||!msg||!btn)return;
+ var val=pw.value,val2=pw2.value;
+ msg.textContent="";
+ if(val.length<6){msg.textContent="كلمة المرور يجب أن تكون 6 أحرف على الأقل";pw.focus();return}
+ if(val!==val2){msg.textContent="كلمتا المرور غير متطابقتين";pw2.focus();return}
+ if(!confirm("تأكيد تغيير كلمة مرور «"+name+"»؟ تأكد من إبلاغه بكلمة المرور الجديدة."))return;
+ btn.disabled=true;btn.textContent="جاري التغيير...";
+ var res=await tmAdminCall("set_password",name,{newPassword:val});
+ if(res&&res.ok){
+  act("🔑 غيّر كلمة مرور «"+name+"»");
+  toast(res.message||"تم تغيير كلمة المرور ✓");
+  // مسح الحقول فوراً
+  pw.value="";pw2.value="";
+  closeM();
+ }else{
+  btn.disabled=false;btn.textContent="💾 تغيير كلمة المرور";
+ }
+}
+
+/* ---- جلب حالة الحساب الفعلية ---- */
+var TM_ACCT_STATUS={};
+async function tmLoadAccountStatus(name){
+ if(TM_ACCT_STATUS[name])return TM_ACCT_STATUS[name];
+ var res=await tmAdminCall("get_status",name);
+ if(res&&res.ok){TM_ACCT_STATUS[name]=res;return res}
+ return null;
 }
 
 /* ---- SQL Migration للصلاحيات ---- */
