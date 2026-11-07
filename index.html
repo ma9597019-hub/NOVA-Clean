@@ -1025,12 +1025,12 @@ home:function(){
  var kp=function(href,ic,col,v,lab,sub){return'<a class="hm-k" href="#'+href+'"><div class="ic" style="background:'+col+'">'+ic+'</div><div><b>'+v+'</b><span>'+lab+(sub?' · '+sub:'')+'</span></div></a>'};
  var tv=function(v){return n?fm(v):"—"},pv=function(v){return np?fm(v):"—"};
 
- var h='<!--ATT-->'+'<div class="hm-hero"><div><h2>'+hmGreet()+'، '+esc(me)+' 👋</h2><p class="sub">روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة<br><span dir="ltr">Smart Autonomous Cleaning Robot – Self Operation Vacuum Cleaner</span></p>'
+ var h='<div class="hm-hero"><div><h2>'+hmGreet()+'، '+esc(me)+' 👋</h2><p class="sub">روبوت التنظيف المنزلي الذكي ذاتي الحركة والشحن وتفريغ الأتربة<br><span dir="ltr">Smart Autonomous Cleaning Robot – Self Operation Vacuum Cleaner</span></p>'
   +'<div class="hm-meta"><span>حالة المشروع: <span class="pill '+st[1]+'">'+esc(st[0])+'</span></span>'
   +'<span>آخر تحديث: <b>'+(last?dt(last):"لا توجد حركات مسجّلة")+'</b></span></div></div>'
   +'<div><div class="hm-meta">نسبة الإنجاز الكلية (من المهام)</div>'+(n?'<div class="hm-big">'+fm(pr)+'٪</div><div class="hm-bar"><i style="width:'+pr+'%"></i></div><div class="hm-meta">'+fm(c.d)+' مكتملة من '+fm(n)+' مهمة</div>':'<div class="hm-big">—</div><div class="hm-bar"><i style="width:0"></i></div><div class="hm-meta">لا توجد مهام مسجّلة بعد</div>')+'</div></div>';
  /* KPIs */
- h+='<div class="hm-kg">'
+ h+='<!--ATT-->'+'<div class="hm-kg">'
   +kp("reports","📈","#2563eb",n?fm(pr)+"٪":"—","نسبة الإنجاز")
   +kp("tasks","📋","#0ea5e9",tv(n),"إجمالي المهام")
   +kp("tasks","✅","#22a06b",tv(c.d),"مكتملة")
